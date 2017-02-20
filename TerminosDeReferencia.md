@@ -110,8 +110,8 @@ de algunas librerías como Bootstrap o W3CSS.
 
 - La solución resultante no cumple con algunos aspectos de  la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
 - La solución resultante no se consigue que sea totalmente responsive.
-- La solución resultante posee problamas de escalabilidad.
-- No se consigue ni mediante la interfaz ni mediante el manual de usuario que la 
+- La solución resultante posee problemas de escalabilidad.
+- No se consigue, ni mediante la interfaz, ni mediante el manual de usuario, que la 
 aplicación sea intuitiva para personas no familiarizadas con las tecnologías.
 - Aparición de posibles competidores.
 - La solución resultante no tenga la calidad mínima para evolucionar.
