@@ -72,7 +72,7 @@ La solución **IDEALMENTE** tiene que ser capaz de:
 de sus orientaciones está pensada para unidades familiares que no tienen por qué controlar las tecnologías.
 - **Crear** subentidades dentro de las propias entidades, ofreciendo así una forma
 de localización mejorada en los objetos (p.ej., habitaciones dentro de las viviendas).
-- **Ofrecer** mediay lo nte una API los servicios principales del sistema para que las empresas
+- **Ofrecer** mediante una API los servicios principales del sistema para que las empresas
 puedan hacer uso de ellas y si lo desean crearse su propia interfaz.
 - **Documentar y testear** de una forma intensa la API en caso de que se llegue a ofrecer
 públicamente para evitar usos indeseados del sistema.
