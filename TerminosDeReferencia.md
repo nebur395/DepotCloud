@@ -97,7 +97,14 @@ orientado más a las empresas que a las unidades familiares.
 
 ## Hipótesis y dependencias
 
-
+- El proceso y diseño de la interfaz de usuario ha contado con el apoyo del suficiente
+feedback de diversos usuarios como para conseguir una interfaz usable.
+- Se requiere de asesoramiento legal debido a la falta de conocimiento y formación 
+en aspectos legales referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
+- El almacenamiento se podrá realizar sobre una base de datos SQL. 
+- El back-end se puede implementar utilizando la tecnología Spring. 
+- El front-end  se puede implementar utilizando la tecnología AngularJS y el uso
+de algunas librerías como Bootstrap o W3CSS.
 
 ## Riesgos del proyecto
 
