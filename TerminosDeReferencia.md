@@ -23,7 +23,7 @@ empresas de almacenamiento.
  
 ## Objetivos
 
-El proyecto tiene como objetivo principal desarrollar una solución que de una
+El proyecto tiene como objetivo principal desarrollar una aplicación que de una
 solución a los siguientes problemas:
 
  - Gestionar los productos de almacenes, trasteros y/o viviendas de unidades familiares
@@ -66,13 +66,13 @@ principal para facilitar su uso").
 - **Buscar y filtrar** un objeto para obtener de forma rápida la entidad en la que se 
 encuentra localizado.
 
-La solución **IDEALMENTE** ser capaz de:
+La solución **IDEALMENTE** tiene que ser capaz de:
 
-- **Ofrecer** una interfaz responsive o híbrida que sea usable pensando en que uno
-de sus usos es para unidades familiares que no tienen por qué controlar las tecnologías.
+- **Ofrecer** una interfaz responsive o híbrida que sea usable pensando en que una
+de sus orientaciones está pensada para unidades familiares que no tienen por qué controlar las tecnologías.
 - **Crear** subentidades dentro de las propias entidades, ofreciendo así una forma
 de localización mejorada en los objetos (p.ej., habitaciones dentro de las viviendas).
-- **Ofrecer** mediante una API los servicios principales del sistema para que las empresas
+- **Ofrecer** mediay lo nte una API los servicios principales del sistema para que las empresas
 puedan hacer uso de ellas y si lo desean crearse su propia interfaz.
 - **Documentar y testear** de una forma intensa la API en caso de que se llegue a ofrecer
 públicamente para evitar usos indeseados del sistema.
