@@ -34,7 +34,15 @@ El proyecto tiene como objetivo principal desarrollar una solución a los siguie
  - Gestionar los almacenes personales de una unidad familiar, dando la posibilidad de delegar tareas a terceros.
  - Automatizar los procesos anteriores utilizando diferentes tipos de dispositivos. 
  
-## Ámbito
+## Alcance de la solución
+
+**Debe tener**: Son aquellos requisitos críticos para que el trabajo realizado durante un periodo de tiempo determinado (en nuestro caso desde ahora hasta junio 2017) sea considerado un éxito (TFG aprobado). Si uno de estos requisitos no se incluye, el proyecto debera ser considerado un fallo (no se puede presentar el TFG o el TFG es suspendido). **Debe tener** en [MoSCoW](https://en.wikipedia.org/wiki/MoSCoW_method) es **MUST** que puede ser considerado un acrónimo de **M**inimum **U**sable **S**ubse**T**. En ese sentido se puede entender como la unión de los requisitos del [producto mínimo viable](https://en.wikipedia.org/wiki/Minimum_viable_product) con los requisitos legales (p.ej. documentación en forma de memoria de TFG, cumplimiento LOPD, etc.) y de seguridad (en el sentido de robustez y calidad de la solución) obligatorios o acordados. 
+
+**Debería tener**: Son aquellos que son importantes pero no necesarios para ser realizados durante el periodo de tiempo determinado. Pueden posponerse para ser realizado en el siguiente periodo. Son vitales pero no vitales, si no se implementan la solución es viable pero es doloroso no hacerlo (no se alcanzara un notable en el TFG, por ejemplo). 
+
+**Podrá tener**: Son aquellos que comparados con los anteriores son los menos deseados o tienen menor impacto. Hay que tenerlos controlados ya que sólo se podrán entregar si se dan las mejores condiciones (por ejemplo, el proyecto va más rápido de los esperado). Si hay algún riesgo en la entrega del proyecto estos requisitos serían los primeros en ser descartados. Si no, el proyecto cubrira todos sus objetivos (p. ej. se tendra un sobresaliente o matrícula en el TFG) 
+
+**No tendra**: Son aquellos que no van a ser entregados durante el periodo considerado. Se mantienen en esta lista de alcance para clarificar el alcance de la solución. Esto evita que informalmente sean introducidos ms tarde. El objetivo es ayudar a mantener el foto en la solución.
 
 La solución **DEBE** ser capaz de:
 
