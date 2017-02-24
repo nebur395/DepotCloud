@@ -16,24 +16,24 @@
 
 ## Motivación
 
-Este proyecto se motiva por el interés en crear una infraestructura para gestionar 
-y optimizar almacenes y viviendas, así como poder realizar búsquedas de los objetos alojados 
-en los mismos, para facilitar y automatizar dicha tarea a unidades familiares o 
-empresas de almacenamiento. 
+En un cuarto para trastos, o en un trastero, almacenamos no solo trastos sino también objetos personales, sentimentales y valiosos. Normalmente los guardamos en cajas y estos en estanterías.
+
+El primer problema que surge es la ocupación del espacio. Los trastos crecen hasta ocupar todo el espacio disponible. La solución es tener varios almacenes familiares: el cuarto de los trastos, el trastero del edificio, una segunda vivienda o, incluso, un guardamuebles. El segundo problema es decidir dónde deberá guardarse cada objeto. El siguiente problema surge cuando no nos acordamos dónde hemos dejado algo y tenemos que rebuscar en los almacenes familiares para localizarlo.
+
+¿Por qué no podemos localizar un objeto almacenado? Principalmente porque ha pasado tiempo y nos hemos olvidado de dónde lo pusimos. Tambien puede pasar que nosotros o un familiar lo haya cambiado de lugar en un trastero, lo haya llevado a otro almacén, lo ha devuelto a casa o lo ha tirado. Si es un familiar le podemos llegar a preguntar, pero si todos estos movimientos los ha realizado una empresa de mudanzas es muy probable que lo hayamos perdido para siempre. Una posible solución a todos estos problemas es tener un inventario manual de todo lo almacenado. Esta solución es factible cuando el número de objetos es muy bajo. Sin embargo, la experiencia nos dice que rápidamente los trasteros se convierten en un caos, por lo que esta solución no es adecuada en la practica.
  
 ## Objetivos
 
-El proyecto tiene como objetivo principal desarrollar una aplicación que de una
-solución a los siguientes problemas:
+El proyecto tiene como objetivo principal desarrollar una solución a los siguientes problemas relacionados con los almacenes familiares:
 
- - Gestionar los productos de almacenes, trasteros y/o viviendas de unidades familiares
- o empresas de almacenamiento.
- - Optimizar los productos de almacenes, trasteros y/o viviendas de unidades familiares
- o empresas de almacenamiento.
- - Buscar y filtrar objetos/productos para poder localizar rápidamente en que almacén, trastero
- o vivienda se encuentran.
-- Proporcionar un interfaz de las anteriores funcionalidades a usuarios humanos y máquinas.
-
+ - Mantener un inventario fiel de los objetos almacenados.
+ - Aprovechar al máximo el espacio disponible.
+ - Localizar rápìdamente cualquier objeto que esté almacenado.
+ - Dado un objeto determinar dónde deberá estar almacenado.
+ - Controlar quién mueve y a dónde los objetos almacenados.
+ - Gestionar los almacenes personales de una unidad familiar, dando la posibilidad de delegar tareas a terceros.
+ - Automatizar los procesos anteriores utilizando diferentes tipos de dispositivos. 
+ 
 ## Ámbito
 
 La solución **DEBE** ser capaz de:
@@ -43,6 +43,12 @@ un rol de "familia" o "empresa" con su nombre, contraseña y si es necesario alg
 datos adicionales para poder autenticarse.
 - **Crear** diversos perfiles dentro de una cuenta sin necesidad de autenticarse de nuevo
 con el único fin de poder identificar al usuario que está accediendo a esa cuenta.
+
+- Permitir gestionar al menos los siguientes tipos de almacenes familiares: cuarto en vivienda principal, trastero en vivienda principal, vivienda secundaria, y guardamueble
+- Permitir que cualquier miembro de la unidad familiar pueda registrar un almacen familiar y sus caractersticas.
+
+
+
 - **Crear** distintas entidades de almacenamiento que pueden ser dotadas de información
 y/o atributos adicionales para que los usuarios puedan identificarlas (p.ej., vivienda principal, 
 vivienda secundaria, trastero...).
