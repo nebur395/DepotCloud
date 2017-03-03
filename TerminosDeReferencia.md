@@ -54,90 +54,46 @@ El proyecto tiene como objetivo principal desarrollar una solución a los siguie
  
 ## Alcance de la solución
 
-**Debe tener**: Son aquellos requisitos críticos para que el trabajo realizado 
-durante un periodo de tiempo determinado (en nuestro caso desde ahora hasta junio 2017) 
-sea considerado un éxito (TFG aprobado). Si uno de estos requisitos no se incluye, 
-el proyecto deberá ser considerado un fallo (no se puede presentar el TFG o el TFG es suspendido). 
-**Debe tener** en [MoSCoW](https://en.wikipedia.org/wiki/MoSCoW_method) es **MUST** 
-que puede ser considerado un acrónimo de **M**inimum **U**sable **S**ubse**T**. 
-En ese sentido se puede entender como la unión de los requisitos del [producto mínimo viable](https://en.wikipedia.org/wiki/Minimum_viable_product) 
-con los requisitos legales (p.ej. documentación en forma de memoria de TFG, cumplimiento LOPD, etc.) 
-y de seguridad (en el sentido de robustez y calidad de la solución) obligatorios o acordados. 
+La solución debe:
+- Usar mecanismos que aseguren que sólo las usuarios autorizados puedan acceder al sistema.
+- Permitir que los usuarios puedan crear una unidad familiar y administrar que usuarios del sistema forman parte.
+- Servir para que los miembros de una unidad familiar puedan crear un almacén familiar y con posterioridad puedan modificar sus características e incluso darle de baja. 
+- Permitir que cualquier miembro de una unidad familiar pueda registrar que un determinado objeto se situa en un determinado almacén junto con un título, una foto y una breve descripción que permita que para que cualquier miembro de la unidad familiar pueda identificarlo.
+- Permitir que cualquier miembro de una unidad familiar pueda actualizar el estado del objeto, ya sea tras moverlo de un almacén a otro, o cuando hay interés en registrar cualquier evento mediante una nota o una foto. 
+- Permitir que cualquier miembro de una unidad familiar retire un objeto del control del sistema de almacenes.
+- Permitir notificar en tiempo real a todos los miembros de la unidad familiar cualquier accion realizada sobre los almacenes y los objetos almacenados.
+- Ofrecer diversos informes sobre el estado de cada uno de los almacenes y de los objetos contenidos.
+- Ayudar a localizar un objeto entre todos los almacenes mediante un búsqueda de texto y mostrando la descripción, las fotos y la localización de los que coincidan con el texto buscado.
+- Cumplir todos los aspectos legales necesarios para una solución de este tipo, en particular los referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
+- Tener una interfaz de usuario cómoda tanto en escritorio como en móvil.
+- Capturar la información de gestión en un almacén con la ayuda del móvil.
+- Ofrecer un tutorial o manual de usuario sobre el funcionamiento de la aplicación.
+- Analizar la posiblidad de ser un producto comercial utilizando una aproximación ágil. 
 
-**Debería tener**: Son aquellos que son importantes pero no necesarios para ser 
-realizados durante el periodo de tiempo determinado. Pueden posponerse para ser 
-realizado en el siguiente periodo. Son vitales pero no vitales, si no se implementan 
-la solución es viable pero es doloroso no hacerlo (no se alcanzara un notable en el TFG, por ejemplo). 
+La solución debería:
+- Cada almacén tiene un nombre, una dirección o localización y una caracterización de su accesibilidad. Es decir, se podrán caraterizar como almacenes donde hay objetos frecuentemente utilizados y como almacendes donde hay objetos poco o nada utilizados.
+- Tener un modelo de datos más rico del objeto almacenado (p. ej., datos de garantía, fecha de caducidad, valor, etc.).
+- Notificar al usuario de forma automática algunas recomendaciones que pueden implicar la realización de acciones en relación con algunos objetos (p.ej., *"El objeto X ya no está en garantía, puedes dejar de guardar su caja"*).
+- Notificar al usuario que un objeto debería estar en una almacén más accesible dependiendo de su actividad (p.ej., *"El objeto X almacenado en tu vivienda secundaria tiene mucha actividad, prueba a moverlo a tu vivienda principal para facilitar su uso"*).
+- Tener un sistema de roles que controlar el acceso a una determinada información sobre un objeto o almacen en función del rol.
+- Permitir delegar ciertas operaciones de creación, modificación, borrado y búsqueda a una persona ajena a la unidad familiar.
+- Ofrecer mediante una API acceso a los servicios principales del sistema para que empresas o sistemas automáticos puedan hacer uso de ellas.
+- Tener un API bien documentada y testeada para evitar usos indeseados del sistema.
 
-**Podrá tener**: Son aquellos que comparados con los anteriores son los menos 
-deseados o tienen menor impacto. Hay que tenerlos controlados ya que sólo se podrán 
-entregar si se dan las mejores condiciones (por ejemplo, el proyecto va más rápido de 
-los esperado). Si hay algún riesgo en la entrega del proyecto estos requisitos serían 
-los primeros en ser descartados. Si no, el proyecto cubrirá todos sus objetivos (p. ej. 
-se tendrá un sobresaliente o matrícula en el TFG).
+La solución podría:
+- Detectar objetos potencialmente registrados dos veces o que se encuentran registrados en dos almacenes diferentes utilizando las descripciones y las fotos y avisar al usuario para que lo tenga en cuenta a la hora de tomar acciones.
+- Optimizar la forma de introducir objetos en el sistema para que al usuario le sea cómodo y rápido, pudiendo reconocer múltiples objetos almacenados con una única foto.
+- Compartir información utilizando sistemas de mensajería de terceros.
 
-**No tendrá**: Son aquellos que no van a ser entregados durante el periodo considerado. 
-Se mantienen en esta lista de alcance para clarificar el alcance de la solución. Esto evita 
-que informalmente sean introducidos ms tarde. El objetivo es ayudar a mantener el foco en la solución.
-
-La solución **DEBE TENER** que ser capaz de:
-
-- **Permitir** que todos los miembros de la unidad familiar se puedan autenticar y acceder al sistema.
-- **Permitir** gestionar al menos los siguientes tipos de almacenes familiares: vivienda principal,
-cuarto en vivienda principal, trastero en vivienda principal, vivienda secundaria, y guardamuebles.
-- **Permitir** que cualquier miembro de la unidad familiar pueda registrar un almacén familiar y sus características.
-- **Introducir** objetos en los almacenes familiares que pueden contener información y/o características adicionales
-para que los usuarios puedan identificarlos.
-- **Eliminar** objetos de cualquiera de los almacenes familiares creados.
-- **Eliminar** los almacenes familiares creados.
-- **Modificar** la información y/o características de los distintos objetos o almacenes familiares creados.
-- **Mover** un objeto de una almacén familiar a otro.
-- **Visualizar** en una lista la actividad (ordenada cronológicamente) de la cuenta
-de la familia en tiempo real pudiendo identificar que perfiles han realizado diversas acciones sobre la misma.
-- **Detectar** objetos duplicados y avisar al usuario para que lo tenga en cuenta
-a la hora de tomar acciones.
-- **Notificar** al usuario de forma automática algunas recomendaciones que puede
-realizar sobre algunos tipos de objetos específicos (p.ej., "El objeto X ya no está en garantía,
-puedes dejar de guardar su caja").
-- **Notificar** al usuario formas de optimizar la localización de los objetos 
-dependiendo de su actividad en los distintos almacenes familiares (p.ej., "El objeto X almacenado
-en tu vivienda secundaria tiene mucha actividad, prueba a moverlo a tu vivienda
-principal para facilitar su uso").
-- **Buscar** un objeto para obtener de forma rápida la entidad en la que se 
-encuentra localizado.
-- **Cumplir** aspectos legales referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750)
-así como ofrecer unos términos y condiciones de uso a los usuarios.
-
-La solución **DEBERÍA TENER** que ser capaz de:
-- **Ofrecer** una interfaz de usuario responsive o híbrida que sea usable pensando en que una
-de sus orientaciones está pensada para unidades familiares que no tienen por qué controlar las tecnologías.
-- **Permitir** que un tercero a la unidad familiar pueda autenticarse y acceder al sistema.
-- **Permitir** que un tercero a la unidad familiar pueda ejercer acciones sobre los objetos
-almacenados en el guardamuebles pertenecientes a la unidad familiar y que a esta le aparezca registrado
-en su lista de actividad de cuenta.
-- **Ofrecer** mediante una API los servicios principales del sistema para que las empresas
-o sistemas automáticos puedan hacer uso de ellas.
-
-
-La solución **PODRÁ TENER** que ser capaz de:
-- **Documentar y testear** de una forma intensa la API en caso de que se llegue a ofrecer
-públicamente para evitar usos indeseados del sistema.
-- **Optimizar** la forma de introducir objetos en el sistema para que al usuario le sea cómodo
-y rápido, y que a la vez el sistema siga siendo capaz de aplicar las optimizaciones, detecciones
-o recomendaciones apropiadas a los mismos.
-- **Ofrecer** un tutorial o manual de usuario sobre el funcionamiento de la aplicación.
-
-Queda **FUERA** el análisis de un modelo de negocio para la solución implementada, 
-el desarrollo de un sistema de cuentas premium/free así como crear un enfoque de uso atractivo
-centrándose en empresas de mudanza o de gestores de almacenes, y un sistema de 
-comunicaciones entre los distintos perfiles de la unidad familiar o los terceros con acceso
+Queda fuera de la solución de cara al TFG la creación de un enfoque de uso atractivo centrándose en empresas de mudanza (check lists) o de gestores de almacenes (personalización de la interfaz para su reventa por teceros), y
+un sistema de comunicaciones propio entre los distintos perfiles de la unidad familiar o los terceros con acceso
 a sus objetos.
 
 ## Restricciones del proyecto
 - El proyecto ha de ser terminado antes de julio de 2017.
 - La implementación de la solución en la parte del back-end tiene que estar escrita 
 en Java.
-- No se puede realizar ninguna modificación a los objetos o almacenes familiares físicos.
+- El control de la localización es solo virtual, es decir, no se puede realizar ninguna modificación a los objetos o almacenes familiares físicos.
 - La solución no debe requerir de un gran número de recursos computacionales.
 - La solución no puede asumir nunca que la información existente en el sistema, de los objetos y 
 almacenes familiares, pertenecientes a una unidad familiar es actualizada al 100% constantemente.
