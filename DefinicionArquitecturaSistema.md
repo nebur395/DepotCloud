@@ -18,11 +18,13 @@ de software (se identifican todos los interfaces, componentes, middleware y base
 Tomando como referencia la vista general:
 * Describir cada uno de los componentes de hardware del sistema
 * Los interfaces físicos entre ellos en los escenarios de implementación previstos (por ejemplo, _el smartphone y el servidor se conectan a través de una línea de datos móviles_)
+
 Identifica potenciales riesgos y problemas de derivados de desviarse de este plan (si los hubiera)
 ### Componentes de software y sus relaciones
 Tomando como referencia la vista general:
 * Describir cada uno de los componentes de software del sistema en términos de su propósito.
 * Describir cómo se relacionan entre si en los escenarios de implementación previstos (por ejemplo, _el componente A y el B se relacionan mediante un API Web_)
+
 Identifica potenciales riesgos y problemas de derivados de desviarse de este plan (si los hubiera)
 ### Requisitos no funcionales
 Describe qué requisitos no funcionales son importantes para el proyecto y cómo la arquitectura descrita les da soporte. 
