@@ -61,7 +61,7 @@ La solución debe:
 - Permitir que cualquier miembro de una unidad familiar pueda registrar que un determinado objeto se situa en un determinado almacén junto con un título, una foto y una breve descripción que permita que para que cualquier miembro de la unidad familiar pueda identificarlo.
 - Permitir que cualquier miembro de una unidad familiar pueda actualizar el estado del objeto, ya sea tras moverlo de un almacén a otro, o cuando hay interés en registrar cualquier evento mediante una nota o una foto. 
 - Permitir que cualquier miembro de una unidad familiar retire un objeto del control del sistema de almacenes.
-- Permitir notificar en tiempo real a todos los miembros de la unidad familiar cualquier accion realizada sobre los almacenes y los objetos almacenados.
+- Permitir notificar en tiempo real a todos los miembros de la unidad familiar cualquier acción realizada sobre los almacenes y los objetos almacenados.
 - Ofrecer diversos informes sobre el estado de cada uno de los almacenes y de los objetos contenidos.
 - Ayudar a localizar un objeto entre todos los almacenes mediante un búsqueda de texto y mostrando la descripción, las fotos y la localización de los que coincidan con el texto buscado.
 - Cumplir todos los aspectos legales necesarios para una solución de este tipo, en particular los referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
@@ -75,8 +75,8 @@ La solución debería:
 - Tener un modelo de datos más rico del objeto almacenado (p. ej., datos de garantía, fecha de caducidad, valor, etc.).
 - Notificar al usuario de forma automática algunas recomendaciones que pueden implicar la realización de acciones en relación con algunos objetos (p.ej., *"El objeto X ya no está en garantía, puedes dejar de guardar su caja"*).
 - Notificar al usuario que un objeto debería estar en una almacén más accesible dependiendo de su actividad (p.ej., *"El objeto X almacenado en tu vivienda secundaria tiene mucha actividad, prueba a moverlo a tu vivienda principal para facilitar su uso"*).
-- Tener un sistema de roles que controlar el acceso a una determinada información sobre un objeto o almacen en función del rol.
-- Permitir delegar ciertas operaciones de creación, modificación, borrado y búsqueda a una persona ajena a la unidad familiar.
+- Tener un tipo de usuario que sea administrador. No podrán registrarse nuevos usuarios administradores, por tanto tiene que haber mínimo una cuenta ya introducida de serie en el sistema.
+- El usuario administrador tiene que poder buscar y dar de baja en el sistema a unidades familiares.
 - Ofrecer mediante una API acceso a los servicios principales del sistema para que empresas o sistemas automáticos puedan hacer uso de ellas.
 - Tener un API bien documentada y testeada para evitar usos indeseados del sistema.
 
@@ -85,14 +85,17 @@ La solución podría:
 - Optimizar la forma de introducir objetos en el sistema para que al usuario le sea cómodo y rápido, pudiendo reconocer múltiples objetos almacenados con una única foto.
 - Compartir información utilizando sistemas de mensajería de terceros.
 
-Queda fuera de la solución de cara al TFG la creación de un enfoque de uso atractivo centrándose en empresas de mudanza (check lists) o de gestores de almacenes (personalización de la interfaz para su reventa por teceros), y
-un sistema de comunicaciones propio entre los distintos perfiles de la unidad familiar o los terceros con acceso
+Queda fuera de la solución de cara al TFG:
+- Tener un sistema de roles que controlar el acceso a una determinada información sobre un objeto o almacen en función del rol.
+- Permitir delegar ciertas operaciones de creación, modificación, borrado y búsqueda a una persona ajena a la unidad familiar.
+- Creación de un enfoque de uso atractivo centrándose en empresas de mudanza (check lists) o de gestores de almacenes (personalización de la interfaz para su reventa por teceros)
+- Un sistema de comunicaciones propio entre los distintos perfiles de la unidad familiar o los terceros con acceso.
 a sus objetos.
 
 ## Restricciones del proyecto
 - El proyecto ha de ser terminado antes de julio de 2017.
 - La implementación de la solución en la parte del back-end tiene que estar escrita 
-en Java.
+en Java o Javascript.
 - El control de la localización es solo virtual, es decir, no se puede realizar ninguna modificación a los objetos o almacenes familiares físicos.
 - La solución no debe requerir de un gran número de recursos computacionales.
 - La solución no puede asumir nunca que la información existente en el sistema, de los objetos y 
@@ -135,5 +138,3 @@ aplicación sea intuitiva para personas no familiarizadas con las tecnologías.
 * El proyecto debe poderse realizar por un alumno durante un plazo de 4 meses.
 * Los recursos inicialmente comprometidos para este proyecto son un alumno durante 350 horas y un director durante 
 35 horas.
-
-## Implicados
