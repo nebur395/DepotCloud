@@ -4,7 +4,7 @@
   * Hardware/Infraestructure
   * Arquitectura de Software
 * Describir en entorno de despliegue de la solución y (si es diferente) el entorno de desarrollo.
-* Proporcionar una descripcin general de la evolución prevista de áreas de:
+* Proporcionar una descripción general de la evolución prevista de áreas de:
   * Hardware (infraestructura, almacenamiento, etc.)
   * Software (componentes, interacciones principales, etc.)
   * Seguridad (polticas de acceso, control de acceso, etc.)
