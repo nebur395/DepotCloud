@@ -1,10 +1,10 @@
 # Definición de la arquitectura del sistema
 ## Propósito del documento
-* Proporcionar un entendimiento común de las arquitecturas técnicas que van a ser usadas durante el desarrollo y despliegue de la solucin incluyendo:
+* Proporcionar un entendimiento común de las arquitecturas técnicas que van a ser usadas durante el desarrollo y despliegue de la solución incluyendo:
   * Hardware/Infraestructure
   * Arquitectura de Software
 * Describir en entorno de despliegue de la solución y (si es diferente) el entorno de desarrollo.
-* Proporcionar una descripcin general de la evolucin prevista de aras de:
+* Proporcionar una descripcin general de la evolución prevista de áreas de:
   * Hardware (infraestructura, almacenamiento, etc.)
   * Software (componentes, interacciones principales, etc.)
   * Seguridad (polticas de acceso, control de acceso, etc.)
