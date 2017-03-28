@@ -33,14 +33,14 @@ Su importancia de cara al proyecto puede graduarse de forma parecida al alcance 
 
 | Requisito no funcional | Prioridad | Cómo es apoyado por la arquitectura |
 | ---------------------- | --------- | ----------- |
-| Usabilidad | | Aspectos especficos de usabilidad (usuarios con problemas de visión, uso en lugares poco iluminados, etc. )    
-| Rendimiento | | ¿Qué tiempo de respuesta debe tener la aplicación? (y preguntas similares) 
-| Capacidad | | ¿Qué numero de usuarios simultáneos va a tener el sistema? ¿Qué volumen de datos van a ser transmitidos?
-| Escalabilidad | | ¿Cómo se va a acomodar la arquitectura a futuros aumentos de escala?
-| Seguridad | | ¿Qué requisitos de seguridad va a tener la solución? 
-| Disponibilidad | | ¿Cuándo se va a utilizar la aplicación? ¿Qué momentos pueden ser críticos?
-| Resilencia | | ¿Cómo se puede asegurar la disponibilidad? ¿Cómo se tratan los fallos para que no produzcan pérdida de datos?
-| Recuperación | | ¿Cómo se recupera el sistema tras un desastre?
+| Usabilidad | Alta | El sistema debe someterse a la técnica KLM, y algunas métricas probadas con posibles usuarios finales. Los tiempos analizados resultantes con KLM de las actividades principales deberían ser inferiores a 2 minutos. Podría tener una forma rápida para traducir la aplicación. Quedan fuera por ahora aspectos de accesibilidad.
+| Rendimiento | Media | Cualquier tiempo de respuesta de la aplicación no debería superar el minuto.
+| Capacidad | Media | ¿Qué numero de usuarios simultáneos va a tener el sistema? ¿Qué volumen de datos van a ser transmitidos? Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
+| Escalabilidad | Media | ¿Cómo se va a acomodar la arquitectura a futuros aumentos de escala?
+| Seguridad | Media | ¿Qué requisitos de seguridad va a tener la solución? 
+| Disponibilidad | Media | ¿Cuándo se va a utilizar la aplicación? ¿Qué momentos pueden ser críticos?
+| Resilencia | Baja | ¿Cómo se puede asegurar la disponibilidad? ¿Cómo se tratan los fallos para que no produzcan pérdida de datos?
+| Recuperación | Baja | ¿Cómo se recupera el sistema tras un desastre?
 ### Mantenibilidad
 Sobre la base de una expectativa de vida del sistema hay que identificar qué aspectos se han tenido en cuenta en la arquitectura
 para asegurar que la solución cumpla dicha expectativa.
