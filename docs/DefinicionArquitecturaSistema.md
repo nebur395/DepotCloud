@@ -21,8 +21,8 @@ Tomando como referencia la vista general:
 
 Identifica potenciales riesgos y problemas de derivados de desviarse de este plan (si los hubiera)
 ### Componentes de software y sus relaciones
-
-[[images/CyC.png]]
+ 
+![CyC](images/CyC.png)
 
 El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se realiza mediante WebSockets para actualizarlo en tiempo real.
 
