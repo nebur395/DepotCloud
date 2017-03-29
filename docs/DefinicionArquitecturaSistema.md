@@ -24,7 +24,7 @@ Identifica potenciales riesgos y problemas de derivados de desviarse de este pla
  
 ![CyC](images/CyC.png)
 
-El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se realiza mediante WebSockets para actualizarlo en tiempo real.
+El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se comunica mediante WebSockets para actualizarlo en tiempo real.
 
 Cada uno de los componentes Services se corresponden a la API pública de interfaces REST conteniendo los conjuntos de funcionalidades correspondientes a cada uno de ellos.
 
