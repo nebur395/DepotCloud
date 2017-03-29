@@ -21,11 +21,15 @@ Tomando como referencia la vista general:
 
 Identifica potenciales riesgos y problemas de derivados de desviarse de este plan (si los hubiera)
 ### Componentes de software y sus relaciones
-Tomando como referencia la vista general:
-* Describir cada uno de los componentes de software del sistema en términos de su propósito.
-* Describir cómo se relacionan entre si en los escenarios de implementación previstos (por ejemplo, _el componente A y el B se relacionan mediante un API Web_)
 
-Identifica potenciales riesgos y problemas de derivados de desviarse de este plan (si los hubiera)
+[[images/CyC.png]]
+
+El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se realiza mediante WebSockets para actualizarlo en tiempo real.
+
+Cada uno de los componentes Services se corresponden a la API pública de interfaces REST conteniendo los conjuntos de funcionalidades correspondientes a cada uno de ellos.
+
+Por otro lado se encuentran los Repository correspondientes para acceder a la base de datos correspondiente.
+
 ### Requisitos no funcionales
 Describe qué requisitos no funcionales son importantes para el proyecto y cómo la arquitectura descrita les da soporte. 
 Su importancia de cara al proyecto puede graduarse de forma parecida al alcance del documento de términos de referencia 
