@@ -44,16 +44,20 @@ Su importancia de cara al proyecto puede graduarse de forma parecida al alcance 
 | Requisito no funcional | Prioridad | Cómo es apoyado por la arquitectura |
 | ---------------------- | --------- | ----------- |
 | Usabilidad | Alta | El sistema debe someterse a la técnica KLM, y algunas métricas probadas con posibles usuarios finales. Los tiempos analizados resultantes con KLM de las actividades principales deberían ser inferiores a 2 minutos. Podría tener una forma rápida para traducir la aplicación. Quedan fuera por ahora aspectos de accesibilidad.
-| Rendimiento | Media | Cualquier tiempo de respuesta de la aplicación no debería superar el minuto.
-| Capacidad | Media | ¿Qué numero de usuarios simultáneos va a tener el sistema? ¿Qué volumen de datos van a ser transmitidos? Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
-| Escalabilidad | Media | ¿Cómo se va a acomodar la arquitectura a futuros aumentos de escala?
-| Seguridad | Media | ¿Qué requisitos de seguridad va a tener la solución? 
-| Disponibilidad | Media | ¿Cuándo se va a utilizar la aplicación? ¿Qué momentos pueden ser críticos?
-| Resilencia | Baja | ¿Cómo se puede asegurar la disponibilidad? ¿Cómo se tratan los fallos para que no produzcan pérdida de datos?
-| Recuperación | Baja | ¿Cómo se recupera el sistema tras un desastre?
+| Rendimiento | Media | Cualquier tiempo de respuesta de la aplición no debería tener tiempos de respuesta altos. Esto se quiere conseguir gracias a la implementación de una arquitectura RESTful.
+| Capacidad | Media | Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación.
+| Escalabilidad | Alta | El sistema debe plantear una arquitectura que sea mínimamente escabale, así como dejar descrita una documentación de qué debería de hacerse en el futuro para conseguirlo. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
+| Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs, aunque la implementación queda fuera del alcance.
+| Disponibilidad | Media | Se va a seguir una metología de integración continua para intentar garantizar que todos los despliegues del sistema se hagan de forma automática y reducir el tiempo que pueda pasar al sistema desconectado debido a fallos o falta de despliegue automático.
+| Resilencia | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
+| Recuperación | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
 ### Mantenibilidad
-Sobre la base de una expectativa de vida del sistema hay que identificar qué aspectos se han tenido en cuenta en la arquitectura
-para asegurar que la solución cumpla dicha expectativa.
+Se busca un sistema que al menos tenga una vida útil de más de 2 años.  
+
+Con eso en mente, se ha de pensar en un sistema claramente modularizado y organizado, con una buena documentación y un código legible. Para ello, el sistema podría contar con una serie de estándares y definiciones de hecho, así como el uso de algunas herramientas de *Quality Assurance* como SonarQube.
+ 
+Por otro lado, para conseguir una buena documentación de la API de forma mantenible, el sistema podría hacer uso de la herramienta *swagger*.
+
 ## Entornos técnicos
 ### Plataforma de desarrollo
 Hay que identificar todas las herramientas de software que se van a utilizar durante el desarrollo. Esta lista es extensa ya que hay
