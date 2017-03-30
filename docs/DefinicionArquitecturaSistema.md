@@ -10,25 +10,31 @@
   * Seguridad (polticas de acceso, control de acceso, etc.)
 ## Arquitectura del sistema
 ### Vista general
-Diagrama de despliegue que identifique claramente todos los componentes de hardware de la arquitectura y que muestre cómo la aplicación se despliega sobre dicho hardware.
-Debe verificarse que es completa en términos de hardware (se identifican todas las plataformas de hardware y las relaciones entre ellas) y
-de software (se identifican todos los interfaces, componentes, middleware y bases de datos) que se desarrollan en el proyecto 
-(**no incluir** componentes reusables que el proyecto puedeo producir o reutilizar).
-### Componentes de hardware y sus relaciones
-Tomando como referencia la vista general:
-* Describir cada uno de los componentes de hardware del sistema
-* Los interfaces físicos entre ellos en los escenarios de implementación previstos (por ejemplo, _el smartphone y el servidor se conectan a través de una línea de datos móviles_)
+**Diagrama de despliegue**
+![CyC](images/Deployment.png)
 
-Identifica potenciales riesgos y problemas de derivados de desviarse de este plan (si los hubiera)
-### Componentes de software y sus relaciones
- 
+**Diagrama de Componentes y Conectores**
 ![CyC](images/CyC.png)
 
-El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se comunica mediante WebSockets para actualizarlo en tiempo real.
+### Componentes de hardware y sus relaciones
+**Catálogo de la vista**  
+Siguiendo un orden de flujo de interacción se encuentran los siguientes componentes:
+* El cliente, componiéndose de un dispositivo móvil que puede ser iOS y Android. Incluye el navegador web Cordova para conseguir un funcionamiento híbrido, el cual además es el encargado de generar las peticiones HTTP e interpretar la aplicación cliente y las respuestas del servidor.
+* El servidor web, componiéndose del entorno de ejecución Node.js/Apache Tomcat en el cual se despliega Spring/Express, una aplicación framework que actúa como middleware, conteniendo a su vez la lógica de la aplicación. La conexión del equipo se realiza en la capa de transporte con la máquina que aloja el servidor vía TCP/IP y en la capa de aplicación entre el navegador y el servidor vía HTTP.
+* El servidor de base de datos, el cual se conecta con la aplicación del servidor mediante un DB Driver, en este caso Mongoose/JDBC.
 
-Cada uno de los componentes Services se corresponden a la API pública de interfaces REST conteniendo los conjuntos de funcionalidades correspondientes a cada uno de ellos.
+**Exposición de razones**  
 
-Por otro lado se encuentran los Repository correspondientes para acceder a la base de datos correspondiente.
+
+### Componentes de software y sus relaciones
+**Catálogo de la visata**  
+* El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se comunica mediante WebSockets para actualizarlo en tiempo real.
+
+Cada uno de los componentes Services se corresponden a la API pública de interfaces REST conteniendo los conjuntos de funcionalidades correspondientes a cada uno de ellos. Todos los componentes Services que se comunican con los Repository lo hacen mediante Mongoose/jdbc.
+
+Por otro lado se encuentran los Repository correspondientes para acceder a la base de datos MongoDB/MySQL.
+
+**Exposición de razones**
 
 ### Requisitos no funcionales
 Describe qué requisitos no funcionales son importantes para el proyecto y cómo la arquitectura descrita les da soporte. 
