@@ -36,7 +36,7 @@ Cada uno de los componentes Services se corresponden a la API pública de interf
 
 Por otro lado se encuentran los Repository correspondientes para acceder a la base de datos MongoDB.
 
-**Exposición de razones**
+**Exposición de razones**  
 La arquitectura presentada de los componentes software se ha decidido que siga los principios de los servicios web RESTful. Esta decisión de diseño se ha tomado en base al objetivo de querer conseguir un sistema que pueda escalar gracias a las características de estos servicios, y porque se adaptaba bien a una arquitectura orientada a los recursos web, en vez de a las funcionalidades (para las cuales se podría hacer uso de otros servicios web como SOAP y WISDL).
 
 Es por eso que nos encontramos el servidor dividido en componentes que se identifican como recursos web que pueden ser accedidos e identificados vía URIs. Además, puesto que nos encontramos con una base de datos no relacional, se han decidido crear unos esquemas de objetos con el framework Mongoose, para mantener un mínimo de organización esquemática en la base de datos, los cuales son usados por los recursos RESTful del servidor para acceder a la base de datos.
