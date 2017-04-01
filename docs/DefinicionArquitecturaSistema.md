@@ -68,7 +68,7 @@ Por otro lado, para conseguir una buena documentación de la API de forma manten
 Las herramientas de software que se van a utilizar durante el desarrollo de la aplicación se encuentran en la siguiente lista:
 * El entorno de ejecución [Node.js](https://nodejs.org/en/)
 * La base de datos [MongoDB](https://www.mongodb.com/)
-* El framework [Ionic]https://ionicframework.com/docs/api/) junto con el navegador web Cordova.
+* El framework [Ionic](https://ionicframework.com/docs/api/) junto con el navegador web Cordova.
 * Un ID con capacidad para debuggear entornos javascript, en este caso [IntelliJ IDEA](https://www.jetbrains.com/idea/) o [WebStorm](https://www.jetbrains.com/webstorm/).
 * La herramienta para la documentación automática de la API: [Swagger](http://swagger.io/).
 * La herramienta [SonarQube](https://www.sonarqube.org/)  para *Quality Assurance*.
