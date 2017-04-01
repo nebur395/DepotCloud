@@ -24,7 +24,9 @@ Siguiendo un orden de flujo de interacción se encuentran los siguientes compone
 * El servidor de base de datos, el cual se conecta con la aplicación del servidor mediante un DB Driver, en este caso Mongoose.
 
 **Exposición de razones**  
+Se ha tomado la decisión de escoger la tecnología Cordova para el navegador web del dispositivo móvil en la parte del cliente. Las razones para ello son porque de esa forma, se permite tener una arquitectura web cliente-servidor, en la cual además, el cliente puede utilizar utilidades nativas (como la cámara) de los dispositivos siendo así una aplicación híbrida que funciona tanto en iOS como en Andriod, e incluso en desktop.
 
+Además, se ha decidido utilizar el stack MEAN para garantizar que todos los componentes se puedan integrar correctamente pudiendo ofrecer algunos aspectos para ayudar a la escalabilidad del sistema dando un mejor soporte a la arquitectura software detallada en la siguiente sección. De esta forma tenemos un servidor con un entorno de ejecución de Node.js con la lógica del servidor de de la aplicación, la cual se puede replicar fácilmente (puesto que está contenida en un nodo específico) de forma horizontal en distintos servidores cuando se lleguen a ciertos umbrales en la capacidad del sistema. A su vez, nos encontramos con un nodo aparte conteniendo una base de datos no relacional (MongoDB), la cual nos puede ayudar también a la hora de gesetionar la escalabilidad del sistema gracias a su sistema automático de *sharding*.
 
 ### Componentes de software y sus relaciones
 **Catálogo de la visata**  
@@ -35,6 +37,9 @@ Cada uno de los componentes Services se corresponden a la API pública de interf
 Por otro lado se encuentran los Repository correspondientes para acceder a la base de datos MongoDB.
 
 **Exposición de razones**
+La arquitectura presentada de los componentes software se ha decidido que siga los principios de los servicios web RESTful. Esta decisión de diseño se ha tomado en base al objetivo de querer conseguir un sistema que pueda escalar gracias a las características de estos servicios, y porque se adaptaba bien a una arquitectura orientada a los recursos web, en vez de a las funcionalidades (para las cuales se podría hacer uso de otros servicios web como SOAP y WISDL).
+
+Es por eso que nos encontramos el servidor dividido en componentes que se identifican como recursos web que pueden ser accedidos e identificados vía URIs. Además, puesto que nos encontramos con una base de datos no relacional, se han decidido crear unos esquemas de objetos con el framework Mongoose, para mantener un mínimo de organización esquemática en la base de datos, los cuales son usados por los recursos RESTful del servidor para acceder a la base de datos.
 
 ### Requisitos no funcionales
 Describe qué requisitos no funcionales son importantes para el proyecto y cómo la arquitectura descrita les da soporte. 
