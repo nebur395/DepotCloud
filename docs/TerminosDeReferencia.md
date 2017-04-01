@@ -93,11 +93,11 @@ Queda fuera de la solución de cara al TFG:
 a sus objetos.
 
 ## Restricciones del proyecto
-- El proyecto ha de ser terminado antes de julio de 2017.
+- El proyecto ha de ser terminado antes de septiembre de 2017.
 - La implementación de la solución en la parte del back-end tiene que estar escrita 
 en Java o Javascript.
 - El control de la localización es solo virtual, es decir, no se puede realizar ninguna modificación a los objetos o almacenes familiares físicos.
-- La solución no debe requerir de un gran número de recursos computacionales.
+- La solución en el cliente no debe requerir de un gran número de recursos computacionales.
 - La solución no puede asumir nunca que la información existente en el sistema, de los objetos y 
 almacenes familiares, pertenecientes a una unidad familiar es actualizada al 100% constantemente.
  
@@ -112,20 +112,20 @@ almacenes familiares, pertenecientes a una unidad familiar es actualizada al 100
 feedback de diversos usuarios como para conseguir una interfaz usable.
 - Se requiere de asesoramiento legal debido a la falta de conocimiento y formación 
 en aspectos legales referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
-- El almacenamiento se podrá realizar sobre una base de datos SQL. 
-- El back-end se puede implementar utilizando la tecnología Spring. 
-- El front-end  se puede implementar utilizando la tecnología AngularJS y el uso
-de algunas librerías como Bootstrap o W3CSS.
+- El almacenamiento se podrá realizar sobre una base de datos NoSQL. 
+- El back-end se puede implementar utilizando la tecnología Spring o Express. 
+- El front-end  se puede implementar utilizando la tecnología Ionic.
 
 ## Riesgos del proyecto
 
 - La solución resultante no cumple con algunos aspectos de  la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
-- La solución resultante no se consigue que sea totalmente responsive.
+- La solución resultante no se consigue que sea totalmente responsive e híbrida entre los distintos dispositivos móviles.
 - La solución resultante posee problemas de escalabilidad.
 - No se consigue, ni mediante la interfaz, ni mediante el manual de usuario, que la 
 aplicación sea intuitiva para personas no familiarizadas con las tecnologías.
 - Aparición de posibles competidores.
 - La solución resultante no tenga la calidad mínima para evolucionar.
+- No se domina lo suficiente la tecnología Javascript con Express como para que se tenga que migrar el proyecto a Java con Spring en un estado avanzado del desarrollo de la aplicación.
 
 ## Recursos e instalaciones necesarias
 
@@ -134,7 +134,7 @@ aplicación sea intuitiva para personas no familiarizadas con las tecnologías.
 
 ## Plazos y costes
 
-* El plazo de finalización de este proyecto es junio 2017.
+* El plazo de finalización de este proyecto es septiembre 2017.
 * El proyecto debe poderse realizar por un alumno durante un plazo de 4 meses.
 * Los recursos inicialmente comprometidos para este proyecto son un alumno durante 350 horas y un director durante 
 35 horas.
