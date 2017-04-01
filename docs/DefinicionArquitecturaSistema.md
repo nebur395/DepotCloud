@@ -65,7 +65,17 @@ Por otro lado, para conseguir una buena documentación de la API de forma manten
 
 ## Entornos técnicos
 ### Plataforma de desarrollo
-Hay que identificar todas las herramientas de software que se van a utilizar durante el desarrollo. Esta lista es extensa ya que hay
-que incluir compiladores, entornos de desarrollo, sistemas de gestión de configuraciones, herramientas de pruebas, etc.
+Las herramientas de software que se van a utilizar durante el desarrollo de la aplicación se encuentran en la siguiente lista:
+* El entorno de ejecución [Node.js](https://nodejs.org/en/)
+* La base de datos [MongoDB](https://www.mongodb.com/)
+* El framework [Ionic]https://ionicframework.com/docs/api/) junto con el navegador web Cordova.
+* Un ID con capacidad para debuggear entornos javascript, en este caso [IntelliJ IDEA](https://www.jetbrains.com/idea/) o [WebStorm](https://www.jetbrains.com/webstorm/).
+* La herramienta para la documentación automática de la API: [Swagger](http://swagger.io/).
+* La herramienta [SonarQube](https://www.sonarqube.org/)  para *Quality Assurance*.
+* La aplicación web [GitHub](https://github.com/) junto con [Git](https://git-scm.com/downloads) para el control de versiones y la gestión de configuraciones.
+* La herramienta de pruebas [Protractor](http://www.protractortest.org/#/) para los test de sistema y aceptación.
+* La herramienta de pruebas [Mocha](https://mochajs.org/) para los test unitarios.
+* [TravisCI](https://travis-ci.com/) junto con [Codecov](https://codecov.io/gh) para facilitar un entorno de integración continua con GitHub.
+
 ### Plataforma de destino
 Hay que identificar todo el hardware necesario así como todas las herramientas necesarias para su administración y mantenimiento.
