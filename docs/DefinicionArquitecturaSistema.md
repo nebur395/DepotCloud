@@ -78,4 +78,9 @@ Las herramientas de software que se van a utilizar durante el desarrollo de la a
 * [TravisCI](https://travis-ci.com/) junto con [Codecov](https://codecov.io/gh) para facilitar un entorno de integración continua con GitHub.
 
 ### Plataforma de destino
-Hay que identificar todo el hardware necesario así como todas las herramientas necesarias para su administración y mantenimiento.
+El hardware necesarioasí como todas las herramientas necesarias para su administración y mantenimiento es el siguiente:
+* Dispsitivo móvil Android 6.0 + con las opciones de desarrollador activadas para debuggear en un entorno de cliente real.
+* Mínimo un ordenador con capacidad para lanzar un entorno de desarrollo como IntelliJ IDEA o WebStorm para poder desarrollar. Además, ha de contar con un navegador web para el desarrollo de las funcionalidades que no requieran de aspectos nativos en dispositivos móviles.
+* Mínimo un ordenador con capacidad de atender al menos a 3 clientes simultáneamente para tener corriendo el servidor con la base de datos simulando un entorno de despliegue real.
+
+*Nota:* El ordenador a utilizar puede ser el mismo en los dos últimos casos mientras tenga la capacidad para cumplir ambas.
