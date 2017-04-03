@@ -113,8 +113,8 @@ feedback de diversos usuarios como para conseguir una interfaz usable.
 - Se requiere de asesoramiento legal debido a la falta de conocimiento y formación 
 en aspectos legales referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
 - El almacenamiento se podrá realizar sobre una base de datos NoSQL. 
-- El back-end se puede implementar utilizando la tecnología Spring o Express. 
-- El front-end  se puede implementar utilizando la tecnología Ionic.
+- El back-end se puede implementar utilizando la tecnología Express. 
+- El front-end  se puede implementar utilizando la tecnología Ionic2.
 
 ## Riesgos del proyecto
 
