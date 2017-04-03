@@ -126,6 +126,7 @@ aplicación sea intuitiva para personas no familiarizadas con las tecnologías.
 - Aparición de posibles competidores.
 - La solución resultante no tenga la calidad mínima para evolucionar.
 - No se domina lo suficiente la tecnología Javascript con Express como para que se tenga que migrar el proyecto a Java con Spring en un estado avanzado del desarrollo de la aplicación.
+- No se domina lo suficiente la tecnología Ionic2 con Angular2 como para que se tenga que migrar el proyecto a Ionic1 con Angular1 en un estado avanzado del desarrollo de la aplicación.
 
 ## Recursos e instalaciones necesarias
 
