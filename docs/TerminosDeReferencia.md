@@ -112,7 +112,7 @@ almacenes familiares, pertenecientes a una unidad familiar es actualizada al 100
 feedback de diversos usuarios como para conseguir una interfaz usable.
 - Se requiere de asesoramiento legal debido a la falta de conocimiento y formación 
 en aspectos legales referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
-- El almacenamiento se podrá realizar sobre una base de datos NoSQL. 
+- El almacenamiento se podrá realizar sobre una base de datos documental. 
 - El back-end se puede implementar utilizando la tecnología Express. 
 - El front-end  se puede implementar utilizando la tecnología Ionic2.
 
