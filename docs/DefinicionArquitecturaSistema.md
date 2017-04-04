@@ -29,7 +29,7 @@ Se ha tomado la decisión de escoger la tecnología Cordova para el navegador we
 Además, se ha decidido utilizar el stack MEAN para garantizar que todos los componentes se puedan integrar correctamente pudiendo ofrecer algunos aspectos para ayudar a la escalabilidad del sistema dando un mejor soporte a la arquitectura software detallada en la siguiente sección. De esta forma tenemos un servidor con un entorno de ejecución de Node.js con la lógica del servidor de de la aplicación, la cual se puede replicar fácilmente (puesto que está contenida en un nodo específico) de forma horizontal en distintos servidores cuando se lleguen a ciertos umbrales en la capacidad del sistema. A su vez, nos encontramos con un nodo aparte conteniendo una base de datos no relacional (MongoDB), la cual nos puede ayudar también a la hora de gesetionar la escalabilidad del sistema gracias a su sistema automático de *sharding*.
 
 ### Componentes de software y sus relaciones
-**Catálogo de la visata**  
+**Catálogo de la vista**  
 * El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se comunica mediante WebSockets para actualizarlo en tiempo real.
 
 Cada uno de los componentes Services se corresponden a la API pública de interfaces REST conteniendo los conjuntos de funcionalidades correspondientes a cada uno de ellos. Todos los componentes Services que se comunican con los Repository lo hacen mediante Mongoose.
