@@ -19,18 +19,27 @@
 ### Componentes de hardware y sus relaciones
 **Catálogo de la vista**  
 Siguiendo un orden de flujo de interacción se encuentran los siguientes componentes:
-* El cliente, componiéndose de un dispositivo móvil que puede ser iOS y Android. Incluye el navegador web Cordova para conseguir un funcionamiento híbrido, el cual además es el encargado de generar las peticiones HTTP e interpretar la aplicación cliente y las respuestas del servidor.
-* El servidor web, componiéndose del entorno de ejecución Node.js en el cual se despliega Express, una aplicación framework que actúa como middleware, conteniendo a su vez la lógica de la aplicación. La conexión se realiza en la capa de aplicación entre el navegador y el servidor vía HTTP.
-* El servidor de base de datos, el cual se conecta con la aplicación del servidor mediante un DB Driver, en este caso Mongoose.
+* El cliente Android, componiéndose de un dispositivo móvil que puede ser iOS y Android. Incluye el navegador web Cordova para conseguir un funcionamiento híbrido. Este nodo se encarga de contener el cliente de la aplicación para usuarios **no** administradores, comunicándose con los protocolos HTTP sobre Wi-Fi con el servidor.
+* El cliente Desktop, que se compone de un dispositivo desktop, en el cual se incluye un navegador web. Este nodo se encarga de contener el cliente para usuarios de tipo administrador comunicándose con los protocolos HTTP sobre TCP/IP con el servidor.
+* El servidor web, componiéndose del entorno de ejecución Node.js en el cual se despliega Express, una aplicación framework que actúa como middleware, conteniendo a su vez la lógica de la aplicación.
+* El servidor de base de datos documental MongoDB, el cual se conecta con la aplicación del servidor mediante un DB Driver, en este caso Mongoose.
 
-**Exposición de razones**  
-Se ha tomado la decisión de escoger la tecnología Cordova para el navegador web del dispositivo móvil en la parte del cliente. Las razones para ello son porque de esa forma, se permite tener una arquitectura web cliente-servidor, en la cual además, el cliente puede utilizar utilidades nativas (como la cámara) de los dispositivos siendo así una aplicación híbrida que funciona tanto en iOS como en Andriod, e incluso en desktop.
+**Exposición de razones**
+Puesto que la aplicación va a contar con dos tipos de clientes diferentes, uno para dispositivos móviles orientado a usuarios comunes, y otro para dispositivos desktop orientado a usuarios administradores, se presentan dos nodos independientes actuando como clientes del servidor web con una arquitectura web cliente-servidor.
+
+Se ha tomado la decisión de escoger la tecnología Cordova para el navegador web del dispositivo móvil en la parte del cliente. Las razones para ello son porque de esa forma, el cliente puede utilizar utilidades nativas (como la cámara) de los dispositivos siendo así una aplicación híbrida que funciona tanto en iOS como en Andriod, e incluso en desktop.
 
 Además, se ha decidido utilizar el stack MEAN para garantizar que todos los componentes se puedan integrar correctamente pudiendo ofrecer algunos aspectos para ayudar a la escalabilidad del sistema dando un mejor soporte a la arquitectura software detallada en la siguiente sección. De esta forma tenemos un servidor con un entorno de ejecución de Node.js con la lógica del servidor de de la aplicación, la cual se puede replicar fácilmente (puesto que está contenida en un nodo específico) de forma horizontal en distintos servidores cuando se lleguen a ciertos umbrales en la capacidad del sistema. A su vez, nos encontramos con un nodo aparte conteniendo una base de datos no relacional (MongoDB), la cual nos puede ayudar también a la hora de gesetionar la escalabilidad del sistema gracias a su sistema automático de *sharding*.
 
 ### Componentes de software y sus relaciones
 **Catálogo de la vista**  
-* El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se comunica mediante WebSockets para actualizarlo en tiempo real.
+* El componente DepotCloudApp es el cliente para dispositivos móviles de la aplicación. Contiene todo el cliente desarrollado sobre Ionic2 y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST, salvo con el componente Notifications, que se comunica mediante WebSockets para mandar notificaciones en tiempo real, y con el componente Statistics con el cual no se comunica.
+* El componente DepotCloudAdminApp es el cliente para dispositivos desktop de la aplicación. Contiene todo el cliente desarrollado sobre AngularJS para los usuarios administradores y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST. Este componente solo va a hacer uso de las interfaces RESTful de los componentes User y Statistics.
+* El componente Control Access es el encargado de gestionar el control de acceso al sistema. Este control de accesos se va a realizar con la tecnología [JSON Web Tokens](https://jwt.io/). Solo se puede hacer uso de los componentes habiendo iniciado sesión. Los usuarios administradores solo pueden acceder a los componentes de User y Statistics. Los usuarios normales pueden acceder a todos los componentes salvo Statistics.
+* El componente de Statistics ofrece la interfaz para acceder a las estadísticas que necesita el usuario administrador para visualizar en el cliente.
+* El componente User ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de usuarios.
+* El componente Depot ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de almacenes.
+* El componente DepotObject ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de los objetos que se guardan en los almacenes.
 
 Cada uno de los componentes Services se corresponden a la API pública de interfaces REST conteniendo los conjuntos de funcionalidades correspondientes a cada uno de ellos. Todos los componentes Services que se comunican con los Repository lo hacen mediante Mongoose.
 
