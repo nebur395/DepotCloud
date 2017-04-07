@@ -76,7 +76,9 @@ La solución debería:
 - Notificar al usuario de forma automática algunas recomendaciones que pueden implicar la realización de acciones en relación con algunos objetos (p.ej., *"El objeto X ya no está en garantía, puedes dejar de guardar su caja"*).
 - Notificar al usuario que un objeto debería estar en una almacén más accesible dependiendo de su actividad (p.ej., *"El objeto X almacenado en tu vivienda secundaria tiene mucha actividad, prueba a moverlo a tu vivienda principal para facilitar su uso"*).
 - Tener un tipo de usuario que sea administrador. No podrán registrarse nuevos usuarios administradores, por tanto tiene que haber mínimo una cuenta ya introducida de serie en el sistema.
+- Tener una interfaz de usuario para el administrador que esté pensada para dispositivos desktop.
 - El usuario administrador tiene que poder buscar y dar de baja en el sistema a unidades familiares.
+- El usuario administrador puede ver estadísticas con datos relevantes del sistema.
 - Ofrecer mediante una API acceso a los servicios principales del sistema para que empresas o sistemas automáticos puedan hacer uso de ellas.
 - Tener un API bien documentada y testeada para evitar usos indeseados del sistema.
 
@@ -114,7 +116,7 @@ feedback de diversos usuarios como para conseguir una interfaz usable.
 en aspectos legales referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750).
 - El almacenamiento se podrá realizar sobre una base de datos documental. 
 - El back-end se puede implementar utilizando la tecnología Express. 
-- El front-end  se puede implementar utilizando la tecnología Ionic2.
+- El front-end  se puede implementar utilizando la tecnología Ionic2 y AngularJS.
 
 ## Riesgos del proyecto
 
