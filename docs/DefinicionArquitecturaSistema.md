@@ -62,12 +62,12 @@ Su importancia de cara al proyecto puede graduarse de forma parecida al alcance 
 | Rendimiento | Media | Cualquier tiempo de respuesta de la aplición no debería tener tiempos de respuesta altos. Esto se quiere conseguir gracias a la implementación de una arquitectura RESTful.
 | Capacidad | Media | Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación.
 | Escalabilidad | Alta | El sistema debe plantear una arquitectura que sea mínimamente escabale, así como dejar descrita una documentación de qué debería de hacerse en el futuro para conseguirlo. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
-| Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs, aunque la implementación queda fuera del alcance.
+| Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs.
 | Disponibilidad | Media | Se va a seguir una metología de integración continua para intentar garantizar que todos los despliegues del sistema se hagan de forma automática y reducir el tiempo que pueda pasar al sistema desconectado debido a fallos o falta de despliegue automático.
 | Resilencia | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
 | Recuperación | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
 ### Mantenibilidad
-Se busca un sistema que al menos tenga una vida útil de más de 2 años.  
+Se busca un sistema que al menos tenga una vida útil de más de 2 años para sistemas de Android Marshmallow 6.0.  
 
 Con eso en mente, se ha de pensar en un sistema claramente modularizado y organizado, con una buena documentación y un código legible. Para ello, el sistema podría contar con una serie de estándares y definiciones de hecho, así como el uso de algunas herramientas de *Quality Assurance* como SonarQube.
  
@@ -91,6 +91,6 @@ Las herramientas de software que se van a utilizar durante el desarrollo de la a
 El hardware necesarioasí como todas las herramientas necesarias para su administración y mantenimiento es el siguiente:
 * Dispsitivo móvil Android 6.0 + con las opciones de desarrollador activadas para debuggear en un entorno de cliente real.
 * Mínimo un ordenador con capacidad para lanzar un entorno de desarrollo como IntelliJ IDEA o WebStorm para poder desarrollar. Además, ha de contar con un navegador web para el desarrollo de las funcionalidades que no requieran de aspectos nativos en dispositivos móviles.
-* Mínimo un ordenador con capacidad de atender al menos a 3 clientes simultáneamente para tener corriendo el servidor con la base de datos simulando un entorno de despliegue real.
+* Mínimo un ordenador con capacidad de atender al menos a 100 clientes simultáneamente para tener corriendo el servidor con la base de datos simulando un entorno de despliegue real.
 
 *Nota:* El ordenador a utilizar puede ser el mismo en los dos últimos casos mientras tenga la capacidad para cumplir ambas.
