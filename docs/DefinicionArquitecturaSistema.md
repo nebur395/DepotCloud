@@ -19,22 +19,32 @@
 ### Componentes de hardware y sus relaciones
 **Catálogo de la vista**  
 Siguiendo un orden de flujo de interacción se encuentran los siguientes componentes:
-* El cliente, componiéndose de un dispositivo móvil que puede ser iOS y Android. Incluye el navegador web Cordova para conseguir un funcionamiento híbrido, el cual además es el encargado de generar las peticiones HTTP e interpretar la aplicación cliente y las respuestas del servidor.
-* El servidor web, componiéndose del entorno de ejecución Node.js en el cual se despliega Express, una aplicación framework que actúa como middleware, conteniendo a su vez la lógica de la aplicación. La conexión se realiza en la capa de aplicación entre el navegador y el servidor vía HTTP.
-* El servidor de base de datos, el cual se conecta con la aplicación del servidor mediante un DB Driver, en este caso Mongoose.
+* El cliente Android, componiéndose de un dispositivo móvil que puede ser iOS y Android. Incluye el navegador web Cordova para conseguir un funcionamiento híbrido. Este nodo se encarga de contener el cliente de la aplicación para usuarios **no** administradores, comunicándose con los protocolos HTTP sobre Wi-Fi con el servidor.
+* El cliente Desktop, que se compone de un dispositivo desktop, en el cual se incluye un navegador web. Este nodo se encarga de contener el cliente para usuarios de tipo administrador comunicándose con los protocolos HTTP sobre TCP/IP con el servidor.
+* El servidor web, componiéndose del entorno de ejecución Node.js en el cual se despliega Express, una aplicación framework que actúa como middleware, conteniendo a su vez la lógica de la aplicación.
+* El servidor de base de datos documental MongoDB, el cual se conecta con la aplicación del servidor mediante un DB Driver, en este caso Mongoose.
 
-**Exposición de razones**  
-Se ha tomado la decisión de escoger la tecnología Cordova para el navegador web del dispositivo móvil en la parte del cliente. Las razones para ello son porque de esa forma, se permite tener una arquitectura web cliente-servidor, en la cual además, el cliente puede utilizar utilidades nativas (como la cámara) de los dispositivos siendo así una aplicación híbrida que funciona tanto en iOS como en Andriod, e incluso en desktop.
+**Exposición de razones**
+Puesto que la aplicación va a contar con dos tipos de clientes diferentes, uno para dispositivos móviles orientado a usuarios comunes, y otro para dispositivos desktop orientado a usuarios administradores, se presentan dos nodos independientes actuando como clientes del servidor web con una arquitectura web cliente-servidor.
+
+Se ha tomado la decisión de escoger la tecnología Cordova para el navegador web del dispositivo móvil en la parte del cliente. Las razones para ello son porque de esa forma, el cliente puede utilizar utilidades nativas (como la cámara) de los dispositivos siendo así una aplicación híbrida que funciona tanto en iOS como en Andriod, e incluso en desktop.
 
 Además, se ha decidido utilizar el stack MEAN para garantizar que todos los componentes se puedan integrar correctamente pudiendo ofrecer algunos aspectos para ayudar a la escalabilidad del sistema dando un mejor soporte a la arquitectura software detallada en la siguiente sección. De esta forma tenemos un servidor con un entorno de ejecución de Node.js con la lógica del servidor de de la aplicación, la cual se puede replicar fácilmente (puesto que está contenida en un nodo específico) de forma horizontal en distintos servidores cuando se lleguen a ciertos umbrales en la capacidad del sistema. A su vez, nos encontramos con un nodo aparte conteniendo una base de datos no relacional (MongoDB), la cual nos puede ayudar también a la hora de gesetionar la escalabilidad del sistema gracias a su sistema automático de *sharding*.
 
 ### Componentes de software y sus relaciones
-**Catálogo de la visata**  
-* El componente DepotCloudApp se corresponde al cliente web para móvil de la aplicación. Todas las conexiones que se realizan con los Services se hacen vía API REST salvo con el componente NotificationsService que se comunica mediante WebSockets para actualizarlo en tiempo real.
-
-Cada uno de los componentes Services se corresponden a la API pública de interfaces REST conteniendo los conjuntos de funcionalidades correspondientes a cada uno de ellos. Todos los componentes Services que se comunican con los Repository lo hacen mediante Mongoose.
-
-Por otro lado se encuentran los Repository correspondientes para acceder a la base de datos MongoDB.
+**Catálogo de la vista**  
+* **DepotCloudApp:** Es el cliente para dispositivos móviles de la aplicación. Contiene todo el cliente desarrollado sobre Ionic2 y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST, salvo con el componente Notifications, que se comunica mediante WebSockets para mandar notificaciones en tiempo real, y con el componente Statistics con el cual no se comunica.
+* **DepotCloudAdminApp:** Es el cliente para dispositivos desktop de la aplicación. Contiene todo el cliente desarrollado sobre AngularJS para los usuarios administradores y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST. Este componente solo va a hacer uso de las interfaces RESTful de los componentes User y Statistics.
+* **Control Access:** Es el encargado de gestionar el control de acceso al sistema. Este control de accesos se va a realizar con la tecnología [JSON Web Tokens](https://jwt.io/). Solo se puede hacer uso de los componentes habiendo iniciado sesión. Los usuarios administradores solo pueden acceder a los componentes de User y Statistics. Los usuarios normales pueden acceder a todos los componentes salvo Statistics.
+* **Statistics:** Ofrece la interfaz para acceder a las estadísticas que necesita el usuario administrador para visualizar en el cliente.
+* **User:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de usuarios.
+* **Depot:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de almacenes.
+* **DepotObject:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de los objetos que se guardan en los almacenes.
+* **Dashboard:** Es el componente que ofrece las notificaciones a todos los miembros de la unidad familiar acerca de cualquier acción realizada sobre los almacenes y los objetos almacenados.
+* **Notifications:** Es el componente que se encarga de comunicar cualquier notificación en tiempo real.
+* **Duplicates:** Es el componente que se encarga de detectar mediante reconocimiento de imágenes, objetos duplicados que haya en el sistema. Dicho componente trabaja de forma periódica con el de DepotObject para ir detectando los duplicados y posteriormente notificarlo al usuario mediante el componente de Notifications.
+* **Report Generator:** Es el encargado de realizar los informes y recomendaciones acerca de los objetos almacenados para los usuarios. Es un componente que trabaja de forma periódica con el de DepotObject para detectara cualquier tipo de recomendación o informe que pueda generarse, y comunicarlo mediante el componente Notifications en tiempo real al usuario final.
+* **User Schema, Depot Schema, y DepotObject Schema:** Son los componentes encargados de facilitar schemas para los objetos modelos de usuario, almacén y objeto de almacén que se implementan con el driver Mongoose para el acceso a MongoDB.
 
 **Exposición de razones**  
 La arquitectura presentada de los componentes software se ha decidido que siga los principios de los servicios web RESTful. Esta decisión de diseño se ha tomado en base al objetivo de querer conseguir un sistema que pueda escalar gracias a las características de estos servicios, y porque se adaptaba bien a una arquitectura orientada a los recursos web, en vez de a las funcionalidades (para las cuales se podría hacer uso de otros servicios web como SOAP y WISDL).
@@ -48,16 +58,16 @@ Su importancia de cara al proyecto puede graduarse de forma parecida al alcance 
 
 | Requisito no funcional | Prioridad | Cómo es apoyado por la arquitectura |
 | ---------------------- | --------- | ----------- |
-| Usabilidad | Alta | El sistema debe someterse a la técnica KLM, y algunas métricas probadas con posibles usuarios finales. Los tiempos analizados resultantes con KLM de las actividades principales deberían ser inferiores a 2 minutos. Podría tener una forma rápida para traducir la aplicación. Quedan fuera por ahora aspectos de accesibilidad.
+| Usabilidad | Alta | El sistema debe someterse a la técnica [KLM](https://en.wikipedia.org/wiki/Keystroke-level_model), y algunas métricas probadas con posibles usuarios finales. Los tiempos analizados resultantes con KLM de las actividades principales deberían ser inferiores a 2 minutos. Podría tener una forma rápida para traducir la aplicación. Quedan fuera por ahora aspectos de accesibilidad.
 | Rendimiento | Media | Cualquier tiempo de respuesta de la aplición no debería tener tiempos de respuesta altos. Esto se quiere conseguir gracias a la implementación de una arquitectura RESTful.
 | Capacidad | Media | Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación.
 | Escalabilidad | Alta | El sistema debe plantear una arquitectura que sea mínimamente escabale, así como dejar descrita una documentación de qué debería de hacerse en el futuro para conseguirlo. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
-| Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs, aunque la implementación queda fuera del alcance.
+| Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs.
 | Disponibilidad | Media | Se va a seguir una metología de integración continua para intentar garantizar que todos los despliegues del sistema se hagan de forma automática y reducir el tiempo que pueda pasar al sistema desconectado debido a fallos o falta de despliegue automático.
 | Resilencia | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
 | Recuperación | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
 ### Mantenibilidad
-Se busca un sistema que al menos tenga una vida útil de más de 2 años.  
+Se busca un sistema que al menos tenga una vida útil de más de 2 años para sistemas de Android Marshmallow 6.0.  
 
 Con eso en mente, se ha de pensar en un sistema claramente modularizado y organizado, con una buena documentación y un código legible. Para ello, el sistema podría contar con una serie de estándares y definiciones de hecho, así como el uso de algunas herramientas de *Quality Assurance* como SonarQube.
  
@@ -81,6 +91,6 @@ Las herramientas de software que se van a utilizar durante el desarrollo de la a
 El hardware necesarioasí como todas las herramientas necesarias para su administración y mantenimiento es el siguiente:
 * Dispsitivo móvil Android 6.0 + con las opciones de desarrollador activadas para debuggear en un entorno de cliente real.
 * Mínimo un ordenador con capacidad para lanzar un entorno de desarrollo como IntelliJ IDEA o WebStorm para poder desarrollar. Además, ha de contar con un navegador web para el desarrollo de las funcionalidades que no requieran de aspectos nativos en dispositivos móviles.
-* Mínimo un ordenador con capacidad de atender al menos a 3 clientes simultáneamente para tener corriendo el servidor con la base de datos simulando un entorno de despliegue real.
+* Mínimo un ordenador con capacidad de atender al menos a 100 clientes simultáneamente para tener corriendo el servidor con la base de datos simulando un entorno de despliegue real.
 
 *Nota:* El ordenador a utilizar puede ser el mismo en los dos últimos casos mientras tenga la capacidad para cumplir ambas.
