@@ -1,3 +1,32 @@
-# IntelliJ:
-.idea/
+## generic files to ignore
+*~
+*.out
+out/*
+build/*
+*.log
+logs/*
+
+# npm ignores
+node_modules/
+
+#mongo database ignore
+db/
+
+# eclipse specific
+.metadata
+jrebel.lic
+.settings
+.classpath
+.project
+
+.ensime*
+*.sublime-*
+.cache
+
+# intellij
+*.eml
 *.iml
+*.ipr
+*.iws
+.*.sw?
+.idea/
