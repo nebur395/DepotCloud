@@ -19,12 +19,12 @@ app.models = require('./models');
 require('./routes')(app);
 
 app.use('/', function(req, res) {
-    console.log("Bienvenido");
+    console.log("Welcome");
 });
 
 // Database connection and server launching
 
-var dbUri = 'mongodb://localhost:27017/aniscloDb';
+var dbUri = 'mongodb://localhost:27017/depotCloudDb';
 mongoose.connect(dbUri);
 mongoose.connection.once('open', function(){
 
