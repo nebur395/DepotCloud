@@ -1,19 +1,19 @@
 angular.module('depotCloudApp')
 
-    .controller('navbarCtrl', ['$scope', 'auth', function ($scope, auth) {
+    .controller('navbarCtrl', ['$scope', 'authService', function ($scope, authService) {
 
         $scope.home = "";
         $scope.logged = false;
 
         // Watches to control if the user is authenticated
         $scope.$watch(function() {
-            return auth.isAuthenticated();
+            return authService.isAuthenticated();
         }, function () {
-            $scope.logged = auth.isAuthenticated();
+            $scope.logged = authService.isAuthenticated();
             $scope.home = $scope.logged ? "adminManagement" : "starter";
         });
 
         $scope.logout = function () {
-            auth.logout();
+            authService.logout();
         }
     }]);

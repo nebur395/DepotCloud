@@ -28,7 +28,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/profile",
                 templateUrl: "templates/profile.html",
                 controller: "profileCtrl",
-                onEnter: function($state, manageState){
+                onEnter: function($state, authService){
                     if (!authService.isAuthenticated()) {
                         $state.go('starter');
                     }
@@ -40,7 +40,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/adminManagement",
                 templateUrl: "templates/adminManagement.html",
                 controller: "adminManagementCtrl",
-                onEnter: function($state, manageState){
+                onEnter: function($state, authService){
                     if (!authService.isAuthenticated()) {
                         $state.go('starter');
                     }
@@ -52,7 +52,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/adminStats",
                 templateUrl: "templates/adminStats.html",
                 controller: "adminStatsCtrl",
-                onEnter: function($state, manageState){
+                onEnter: function($state, authService){
                     if (!authService.isAuthenticated()) {
                         $state.go('starter');
                     }
@@ -71,7 +71,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
         $httpProvider.interceptors.push(['$q','$injector', function ($q, $injector) {
             return {
                 'request': function (config) {
-                    var authService = $injector.get('auth');
+                    var authService = $injector.get('authService');
                     config.headers = config.headers || {};
                     if (authService.getToken()) {
                         config.headers.Authorization = 'Bearer ' + authService.getToken();
@@ -81,7 +81,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 'responseError': function (response) {
 
                     if (response.status === 401) {
-                        var authService = $injector.get('auth');
+                        var authService = $injector.get('authService');
 
                         if(authService.getToken() && authService.isTokenExpired()){
                             authService.logout();

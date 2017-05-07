@@ -1,4 +1,4 @@
-angular.module('pirineoPOIApp')
+angular.module('depotCloudApp')
 
     .controller('starterCtrl', ['$scope', 'authService', 'notificationService',
         function ($scope, authService, notificationService) {
