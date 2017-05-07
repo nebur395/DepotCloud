@@ -4,17 +4,23 @@ var express = require("express"),
     swaggerJSDoc = require("swagger-jsdoc"),
     crypto = require("crypto"),
     fs = require("fs"),
+    morgan = require("morgan"),
+    config = require("./config"),
+    jwt = require("express-jwt"),
     https = require("https");
 
 
 var app = express();
+
+// Morgan used to log requests to the console in developer's mode
+app.use(morgan('dev'));
 
 // swagger definition
 var swaggerDefinition = {
     info: {
         title: 'Depot Cloud API ',
         version: '1.0.0',
-        description: 'Description of the Depot Cloud API'
+        description: 'Descripción de la API de Depot Cloud.'
     },
     host: 'localhost:8080',
     basePath: '/'
@@ -31,7 +37,13 @@ var options = {
 // initialize swagger-jsdoc
 var swaggerSpec = swaggerJSDoc(options);
 
+// Secret key used to sign JWT
+app.set('secret', config.secret);
+
 app.use(express.static('./public'));
+
+// Midelware to access handler and JWT
+require('./security/jwt-handler')(app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
