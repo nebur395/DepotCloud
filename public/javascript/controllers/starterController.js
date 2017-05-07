@@ -4,7 +4,6 @@ angular.module('pirineoPOIApp')
         function ($scope, authService, notificationService) {
 
             // inputs visual variables
-            $scope.name = "";
             $scope.email = "";
             $scope.password = "";
 
