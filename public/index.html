@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
+  <link rel="shortcut icon" type="image/x-icon" href="favicons/iconLogo.ico" />
+  <title>Depot Cloud</title>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- Bootstrap imports -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Google fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'/>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet"/>
+
+  <!--load the favicons-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- AngularJS external libraries -->
+  <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+  <script src="node_modules/angular-base64/angular-base64.min.js"></script>
+  <script type="text/javascript" src="node_modules/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+  <link rel="stylesheet" href="node_modules/angular-ui-notification/dist/angular-ui-notification.min.css"/>
+  <script type="text/javascript" src="node_modules/chart.js/dist/Chart.min.js"></script>
+  <script type="text/javascript" src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script type="text/javascript" src="node_modules/angular-jwt/dist/angular-jwt.min.js"></script>
+
+  <!-- css own imports -->
+  <link rel="stylesheet" href="css/colorTheme.css"/>
+  <link rel="stylesheet" href="css/generalStyle.css"/>
+  <link rel="stylesheet" href="css/navbarStyle.css"/>
+  <link rel="stylesheet" href="css/starter/starterStyle.css"/>
+  <link rel="stylesheet" href="css/starter/dragAndDropStyle.css"/>
+  <link rel="stylesheet" href="css/signUpStyle.css"/>
+  <link rel="stylesheet" href="css/loginStyle.css"/>
+  <link rel="stylesheet" href="css/accordionStyle.css"/>
+  <link rel="stylesheet" href="css/userCardsStyle.css"/>
+
+  <!-- OWN SCRIPTS -->
+  <!-- App states-->
+  <script src="app.js"></script>
+  <!-- services -->
+  <script src="javascript/services.js"></script>
+  <!-- directives -->
+  <script src="javascript/directives.js"></script>
+  <!-- controllers -->
+  <script src="javascript/controllers/starterController.js"></script>
+  <script src="javascript/controllers/navbarController.js"></script>
+  <script src="javascript/controllers/signUpController.js"></script>
+  <script src="javascript/controllers/loginController.js"></script>
+  <script src="javascript/controllers/profileController.js"></script>
+  <script src="javascript/controllers/changePasswordController.js"></script>
+  <script src="javascript/controllers/retrievePasswordController.js"></script>
+  <script src="javascript/controllers/favsListController.js"></script>
+  <script src="javascript/controllers/followListController.js"></script>
+  <script src="javascript/controllers/userStatsController.js"></script>
+  <script src="javascript/controllers/adminManagementController.js"></script>
+  <script src="javascript/controllers/adminStatsController.js"></script>
+  <script src="javascript/controllers/userCardController.js"></script>
 </head>
-<body>
+
+<body ng-app="depotCloudApp">
+
+<navbar></navbar>
+<!-- the content here will be the 'body page' and it will change dependending of the current state -->
+<ui-view></ui-view>
 
 </body>
 </html>
