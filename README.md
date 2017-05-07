@@ -21,6 +21,11 @@ puerto 8080. Alternativamente, se puede ejecutar `node server.js`.
 Espera a que el servidor de ionic este lanzado, abre un navegador web, y accede a la dirección http://localhost:8100.
 1. **Acceder al cliente de desktop:** Abre un navegador web y escribe la dirección http://localhost:8080 para poder acceder al cliente del administrador.
 
+## Documentación de la API
+Para poder visualizar la API del proyecto, hay que seguir estos pasos:  
+1. Lanza el servidor ejecutando el comando `npm start`.
+1. **JSON:** Abre el navegador y accede a http://localhost:8080/swagger.json para visualizar la API de la aplicación en formato JSON.
+1. **UI Web:** Abre el navegador y accede a http://localhost:8080/api-docs/ para visualizar la API de la aplicación con la interfaz web.
 
 ## EditorConfig 
 [EditorConfig](http://editorconfig.org/) helps developers maintain consistent coding styles between different editors and IDEs. It is a file format for defining coding styles and a collection of text editor plugins that enable editors to read the file format and adhere to defined styles.
