@@ -14,12 +14,19 @@ module.exports = function (app) {
     /**
      * @swagger
      * definition:
-     *   User:
+     *   FeedbackMessage:
+     *     description: Mensaje de feedback que se devuelve al usuario en caso de error o acierto en una determinada
+     *       operación.
+     *     type: object
      *     properties:
-     *       userEmail:
+     *       success:
+     *         type: boolean
+     *         required: true
+     *         description: True si la operación ha ido con éxito. False si ha habido algún error.
+     *       message:
      *         type: string
-     *       userPassword:
-     *         type: string
+     *         required: true
+     *         description: Mensaje que describe el resultado de una operación.
      */
     var User = app.models.User;
 
@@ -29,42 +36,124 @@ module.exports = function (app) {
      *   post:
      *     tags:
      *       - Users
-     *     description: Returns all users
-     *     produces:
+     *     summary: Crear usuario (Sign Up)
+     *     description: Crea una nueva cuenta familiar en el sistema comprobando la seguridad de
+     *       las contraseñas.
+     *     consumes:
      *       - application/json
-     *     responses:
-     *       200:
-     *         description: An array of users
-     *         schema:
-     *           $ref: '#/definitions/User'
-     */
-    router.post("/", function(req,res){
-
-    });
-
-    /**
-     * @swagger
-     * /users/{email}:
-     *   get:
-     *     tags:
-     *       - Users
-     *     description: Returns a single user
+     *       - charset=utf-8
      *     produces:
      *       - application/json
      *     parameters:
-     *       - name: email
-     *         description: User's email
-     *         in: path
+     *       - name: name
+     *         description: Nombre de la cuenta familiar.
+     *         in: body
      *         required: true
-     *         type: integer
+     *         type: string
+     *       - name: password
+     *         description: Contraseña de la cuenta familiar.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: rePassword
+     *         description: Contraseña repetida de la cuenta familiar.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: email
+     *         description: Email del usuario que sirve como identificador.
+     *         in: body
+     *         required: true
+     *         type: string
      *     responses:
      *       200:
-     *         description: A single user
+     *         description: Mensaje de feedback para el usuario.
      *         schema:
-     *           $ref: '#/definitions/User'
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.get("/:email", function(req,res){
+    router.post("/", function(req,res){
 
+        // Checks all body fields
+        if (!req.body.name || !req.body.password|| !req.body.rePassword || !req.body.email) {
+            res.status(404).send({
+                "success": false,
+                "message": "Nombre, contraseña o email incorrectos."
+            });
+            return;
+        }
+
+        // Checks if both passwords are equals
+        if (req.body.password !== req.body.rePassword) {
+            res.status(404).send({
+                "success": false,
+                "message": "Las contraseñas no coinciden."
+            });
+            return;
+        }
+
+        //
+        if ((req.body.password.length < 5) || (req.body.password.length > 20)) {
+            res.status(404).send({
+                "success": false,
+                "message": "La contraseña no tiene el tamaño adecuado."
+            });
+            return;
+        }
+
+        User.findOne({email: req.body.email}, function(err, result){
+
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            // Checks if a user already exist
+            if (result) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "Ya existe una cuenta con ese correo."
+                });
+            } else {
+
+                var hashPass = require('crypto')
+                    .createHash('sha1')
+                    .update(req.body.password)
+                    .digest('base64');
+
+                User.create({
+
+                    email: req.body.email,
+                    name: req.body.name,
+                    password: hashPass,
+                    admin: false
+
+                }, function (err, result){
+
+                    if(err){
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor"
+                        });
+                    } else {
+                        res.status(200).send({
+                            "success": true,
+                            "message": "Usuario creado correctamente. Comprueba tu correo para" +
+                            " confirmar tu cuenta."
+                        });
+                    }
+                });
+            }
+        });
     });
 
     return router;
