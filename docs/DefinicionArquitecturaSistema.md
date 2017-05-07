@@ -61,11 +61,11 @@ Su importancia de cara al proyecto puede graduarse de forma parecida al alcance 
 | Usabilidad | Alta | El sistema debe someterse a la técnica [KLM](https://en.wikipedia.org/wiki/Keystroke-level_model), y algunas métricas probadas con posibles usuarios finales. Los tiempos analizados resultantes con KLM de las actividades principales deberían ser inferiores a 2 minutos. Podría tener una forma rápida para traducir la aplicación. Quedan fuera por ahora aspectos de accesibilidad.
 | Rendimiento | Media | Cualquier tiempo de respuesta de la aplición no debería tener tiempos de respuesta altos. Esto se quiere conseguir gracias a la implementación de una arquitectura RESTful.
 | Capacidad | Media | Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación.
-| Escalabilidad | Alta | El sistema debe plantear una arquitectura que sea mínimamente escabale, así como dejar descrita una documentación de qué debería de hacerse en el futuro para conseguirlo. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
+| Escalabilidad | Alta | El sistema debe plantear una arquitectura que sea mínimamente escabale, esto se va a conseguir escalando el sistema de forma horizontal gracias a la tecnología de NodeJS. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
 | Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs.
 | Disponibilidad | Media | Se va a seguir una metología de integración continua para intentar garantizar que todos los despliegues del sistema se hagan de forma automática y reducir el tiempo que pueda pasar al sistema desconectado debido a fallos o falta de despliegue automático.
-| Resilencia | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
-| Recuperación | Baja | Se van a dejar documentados aspectos referentes pero no se van a llevar a cabo en la implementación del sistema.
+| Resilencia | Baja | Se va a plantear externalizar estos riesgos (con lo que ello conlleva) a una tercera parte haciendo uso de los servicios de [Amazon S3](https://aws.amazon.com/s3/), la cual garantiza un 99,99% de disponibilidad en la nube.
+| Recuperación | Baja | Se va a plantear externalizar estos riesgos (con lo que ello conlleva) a una tercera parte haciendo uso de los servicios de [Amazon S3](https://aws.amazon.com/s3/), la cual garantiza un 99,999999999% de durabilidad de los objetos en la nube.
 ### Mantenibilidad
 Se busca un sistema que al menos tenga una vida útil de más de 2 años para sistemas de Android Marshmallow 6.0.  
 
