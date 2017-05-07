@@ -104,5 +104,3 @@ angular.module('depotCloudApp')
             }
         };
     });
-
-
