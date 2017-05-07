@@ -5,11 +5,11 @@
 .w3-theme {color:#fff !important; background-color:#795548 !important}
 .w3-text-theme {color:#795548 !important}
 .w3-text-secondary {color: #757575 !important}
-.w3-border-theme {border-color:#795548 !important}
+.w3-border-theme {border-color:#553c33 !important}
 
 .w3-theme:hover {color:#fff !important; background-color:#795548 !important}
 .w3-text-theme:hover {color: #795548 !important}
-.w3-border-theme:hover {border-color: #795548 !important}
+.w3-border-theme:hover {border-color: #553c33 !important}
 .w3-theme-action:hover {color:#fff !important; background-color: #FF9800 !important}
 
 .w3-navbar-theme {
