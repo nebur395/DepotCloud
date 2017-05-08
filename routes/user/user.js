@@ -147,8 +147,7 @@ module.exports = function (app) {
                     } else {
                         res.status(200).send({
                             "success": true,
-                            "message": "Usuario creado correctamente. Comprueba tu correo para" +
-                            " confirmar tu cuenta."
+                            "message": "Usuario creado correctamente."
                         });
                     }
                 });

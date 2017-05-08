@@ -7,7 +7,7 @@ module.exports = function jwtHandler(app){
         .unless({
             path:[  // Non-authorization routes
                 { url: "/users/", methods: ['POST']  },  // sign up
-                { url: "/users/login", methods: ['GET']  },  // Login
+                { url: "/login/", methods: ['GET']  },  // Login
                 { url: "/swagger.json", methods: ['GET']  },  // Swagger's JSON
                 { url: "/api-docs/", methods: ['GET']  }  // Swagger's API Web
             ]}
