@@ -36,6 +36,7 @@ var userSchema = mongoose.Schema({
     password: {type: String, required: true},
     name: {type: String, required: true},
     admin: {type: Boolean, required: true},
+    isActive: {type: Boolean, default: true},
     registerDate: {type: Date, default: Date.now},
     lastLoginDate: {type: Date, default: Date.now},
     members: {type:[String], default: []}
