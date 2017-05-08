@@ -11,7 +11,7 @@ angular.module('depotCloudApp')
             $scope.login = function () {
                 // Standard 'authorization basic'
                 authService.login($scope.email, $scope.password, function (data) {
-                    notificationService.showError("",data);
+                    notificationService.showError('&#10008',data);
                 });
             };
         }]);
