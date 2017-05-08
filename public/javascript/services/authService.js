@@ -90,16 +90,17 @@ angular.module('depotCloudApp')
                 var that = this;
                 $http({
                     method: 'GET',
-                    url: '/login',
+                    url: 'login/',
                     headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
                         'Authorization': 'Basic ' +
                         $base64.encode(user + ":" + password)
                     }
-                }).success(function (data) {
-                    that.authenticate(data.token);
+                }).then(function (successData) {
+                    that.authenticate(successData.data.token);
                     $state.go('adminManagement');
-                }).error(function (data) {
-                    callbackError(data.message);
+                }, function (errorData) {
+                    callbackError(errorData.data.message);
                 });
             }
         };

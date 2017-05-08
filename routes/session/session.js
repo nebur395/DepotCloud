@@ -5,6 +5,7 @@ var utf8 = require('utf8');
 var randomstring = require('randomstring');
 var ip = require('ip');
 var request = require('request');
+var jwt = require ('jsonwebtoken');
 
 
 module.exports = function (app) {
@@ -60,7 +61,6 @@ module.exports = function (app) {
         var index = credentials.indexOf(":");
         var email = credentials.substring(0, index);
         var pass = credentials.substring(index+1);
-        console.log("Email: "+email+" Pass: "+pass);
 
         // Looks for the user
         User.findOneAndUpdate({email: email}, {lastLoginDate: Date.now()}, function(err, result) {
