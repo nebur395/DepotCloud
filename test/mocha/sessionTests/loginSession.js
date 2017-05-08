@@ -1,9 +1,9 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
-var server = require('../server.js');
+var server = require('../../../server');
 var User = server.models.User;
-var config = require("../config");
+var config = require("../../../config");
 var jwt = require('jsonwebtoken');
 
 chai.use(chaiHttp);

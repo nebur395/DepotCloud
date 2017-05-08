@@ -9,7 +9,7 @@
   "scripts": {
     "postinstall": "cd public ; npm install;",
     "install": "node_modules/protractor/bin/webdriver-manager update",
-    "test": "mocha"
+    "test": "mocha test/mocha/**/*.js"
   },
   "repository": {
     "type": "git",

@@ -82,7 +82,7 @@ module.exports = function (app) {
     router.post("/", function(req,res){
 
         // Checks all body fields
-        if (!req.body.name || !req.body.password|| !req.body.rePassword || !req.body.email) {
+        if (!req.body.name || !req.body.password || !req.body.rePassword || !req.body.email) {
             res.status(404).send({
                 "success": false,
                 "message": "Nombre, contraseña o email incorrectos."
@@ -99,7 +99,7 @@ module.exports = function (app) {
             return;
         }
 
-        //
+        // Checks if passwords are of adequate length
         if ((req.body.password.length < 5) || (req.body.password.length > 20)) {
             res.status(404).send({
                 "success": false,
