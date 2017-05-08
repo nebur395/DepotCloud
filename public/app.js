@@ -17,7 +17,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 templateUrl: "templates/starter.html",
                 controller: "starterCtrl",
                 onEnter: function($state, authService){
-                    if (authService.isAuthenticated()) {
+                    if (authService.isAuthenticated() && authService.getAdmin()) {
                         $state.go('adminManagement');
                     }
                 }
@@ -28,8 +28,10 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/profile",
                 templateUrl: "templates/profile.html",
                 controller: "profileCtrl",
-                onEnter: function($state, authService){
-                    if (!authService.isAuthenticated()) {
+                onEnter: function($state, authService, notificationService){
+                    if (!authService.isAuthenticated() || !authService.getAdmin()) {
+                        notificationService.showError("Error de autenticación", "Por favor," +
+                            " introduzca las credenciales de un usuario administrador.", null);
                         $state.go('starter');
                     }
                 }
@@ -40,8 +42,10 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/adminManagement",
                 templateUrl: "templates/adminManagement.html",
                 controller: "adminManagementCtrl",
-                onEnter: function($state, authService){
-                    if (!authService.isAuthenticated()) {
+                onEnter: function($state, authService, notificationService){
+                    if (!authService.isAuthenticated() || !authService.getAdmin()) {
+                        notificationService.showError("Error de autenticación", "Por favor," +
+                            " introduzca las credenciales de un usuario administrador.", null);
                         $state.go('starter');
                     }
                 }
@@ -52,8 +56,10 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/adminStats",
                 templateUrl: "templates/adminStats.html",
                 controller: "adminStatsCtrl",
-                onEnter: function($state, authService){
-                    if (!authService.isAuthenticated()) {
+                onEnter: function($state, authService, notificationService){
+                    if (!authService.isAuthenticated() || !authService.getAdmin()) {
+                        notificationService.showError("Error de autenticación", "Por favor," +
+                            " introduzca las credenciales de un usuario administrador.", null);
                         $state.go('starter');
                     }
                 }
