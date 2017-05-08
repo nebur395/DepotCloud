@@ -29,10 +29,14 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 templateUrl: "templates/profile.html",
                 controller: "profileCtrl",
                 onEnter: function($state, authService, notificationService){
-                    if (!authService.isAuthenticated() || !authService.getAdmin()) {
-                        notificationService.showError("Error de autenticación", "Por favor," +
-                            " introduzca las credenciales de un usuario administrador.", null);
+                    if (!authService.isAuthenticated()) {
+                        notificationService.showError("Error de autenticación", "Token inválido" +
+                            " o no existente. Por favor, envíe un token correcto.");
                         $state.go('starter');
+                    } else if (!authService.getAdmin()) {
+                        notificationService.showError("Usuario no autorizado", "Por favor," +
+                            " introduzca las credenciales de un usuario administrador.", null);
+                        authService.logout();
                     }
                 }
             })
@@ -43,10 +47,14 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 templateUrl: "templates/adminManagement.html",
                 controller: "adminManagementCtrl",
                 onEnter: function($state, authService, notificationService){
-                    if (!authService.isAuthenticated() || !authService.getAdmin()) {
-                        notificationService.showError("Error de autenticación", "Por favor," +
-                            " introduzca las credenciales de un usuario administrador.", null);
+                    if (!authService.isAuthenticated()) {
+                        notificationService.showError("Error de autenticación", "Token inválido" +
+                            " o no existente. Por favor, envíe un token correcto.");
                         $state.go('starter');
+                    } else if (!authService.getAdmin()) {
+                        notificationService.showError("Usuario no autorizado", "Por favor," +
+                            " introduzca las credenciales de un usuario administrador.", null);
+                        authService.logout();
                     }
                 }
             })
@@ -57,10 +65,14 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 templateUrl: "templates/adminStats.html",
                 controller: "adminStatsCtrl",
                 onEnter: function($state, authService, notificationService){
-                    if (!authService.isAuthenticated() || !authService.getAdmin()) {
-                        notificationService.showError("Error de autenticación", "Por favor," +
-                            " introduzca las credenciales de un usuario administrador.", null);
+                    if (!authService.isAuthenticated()) {
+                        notificationService.showError("Error de autenticación", "Token inválido" +
+                            " o no existente. Por favor, envíe un token correcto.");
                         $state.go('starter');
+                    } else if (!authService.getAdmin()) {
+                        notificationService.showError("Usuario no autorizado", "Por favor," +
+                            " introduzca las credenciales de un usuario administrador.", null);
+                        authService.logout();
                     }
                 }
             });
