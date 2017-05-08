@@ -1,6 +1,7 @@
 # DepotCloud
 
 [![Build Status](https://travis-ci.com/nebur395/DepotCloud-tfg.svg?token=TeQnRfV979qCVxB8pdn2&branch=master)](https://travis-ci.com/nebur395/DepotCloud-tfg)
+[![codecov](https://codecov.io/gh/nebur395/DepotCloud-tfg/branch/master/graph/badge.svg?token=gzD6RFnKbB)](https://codecov.io/gh/nebur395/DepotCloud-tfg)
 
 # Documentación
 * [Términos de referencia](docs/TerminosDeReferencia.md)
