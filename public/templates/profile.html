@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<div id="profileStyle">
+  <div class="container">
 
-</body>
-</html>
+    <!-- used for right align the form -->
+    <div class="col-xs-8 col-xs-offset-2">
+      <h1 id="firstContent" class="text-center">Bienvenido a tu cuenta <span
+        class="w3-text-theme">{{email}}</span></h1>
+
+      <form role="form" ng-submit="settings()">
+
+        <!-- user name input form -->
+        <div class="form-group">
+          <label for="userName">Nombre de usuario:</label>
+          <input id="userName" type="text" ng-model="name" class="form-control"
+                 placeholder="Introduce el nombre de usuario" required />
+        </div>
+
+        <!-- user password input form -->
+        <div class="form-group">
+          <label for="userCurrent">Contraseña actual:</label>
+          <input id="userCurrent" type="password" ng-model="current" class="form-control"
+                 placeholder="Introduce tu contraseña actual" required />
+        </div>
+
+        <!-- user new password input form -->
+        <div class="form-group">
+          <label for="userNew">Contraseña nueva:</label>
+          <input id="userNew" type="password" ng-model="new" class="form-control"
+                 placeholder="Introduce tu nueva contraseña" />
+        </div>
+
+        <!-- submit button form-->
+        <p class="text-center">
+          <button ng-click="delete=false" type="submit" class="btn w3-theme-action customButton">
+            Guardar cambios</button>
+          <button ng-click="delete=true" type="submit" class="btn btn-danger customButton">
+            Borrar cuenta</button>
+        </p>
+
+    </div>
+  </div>
+</div>
