@@ -79,7 +79,7 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.post("/", function(req,res){
+    router.post("/", function (req, res) {
 
         // Checks all body fields
         if (!req.body.name || !req.body.password || !req.body.rePassword || !req.body.email) {
@@ -108,7 +108,7 @@ module.exports = function (app) {
             return;
         }
 
-        User.findOne({email: req.body.email}, function(err, result){
+        User.findOne({email: req.body.email}, function (err, result) {
 
             if (err) {
                 res.status(500).send({
@@ -137,9 +137,9 @@ module.exports = function (app) {
                     password: hashPass,
                     admin: false
 
-                }, function (err, result){
+                }, function (err, result) {
 
-                    if(err){
+                    if (err) {
                         res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor"
@@ -150,6 +150,133 @@ module.exports = function (app) {
                             "message": "Usuario creado correctamente."
                         });
                     }
+                });
+            }
+        });
+    });
+
+    /**
+     * @swagger
+     * /users/{email}:
+     *   put:
+     *     tags:
+     *       - Users
+     *     summary: Cambiar perfil de usuario administrador o unidad familiar.
+     *     description: Posibilidad de cambiar contraseña y/o nombre de un usuario administrador
+     *       o una unidad familiar.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *       - name: email
+     *         description: Email del usuario administrador o de la unidad familiar que sirve como
+     *           identificador.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: name
+     *         description: Nombre del usuario administrador o de la unidad familiar.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: current
+     *         description: Contraseña actual del usuario administrador o de la unidad familiar.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: new
+     *         description: Contraseña nueva del usuario administrador o de la unidad familiar.
+     *         in: body
+     *         required: true
+     *         type: string
+     *     responses:
+     *       200:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.put("/:email", function (req, res) {
+
+        if (!req.body.current || !req.body.new || !req.body.name) {
+            res.status(404).send({
+                "success": false,
+                "message": "Datos de perfil incorrectos."
+            });
+            return;
+        }
+
+        // Checks if new password are of adequate length
+        if ((req.body.new.length < 5) || (req.body.new.length > 20)) {
+            res.status(404).send({
+                "success": false,
+                "message": "La contraseña nueva no tiene el tamaño adecuado."
+            });
+            return;
+        }
+
+        User.findOne({email: req.params.email}, function (err, result) {
+
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+                return;
+            }
+
+            var hashPass = require('crypto')
+                .createHash('sha1')
+                .update(req.body.current)
+                .digest('base64');
+
+            if (result && hashPass === result.password) {
+
+                hashPass = require('crypto')
+                    .createHash('sha1')
+                    .update(req.body.new)
+                    .digest('base64');
+
+                User.update({email: req.params.email}, {
+                    password: hashPass,
+                    name: req.body.name
+                }, function (err, data) {
+
+                    if (err) {
+                        res.status(500).send({
+                            "succes": false,
+                            "message": "Error interno del servidor."
+                        });
+                        return;
+                    }
+
+                    res.status(200).send({
+                        "success": true,
+                        "message": "Usuario actualizado correctamente."
+                    });
+
+                });
+            }
+            else {
+                res.status(404).send({
+                    "success": false,
+                    "message": "Email o contraseña actual incorrectos."
                 });
             }
         });
