@@ -17,7 +17,7 @@ angular.module('depotCloudApp')
          */
         $scope.settings = function () {
             if ($scope.delete) {
-                userService.deleteAccount($scope.email, $scope.currentPass, $scope.google, showError);
+                userService.deleteAccount($scope.email, $scope.current, notificationService.showError);
             } else {
                 var requestObject = {
                     name: $scope.name,
