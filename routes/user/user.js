@@ -63,6 +63,16 @@ module.exports = function (app) {
      *                type: array
      *                items:
      *                   $ref: '#/definitions/User'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
      *       404:
      *         description: Mensaje de feedback para el usuario.
      *         schema:
@@ -163,6 +173,11 @@ module.exports = function (app) {
      *     responses:
      *       200:
      *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      *       404:
@@ -296,6 +311,11 @@ module.exports = function (app) {
      *     responses:
      *       200:
      *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      *       404:

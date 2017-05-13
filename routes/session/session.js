@@ -43,6 +43,11 @@ module.exports = function (app) {
      *           properties:
      *             token:
      *               $ref: '#/definitions/User'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
      *       404:
      *         description: Mensaje de feedback para el usuario.
      *         schema:
