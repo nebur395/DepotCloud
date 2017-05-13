@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 /**
  * Test suite for Session functionalities.
  */
-describe('Session', function(){
+describe('Session', function () {
 
     var name = "Testing";
     var email = "testUser@email.com";
@@ -27,7 +27,7 @@ describe('Session', function(){
     /*
      * It creates a new user before the test suite starts executing.
      */
-    before(function(done){
+    before(function (done) {
 
         User.create({
 
@@ -36,7 +36,7 @@ describe('Session', function(){
             password: hashPass,
             admin: false
 
-        }, function(){
+        }, function () {
             done();
         });
 
@@ -46,16 +46,16 @@ describe('Session', function(){
     /**
      * Tests for logIn functionality.
      */
-    describe("#logIn()", function(){
+    describe("#logIn()", function () {
 
         var loginErrorMessage = "Email o contraseña incorrectos";
 
-        it('should successfully login ', function(done){
+        it('should successfully login ', function (done) {
 
             chai.request(server)
                 .get('/login/')
                 .auth(email, password)
-                .end(function(err, result){
+                .end(function (err, result) {
 
                     result.should.have.status(200);
                     result.body.should.be.a('object');
@@ -79,12 +79,12 @@ describe('Session', function(){
                 });
         });
 
-        it('should return an error since the user doesn\'t exist', function(done){
+        it('should return an error since the user doesn\'t exist', function (done) {
 
             chai.request(server)
                 .get('/login/')
                 .auth("false@email.com", password)
-                .end(function(err, result){
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -97,12 +97,12 @@ describe('Session', function(){
                 });
         });
 
-        it('should return an error since the user\'s password is wrong', function(done){
+        it('should return an error since the user\'s password is wrong', function (done) {
 
             chai.request(server)
                 .get('/login/')
                 .auth(email, "wrongPass")
-                .end(function(err, result){
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -115,12 +115,12 @@ describe('Session', function(){
                 });
         });
 
-        it('should return an error since the email is blank', function(done){
+        it('should return an error since the email is blank', function (done) {
 
             chai.request(server)
                 .get('/login/')
                 .auth("", password)
-                .end(function(err, result){
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -133,12 +133,12 @@ describe('Session', function(){
                 });
         });
 
-        it('should return an error since the password is blank', function(done){
+        it('should return an error since the password is blank', function (done) {
 
             chai.request(server)
                 .get('/login/')
                 .auth(email, "")
-                .end(function(err, result){
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -157,8 +157,8 @@ describe('Session', function(){
      * Removes the user created at the begining of the tests
      * after every test is finished.
      */
-    after(function(done){
-        User.collection.remove({"email":email});
+    after(function (done) {
+        User.collection.remove({"email": email});
         done();
     });
 });

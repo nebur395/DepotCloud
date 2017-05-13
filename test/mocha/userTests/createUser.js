@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 /**
  * Test suite for Session functionalities.
  */
-describe('User', function(){
+describe('User', function () {
 
     var name = "Testing";
     var email = "testUser@email.com";
@@ -27,7 +27,7 @@ describe('User', function(){
     /**
      * Tests for signUp functionality.
      */
-    describe('#signUp()', function(){
+    describe('#signUp()', function () {
 
         var singUpSuccessMessage = "Usuario creado correctamente.";
         var signUpErrorAlreadyExistMessage = "Ya existe una cuenta con ese correo.";
@@ -35,12 +35,12 @@ describe('User', function(){
         var signUpWrongPasswordsMessage = "Las contraseñas no coinciden.";
         var signUpInvalidPasswordsMessage = "La contraseña no tiene el tamaño adecuado.";
 
-        it('should sign up a new user', function(done) {
+        it('should sign up a new user', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: name, password: password, rePassword: password, email:email})
-                .end(function(err, result){
+                .send({name: name, password: password, rePassword: password, email: email})
+                .end(function (err, result) {
 
                     result.should.have.status(200);
                     result.body.should.be.a('object');
@@ -54,12 +54,12 @@ describe('User', function(){
                 });
         });
 
-        it('should return an error message since the user already exists', function(done){
+        it('should return an error message since the user already exists', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: name, password: password, rePassword: password, email:email})
-                .end(function(err, result){
+                .send({name: name, password: password, rePassword: password, email: email})
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -72,12 +72,12 @@ describe('User', function(){
                 });
         });
 
-        it('should return an error message since name is blank', function(done){
+        it('should return an error message since name is blank', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: "", password: password, rePassword: password, email:email})
-                .end(function(err, result){
+                .send({name: "", password: password, rePassword: password, email: email})
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -90,12 +90,12 @@ describe('User', function(){
                 });
         });
 
-        it('should return an error message password is blank', function(done){
+        it('should return an error message password is blank', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: "", password: "", rePassword: password, email:email})
-                .end(function(err, result){
+                .send({name: "", password: "", rePassword: password, email: email})
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -108,12 +108,12 @@ describe('User', function(){
                 });
         });
 
-        it('should return an error message rePassword is blank', function(done){
+        it('should return an error message rePassword is blank', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: "", password: password, rePassword: "", email:email})
-                .end(function(err, result){
+                .send({name: "", password: password, rePassword: "", email: email})
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -126,12 +126,12 @@ describe('User', function(){
                 });
         });
 
-        it('should return an error message password doesn\'t match', function(done){
+        it('should return an error message password doesn\'t match', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: name, password: password, rePassword: "wrongPass", email:email})
-                .end(function(err, result){
+                .send({name: name, password: password, rePassword: "wrongPass", email: email})
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -144,12 +144,12 @@ describe('User', function(){
                 });
         });
 
-        it('should return an error message since password isn\'t of adequate length', function(done){
+        it('should return an error message since password isn\'t of adequate length', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: name, password: "pass", rePassword: "pass", email:email})
-                .end(function(err, result){
+                .send({name: name, password: "pass", rePassword: "pass", email: email})
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -162,12 +162,12 @@ describe('User', function(){
                 });
         });
 
-        it('should return an error message since email is blank', function(done){
+        it('should return an error message since email is blank', function (done) {
 
             chai.request(server)
                 .post('/users/')
-                .send({name: "", password: password, rePassword: password, email:""})
-                .end(function(err, result){
+                .send({name: "", password: password, rePassword: password, email: ""})
+                .end(function (err, result) {
 
                     result.should.have.status(404);
                     result.body.should.be.a('object');
@@ -183,8 +183,8 @@ describe('User', function(){
         /*
          * Removes the user created during the signIn tests.
          */
-        after(function(done){
-            User.collection.remove({"email":email});
+        after(function (done) {
+            User.collection.remove({"email": email});
             done();
         });
 
