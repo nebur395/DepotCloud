@@ -392,5 +392,110 @@ module.exports = function (app) {
         });
     });
 
+    /**
+     * @swagger
+     * /users/{email}:
+     *   delete:
+     *     tags:
+     *       - Users
+     *     summary: Borrar usuario
+     *     description: Borra la cuenta de usuario y la marca como inactiva.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *       - name: email
+     *         description: Email del usuario que sirve como identificador.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: current
+     *         description: Contraseña actual del usuario.
+     *         in: body
+     *         required: false
+     *         type: string
+     *     responses:
+     *       200:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.delete("/:email", function (req, res) {
+
+        if (!req.body.current) {
+            res.status(404).send({
+                "success": false,
+                "message": "Contraseña incorrecta."
+            });
+            return;
+        }
+
+        User.findOne({email: req.params.email}, function (err, result) {
+
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+                return;
+            }
+
+            // Hashes the password in order to compare it with the stored one
+            var hashPass = require('crypto')
+                .createHash('sha1')
+                .update(req.body.current)
+                .digest('base64');
+
+            // If the user exists and the password is correct
+            if (result && hashPass === result.password) {
+                User.update({email: req.params.email}, {
+                    isActive: false,
+                    deactivationDate: new Date()
+                }, function (err, result) {
+                    if (err) {
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                        return;
+                    }
+
+                    res.status(200).send({
+                        "success": true,
+                        "message": "Cuenta de usuario eliminada correctamente."
+                    });
+                });
+            } else { //No result
+                res.status(404).send({
+                    "success": false,
+                    "message": "Email o contraseña incorrectos."
+                });
+            }
+        });
+
+    });
+
     return router;
 };

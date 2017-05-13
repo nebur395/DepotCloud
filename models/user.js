@@ -42,6 +42,7 @@ var userSchema = mongoose.Schema({
     isActive: {type: Boolean, default: true},
     registerDate: {type: Date, default: Date.now},
     lastLoginDate: {type: Date, default: Date.now},
+    deactivationDate: {type: Date, default: null},
     members: {type:[String], default: []}
 });
 
