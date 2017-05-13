@@ -2,12 +2,10 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     mongoose = require('mongoose'),
     swaggerJSDoc = require("swagger-jsdoc"),
-    crypto = require("crypto"),
     fs = require("fs"),
     morgan = require("morgan"),
     config = require("./config"),
-    jwt = require("express-jwt"),
-    https = require("https");
+    jwt = require("express-jwt");
 
 
 var app = express();
@@ -46,10 +44,10 @@ app.use(express.static('./public'));
 require('./security/jwt-handler')(app);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // serve swagger
-app.get('/swagger.json', function(req, res) {
+app.get('/swagger.json', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
 });
@@ -58,7 +56,7 @@ app.models = require('./models');
 
 require('./routes')(app);
 
-app.use('/', function(req, res) {
+app.use('/', function (req, res) {
     console.log("Welcome");
 });
 
@@ -66,11 +64,11 @@ app.use('/', function(req, res) {
 
 var dbUri = 'mongodb://localhost:27017/depotCloudDb';
 mongoose.connect(dbUri);
-mongoose.connection.once('open', function(){
+mongoose.connection.once('open', function () {
 
-    console.log("MongoDB connection created in "+dbUri);
+    console.log("MongoDB connection created in " + dbUri);
 
-    app.listen(8080, function(){
+    app.listen(8080, function () {
         console.log("Server listening to PORT 8080");
     });
 

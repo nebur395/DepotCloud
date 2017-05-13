@@ -1,10 +1,6 @@
-var http = require("http");
 var express = require('express');
 var base64 = require('base-64');
 var utf8 = require('utf8');
-var randomstring = require('randomstring');
-var ip = require('ip');
-var request = require('request');
 var jwt = require ('jsonwebtoken');
 
 

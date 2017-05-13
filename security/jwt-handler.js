@@ -1,16 +1,17 @@
 jwt = require('express-jwt');
 
-module.exports = function jwtHandler(app){
+module.exports = function jwtHandler(app) {
 
 // Middleware that add a route access check
-    app.use(jwt({ secret: app.get('secret')})
+    app.use(jwt({secret: app.get('secret')})
         .unless({
-            path:[  // Non-authorization routes
-                { url: "/users/", methods: ['POST']  },  // sign up
-                { url: "/login/", methods: ['GET']  },  // Login
-                { url: "/swagger.json", methods: ['GET']  },  // Swagger's JSON
-                { url: "/api-docs/", methods: ['GET']  }  // Swagger's API Web
-            ]}
+                path: [  // Non-authorization routes
+                    {url: "/users/", methods: ['POST']},  // sign up
+                    {url: "/login/", methods: ['GET']},  // Login
+                    {url: "/swagger.json", methods: ['GET']},  // Swagger's JSON
+                    {url: "/api-docs/", methods: ['GET']}  // Swagger's API Web
+                ]
+            }
         ));
 
 
@@ -23,7 +24,7 @@ module.exports = function jwtHandler(app){
                 " correcto."
             });
         }
-        else{
+        else {
             next();
         }
     });
