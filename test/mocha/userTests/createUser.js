@@ -2,6 +2,8 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
+var crypto = require("crypto");
+var base64 = require('base-64');
 var User = server.models.User;
 var config = require("../../../config");
 var jwt = require('jsonwebtoken');
@@ -11,7 +13,7 @@ chai.use(chaiHttp);
 /**
  * Test suite for Session functionalities.
  */
-describe('Session', function(){
+describe('User', function(){
 
     var name = "Testing";
     var email = "testUser@email.com";

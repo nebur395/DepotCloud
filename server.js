@@ -2,7 +2,6 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     mongoose = require('mongoose'),
     swaggerJSDoc = require("swagger-jsdoc"),
-    fs = require("fs"),
     morgan = require("morgan"),
     config = require("./config"),
     jwt = require("express-jwt");
