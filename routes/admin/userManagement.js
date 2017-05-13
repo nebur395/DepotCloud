@@ -7,15 +7,16 @@ module.exports = function (app) {
 
     var User = app.models.User;
 
+
     /**
      * @swagger
-     * /admin/users/:
-     *   get:
+     * /admin/users/{email}:
+     *   put:
      *     tags:
      *       - Admin
-     *     summary: Listar todos los usuarios del sistema
-     *     description: Lista todos los usuarios del sistema con información a la que sólo
-     *      el admin puede acceder, a excepción de los usuarios administradores, que no los devuelve.
+     *     summary: Modifica la información de un usuario
+     *     description: Permite a un administrador modificar una información
+     *      determinada de un usuario en concreto.
      *     consumes:
      *       - application/json
      *       - charset=utf-8
@@ -29,16 +30,36 @@ module.exports = function (app) {
      *         required: true
      *         type: string
      *         format: byte
+     *       - name: email
+     *         description: Email del usuario que sirve como identificador.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: name
+     *         description: Nombre del usuario.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: newEmail
+     *         description: Nuevo email del usuario.
+     *         in: body
+     *         required: true
+     *         type: string
      *     responses:
      *       200:
      *         description: Mensaje de feedback para el usuario.
      *         schema:
-     *           type: object
-     *           properties:
-     *              users:
-     *                type: array
-     *                items:
-     *                   $ref: '#/definitions/User'
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
      *       404:
      *         description: Mensaje de feedback para el usuario.
      *         schema:
@@ -48,17 +69,29 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.get("/users", function (req, res) {
+    router.put("/users/:email", function (req, res) {
 
         if (!req.user.admin) {
-            res.status(401).send({
+            res.status(403).send({
                 "success": false,
                 "message": "No estás autorizado a acceder a esta operación."
             });
             return;
         }
 
-        User.find({admin: false}, function (err, result) {
+        // Checks all body fields
+        if (!req.body.name || !req.body.newEmail) {
+            res.status(404).send({
+                "success": false,
+                "message": "Datos a actualizar incorrectos incorrectos."
+            });
+            return;
+        }
+
+        User.findOneAndUpdate({email: req.params.email}, {
+            name: req.body.name,
+            email: req.body.newEmail
+        }, function (err, result) {
 
             if (err) {
                 res.status(500).send({
@@ -68,37 +101,19 @@ module.exports = function (app) {
                 return;
             }
 
-            var users = [];
-            async.each(result, function (user, callback) {
-
-                // User to be sent in the response
-                var userResponse = {
-                    "email": user.email,
-                    "name": user.name,
-                    "members": user.members,
-                    "admin": user.admin,
-                    "active": user.isActive
-                };
-
-                users.push(userInfo);
-                callback();
-
-            }, function (err) {
-
-                if (err) {
-                    res.status(500).send({
-                        "success": false,
-                        "message": "Error interno del servidor."
-                    });
-                    return;
-                }
-
+            if (result) {
                 res.status(200).send({
-                    "users": users
+                    "success": true,
+                    "message": "Usuario actualizado correctamente."
                 });
-            });
-        });
+            } else {
+                res.status(404).send({
+                    "success": false,
+                    "message": "El usuario no existe."
+                });
+            }
 
+        });
     });
 
     return router;
