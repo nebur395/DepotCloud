@@ -301,7 +301,7 @@ module.exports = function (app) {
      *       - name: new
      *         description: Contraseña nueva del usuario administrador o de la unidad familiar.
      *         in: body
-     *         required: true
+     *         required: false
      *         type: string
      *     responses:
      *       200:
@@ -324,7 +324,7 @@ module.exports = function (app) {
      */
     router.put("/:email", function (req, res) {
 
-        if (!req.body.current || !req.body.new || !req.body.name) {
+        if (!req.body.current || !req.body.name) {
             res.status(404).send({
                 "success": false,
                 "message": "Datos de perfil incorrectos."
@@ -333,7 +333,7 @@ module.exports = function (app) {
         }
 
         // Checks if new password are of adequate length
-        if ((req.body.new.length < 5) || (req.body.new.length > 20)) {
+        if (req.body.new && (req.body.new.length < 5) || (req.body.new.length > 20)) {
             res.status(404).send({
                 "success": false,
                 "message": "La contraseña nueva no tiene el tamaño adecuado."
@@ -358,32 +358,54 @@ module.exports = function (app) {
 
             if (result && hashPass === result.password) {
 
-                hashPass = require('crypto')
-                    .createHash('sha1')
-                    .update(req.body.new)
-                    .digest('base64');
+                // If user is changing his name and password
+                if (req.body.new) {
+                    hashPass = require('crypto')
+                        .createHash('sha1')
+                        .update(req.body.new)
+                        .digest('base64');
 
-                User.update({email: req.params.email}, {
-                    password: hashPass,
-                    name: req.body.name
-                }, function (err, data) {
+                    User.update({email: req.params.email}, {
+                        password: hashPass,
+                        name: req.body.name
+                    }, function (err, data) {
 
-                    if (err) {
-                        res.status(500).send({
-                            "succes": false,
-                            "message": "Error interno del servidor."
+                        if (err) {
+                            res.status(500).send({
+                                "succes": false,
+                                "message": "Error interno del servidor."
+                            });
+                            return;
+                        }
+
+                        res.status(200).send({
+                            "success": true,
+                            "message": "Usuario actualizado correctamente."
                         });
-                        return;
-                    }
 
-                    res.status(200).send({
-                        "success": true,
-                        "message": "Usuario actualizado correctamente."
                     });
+                } else {    // If user is only changing his name
+                    User.update({email: req.params.email}, {
+                        name: req.body.name
+                    }, function (err, data) {
 
-                });
-            }
-            else {
+                        if (err) {
+                            res.status(500).send({
+                                "succes": false,
+                                "message": "Error interno del servidor."
+                            });
+                            return;
+                        }
+
+                        res.status(200).send({
+                            "success": true,
+                            "message": "Usuario actualizado correctamente."
+                        });
+
+                    });
+                }
+
+            } else {
                 res.status(404).send({
                     "success": false,
                     "message": "Email o contraseña actual incorrectos."
@@ -419,9 +441,9 @@ module.exports = function (app) {
      *         required: true
      *         type: string
      *       - name: current
-     *         description: Contraseña actual del usuario.
+     *         description: Contraseña actual del usuario administrador o de la unidad familiar.
      *         in: body
-     *         required: false
+     *         required: true
      *         type: string
      *     responses:
      *       200:
