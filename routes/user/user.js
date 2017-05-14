@@ -106,10 +106,10 @@ module.exports = function (app) {
                     "name": user.name,
                     "members": user.members,
                     "admin": user.admin,
-                    "active": user.isActive
+                    "isActive": user.isActive
                 };
 
-                users.push(userInfo);
+                users.push(userResponse);
                 callback();
 
             }, function (err) {
