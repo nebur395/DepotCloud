@@ -1,6 +1,7 @@
 angular.module('depotCloudApp')
 
-    .controller('adminManagementCtrl', ['$scope', 'notificationService', function ($scope, notificationService) {
+    .controller('adminManagementCtrl', ['$scope', 'notificationService', 'adminService',
+        function ($scope, notificationService, adminService) {
 
         $scope.userList = [];
 
@@ -9,7 +10,7 @@ angular.module('depotCloudApp')
         };
 
         // get the user list
-        userManagement.getUsers(function (data) {
+        adminService.getUsers(function (data) {
             $scope.userList = data;
         }, notificationService.showError);
 
