@@ -22,7 +22,6 @@ describe('Session', function () {
         .createHash('sha1')
         .update(password)
         .digest('base64');
-    var emailInactive = 'testInactive@email.com';
 
     /*
      * It creates a new user before the test suite starts executing.

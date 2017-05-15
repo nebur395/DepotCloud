@@ -266,7 +266,7 @@ module.exports = function (app) {
      *   put:
      *     tags:
      *       - Users
-     *     summary: Cambiar perfil de usuario administrador o unidad familiar.
+     *     summary: Editar perfil de usuario administrador o unidad familiar.
      *     description: Posibilidad de cambiar contraseña y/o nombre de un usuario administrador
      *       o una unidad familiar.
      *     consumes:

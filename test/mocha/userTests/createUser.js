@@ -6,7 +6,6 @@ var crypto = require("crypto");
 var base64 = require('base-64');
 var User = server.models.User;
 var config = require("../../../config");
-var jwt = require('jsonwebtoken');
 
 chai.use(chaiHttp);
 
