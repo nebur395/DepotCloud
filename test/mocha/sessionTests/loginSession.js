@@ -149,6 +149,26 @@ describe('Session', function () {
                     done();
                 });
         });
+
+        it('should return an error since token doesn\'t exist ', function (done) {
+
+            chai.request(server)
+                .delete('/users/' + email)
+                .send({current: password})
+                .end(function (err, result) {
+
+                    result.should.have.status(401);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Token inválido o no existente. Por favor,' +
+                        ' envíe un token correcto.');
+
+                    done();
+
+                });
+        });
     });
 
 

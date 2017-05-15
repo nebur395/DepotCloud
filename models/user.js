@@ -23,7 +23,7 @@ mongoose.Promise = global.Promise;
  *         type: boolean
  *         required: true
  *         description: True si el usuario es un administrador.
- *       active:
+ *       isActive:
  *         type: boolean
  *         description: True si la cuenta está activa.
  *       members:
