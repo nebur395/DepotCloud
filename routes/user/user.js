@@ -247,7 +247,7 @@ module.exports = function (app) {
                     if (err) {
                         res.status(500).send({
                             "success": false,
-                            "message": "Error interno del servidor"
+                            "message": "Error interno del servidor."
                         });
                     } else {
                         res.status(200).send({
