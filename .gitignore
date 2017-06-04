@@ -9,7 +9,8 @@ logs/*
 # npm ignores
 node_modules/
 
-
+# sonnar scanners
+.scannerwork/
 
 #mongo database ignore
 db/
