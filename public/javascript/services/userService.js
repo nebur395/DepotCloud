@@ -33,7 +33,7 @@ angular.module('depotCloudApp')
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8'
                     }
-                }).then(function (successData) {
+                }).then(function () {
                     authService.logout();
                 }, function (errorData) {
                     callbackError('&#10008',errorData.data.message);

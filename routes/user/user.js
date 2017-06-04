@@ -242,7 +242,7 @@ module.exports = function (app) {
                     password: hashPass,
                     admin: false
 
-                }, function (err, result) {
+                }, function (err) {
 
                     if (err) {
                         res.status(500).send({
@@ -368,7 +368,7 @@ module.exports = function (app) {
                     User.update({email: req.params.email}, {
                         password: hashPass,
                         name: req.body.name
-                    }, function (err, data) {
+                    }, function (err) {
 
                         if (err) {
                             res.status(500).send({
@@ -387,7 +387,7 @@ module.exports = function (app) {
                 } else {    // If user is only changing his name
                     User.update({email: req.params.email}, {
                         name: req.body.name
-                    }, function (err, data) {
+                    }, function (err) {
 
                         if (err) {
                             res.status(500).send({
@@ -495,7 +495,7 @@ module.exports = function (app) {
                 User.update({email: req.params.email}, {
                     isActive: false,
                     deactivationDate: new Date()
-                }, function (err, result) {
+                }, function (err) {
                     if (err) {
                         res.status(500).send({
                             "success": false,
