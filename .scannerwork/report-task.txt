@@ -1,5 +1,5 @@
 projectKey=tfg.depotcloud
 serverUrl=http://localhost:9000
 dashboardUrl=http://localhost:9000/dashboard/index/tfg.depotcloud
-ceTaskId=AVx0abHCt3udJL2V2hNE
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVx0abHCt3udJL2V2hNE
+ceTaskId=AVx0shq6t3udJL2V2hNF
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVx0shq6t3udJL2V2hNF
