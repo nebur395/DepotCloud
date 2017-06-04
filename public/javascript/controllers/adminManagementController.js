@@ -6,7 +6,7 @@ angular.module('depotCloudApp')
         $scope.userList = [];
 
         $scope.isEmpty = function() {
-            return $scope.userList.length == 0;
+            return $scope.userList.length === 0;
         };
 
         // get the user list

@@ -17,11 +17,6 @@ describe('User', function () {
     var name = "Testing";
     var email = "testUser@email.com";
     var password = "testPass";
-    var hashPass = require('crypto')
-        .createHash('sha1')
-        .update(password)
-        .digest('base64');
-    var emailInactive = 'testInactive@email.com';
 
     /**
      * Tests for signUp functionality.

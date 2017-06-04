@@ -47,8 +47,6 @@ describe('Session', function () {
      */
     describe("#logIn()", function () {
 
-        var loginErrorMessage = "Email o contraseña incorrectos";
-
         it('should successfully login ', function (done) {
 
             chai.request(server)

@@ -98,13 +98,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 },
                 'responseError': function (response) {
 
-                    if (response.status === 401) {
-                        var authService = $injector.get('authService');
-
-                        if(authService.getToken() && authService.isTokenExpired()){
-                            authService.logout();
-                        }
-                    } else if (response.status === 403) {
+                    if (response.status === 401 || response.status === 403) {
                         var authService = $injector.get('authService');
 
                         if(authService.getToken() && authService.isTokenExpired()){
