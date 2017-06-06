@@ -1,4 +1,5 @@
 module.exports = {
     User: require('./user.js'),
-    Depot: require('./depot.js')
+    Depot: require('./depot.js'),
+    DepotObject: require('./depotObject.js')
 };
