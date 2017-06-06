@@ -59,6 +59,40 @@ module.exports = function (app) {
      */
     router.post("/:email/:name", function (req, res) {
 
+        User.findOne({email: req.params.email}, function (err, userResult) {
+
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            // Checks if a user already exist
+            if (!userResult) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "El usuario al que se intenta acceder no existe."
+                });
+            } else {
+
+                userResult.members.push(req.params.name);
+                // Saves the user with the new member
+                userResult.save(function (err) {
+                    if (err) {
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                    } else {
+                        res.status(200).send({
+                            "success": true,
+                            "message": "Miembro añadido correctamente a la unidad familiar."
+                        });
+                    }
+                });
+            }
+        });
     });
 
     return router;
