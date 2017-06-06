@@ -153,7 +153,53 @@ module.exports = function (app) {
      */
     router.put("/:email/:name", function (req, res) {
 
+        User.findOne({email: req.params.email}, function (err, userResult) {
 
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            // Checks if a user already exist
+            if (!userResult) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
+                });
+            } else {
+
+                var members = userResult.members;
+                var index = members.indexOf(req.params.name);
+                if (index === -1) {
+                    res.status(404).send({
+                        "success": false,
+                        "message": "El miembro de la unidad familiar que se desea modificar " +
+                        "no existe."
+                    });
+                } else {
+                    members.splice(index, 1);
+                    members.push(req.body.newName);
+                    members.sort();
+                    userResult.members = members;
+                    // Saves the user with the new member
+                    userResult.save(function (err) {
+                        if (err) {
+                            res.status(500).send({
+                                "success": false,
+                                "message": "Error interno del servidor."
+                            });
+                        } else {
+                            res.status(200).send({
+                                "success": true,
+                                "message": "Miembro de la unidad familiar modificado correctamente."
+                            });
+                        }
+                    });
+                }
+            }
+        });
     });
 
     return router;
