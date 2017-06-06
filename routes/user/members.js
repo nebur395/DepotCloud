@@ -272,7 +272,6 @@ module.exports = function (app) {
             } else {
 
                 var members = userResult.members;
-                console.log(members);
                 var index = members.indexOf(req.params.name);
                 if (index === -1) {
                     res.status(404).send({
