@@ -10,7 +10,7 @@ var createUserToken = require('../jwtCreator').createUserToken;
 chai.use(chaiHttp);
 
 /**
- * Test suite for User functionalities.
+ * Test suite for Member functionalities.
  */
 describe('Member', function () {
 
@@ -42,7 +42,7 @@ describe('Member', function () {
     });
 
     /**
-     * Tests for deleteUser functionality.
+     * Tests for addMember functionality.
      */
     describe("#addMember()", function () {
 
