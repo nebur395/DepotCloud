@@ -13,14 +13,13 @@ mongoose.Promise = global.Promise;
  *         type: string
  *         uniqueItems: true
  *         required: true
- *         description: ID del DepotObject en el sistema.
+ *         description: ID del objeto en el sistema.
  *       name:
  *         type: string
  *         required: true
  *         description: Nombre del objeto.
  *       image:
  *         type: string
- *         required: true
  *         description: String en base64 que representa la imagen adjunta al objecto, si la hay.
  *           Si no la hay, será un carácter vacío.
  *       owner:
@@ -46,6 +45,14 @@ mongoose.Promise = global.Promise;
 
 // Create the Schema
 var depotObjectSchema = mongoose.Schema({
+    name : {type: String, required: true},
+    image: {type: mongoose.Schema.Types.ObjectId, default: null},
+    owner: {type: String, required: true},
+    depot: {type: mongoose.Schema.Types.ObjectId, required: true},
+    guarantee: {type: Date},
+    dateOfExpiry: {type: Date},
+    description: {type: String},
+    creationDate: {type: Date, default: Date.now}
 });
 
 // Create the model if it does not exists

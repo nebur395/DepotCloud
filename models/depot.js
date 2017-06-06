@@ -10,18 +10,21 @@ mongoose.Promise = global.Promise;
  *       vivienda perteneciente a un User del sistema.
  *     type: object
  *     properties:
- *       name:
+ *       _id:
  *         type: string
  *         uniqueItems: true
  *         required: true
- *         description: Nombre del almacén que sirve como identificador.
+ *         description: ID del almacén en el sistema.
+ *       name:
+ *         type: string
+ *         required: true
+ *         description: Nombre del almacén.
  *       owner:
  *         type: string
  *         required: true
  *         description: Idenfiticador de la cuenta del User al que pertenece el almacén.
  *       location:
  *         type: string
- *         required: true
  *         description: Localización física real del almacén.
  *       type:
  *         type: string
@@ -32,11 +35,8 @@ mongoose.Promise = global.Promise;
  *         type: string
  *         required: true
  *         description: |
- *           Distancia que hay del deposito actual a tu domicilio habitual. Puede ser: Lejos, cerca.
- *       capacity:
- *         type: integer
- *         required: true
- *         description: Capacidad que tiene el almacén para guardar DepotObjects.
+ *           Distancia que hay del deposito actual a tu domicilio habitual. Puede ser: "[0-1km],
+ *           [1km-2km], [2km-10km], [10km-100km], [100km-300km], [300km, +]".
  *       description:
  *         type: string
  *         description: Descripción del almacén.
@@ -44,12 +44,11 @@ mongoose.Promise = global.Promise;
 
 // Create the Schema
 var depotSchema = mongoose.Schema({
-    name : {type: String, required: true, unique: true},
+    name : {type: String, required: true},
     owner: {type: String, required: true},
-    location: {type: String, required: true},
+    location: {type: String},
     type: {type: String, required: true},
     distance: {type: String, required: true},
-    capacity: {type: Number, required: true},
     description: {type: String},
     creationDate: {type: Date, default: Date.now}
 });
