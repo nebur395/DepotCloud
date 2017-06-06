@@ -202,5 +202,60 @@ module.exports = function (app) {
         });
     });
 
+    /**
+     * @swagger
+     * /members/{email}/{name}:
+     *   delete:
+     *     tags:
+     *       - Members
+     *     summary: Eliminar miembro de la unidad familiar.
+     *     description: Elimina el miembro de la unidad familiar.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *       - name: email
+     *         description: Email de la unidad familiar de la que se quiere eliminar un miembro.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: name
+     *         description: Nombre del miembro que se desea eliminar en la unidad familiar.
+     *         in: path
+     *         required: true
+     *         type: string
+     *     responses:
+     *       200:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.put("/:email/:name", function (req, res) {
+
+
+    });
+
     return router;
 };
