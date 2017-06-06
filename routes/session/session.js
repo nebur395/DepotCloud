@@ -113,7 +113,7 @@ module.exports = function (app) {
 
                 // If user is found and password is right, create and sign a jwt for it
                 var token = jwt.sign(userResponse, app.get('secret'), {
-                    expiresIn: 300 // expires in 5 minutes
+                    expiresIn: "1h"     // expires in 1 hour
                 });
 
                 res.status(200).send({
