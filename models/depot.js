@@ -30,10 +30,12 @@ mongoose.Promise = global.Promise;
  *           Tipo del almacén que puede ser: Storage Room, House, Wardrobe.
  *       distance:
  *         type: string
+ *         required: true
  *         description: |
  *           Distancia que hay del deposito actual a tu domicilio habitual. Puede ser: Lejos, cerca.
  *       capacity:
  *         type: integer
+ *         required: true
  *         description: Capacidad que tiene el almacén para guardar DepotObjects.
  *       description:
  *         type: string
@@ -42,6 +44,14 @@ mongoose.Promise = global.Promise;
 
 // Create the Schema
 var depotSchema = mongoose.Schema({
+    name : {type: String, required: true, unique: true},
+    owner: {type: String, required: true},
+    location: {type: String, required: true},
+    type: {type: String, required: true},
+    distance: {type: String, required: true},
+    capacity: {type: Number, required: true},
+    description: {type: String},
+    creationDate: {type: Date, default: Date.now}
 });
 
 // Create the model if it does not exists
