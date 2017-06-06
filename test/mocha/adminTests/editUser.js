@@ -5,7 +5,6 @@ var server = require('../../../server');
 var crypto = require("crypto");
 var base64 = require('base-64');
 var User = server.models.User;
-var config = require("../../../config");
 var createUserToken = require('../jwtCreator').createUserToken;
 
 chai.use(chaiHttp);

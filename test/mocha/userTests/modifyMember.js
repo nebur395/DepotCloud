@@ -10,9 +10,9 @@ var createUserToken = require('../jwtCreator').createUserToken;
 chai.use(chaiHttp);
 
 /**
- * Test suite for Admin functionalities.
+ * Test suite for Member functionalities.
  */
-describe('Admin', function () {
+describe('Member', function () {
 
     var name = "testUser";
     var email = "testUser@email.com";
@@ -32,7 +32,8 @@ describe('Admin', function () {
             email: email,
             name: name,
             password: hashPass,
-            admin: false
+            admin: false,
+            members: ["Pepe"]
 
         }, function () {
             done();
@@ -42,15 +43,16 @@ describe('Admin', function () {
     });
 
     /**
-     * Tests for activateUser functionality.
+     * Tests for modifyMember functionality.
      */
-    describe("#activateUser()", function () {
+    describe("#modifyMember()", function () {
 
-        it('should successfully activate a user account', function (done) {
+        it('should successfully modify a member', function (done) {
 
             chai.request(server)
-                .put('/admin/users/' + email + '/active')
-                .set('Authorization','Bearer ' + createUserToken(name, true))
+                .put('/members/' + email + '/Pepe')
+                .send({newName: name})
+                .set('Authorization','Bearer ' + createUserToken(name, false))
                 .end(function (err, result) {
 
                     result.should.have.status(200);
@@ -58,37 +60,18 @@ describe('Admin', function () {
                     result.body.should.have.property('success');
                     result.body.success.should.equal(true);
                     result.body.should.have.property('message');
-                    result.body.message.should.equal('Cuenta de usuario reactivada correctamente.');
+                    result.body.message.should.equal('Miembro de la unidad familiar modificado correctamente.');
 
                     done();
 
                 });
         });
 
-        it('should return an error since user is not an admin', function (done) {
+        it('should return an error since the user doesn\'t exists', function (done) {
 
             chai.request(server)
-                .put('/admin/users/' + email + '/active')
+                .put('/members/wrong@email.com/Pepe')
                 .set('Authorization','Bearer ' + createUserToken(name, false))
-                .end(function (err, result) {
-
-                    result.should.have.status(403);
-                    result.body.should.be.a('object');
-                    result.body.should.have.property('success');
-                    result.body.success.should.equal(false);
-                    result.body.should.have.property('message');
-                    result.body.message.should.equal('No estás autorizado a acceder a esta operación.');
-
-                    done();
-
-                });
-        });
-
-        it('should return an error since the user doesn\'t exist', function (done) {
-
-            chai.request(server)
-                .put('/admin/users/' + "false@email.com" + '/active')
-                .set('Authorization','Bearer ' + createUserToken(name, true))
                 .end(function (err, result) {
 
                     result.should.have.status(404);
@@ -96,7 +79,26 @@ describe('Admin', function () {
                     result.body.should.have.property('success');
                     result.body.success.should.equal(false);
                     result.body.should.have.property('message');
-                    result.body.message.should.equal('El usuario no existe.');
+                    result.body.message.should.equal('La unidad familiar a la que se intenta acceder no existe.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since the member doesn\'t exists', function (done) {
+
+            chai.request(server)
+                .put('/members/' + email + '/wrongMember')
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('El miembro de la unidad familiar que se desea modificar no existe.');
 
                     done();
 
