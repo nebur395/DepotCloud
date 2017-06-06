@@ -3,9 +3,7 @@ var express = require('express');
 module.exports = function (app) {
 
     var router = express.Router();
-
     var User = app.models.User;
-
 
     /**
      * @swagger
@@ -13,7 +11,7 @@ module.exports = function (app) {
      *   post:
      *     tags:
      *       - Members
-     *     summary: Añade un miembro a la unidad familiar.
+     *     summary: Añadir un miembro a la unidad familiar.
      *     description: Añade un miembro a la unidad familiar.
      *     consumes:
      *       - application/json
@@ -29,7 +27,7 @@ module.exports = function (app) {
      *         type: string
      *         format: byte
      *       - name: email
-     *         description: Email de la unidad familiar de la que se quieren listar los miembros.
+     *         description: Email de la unidad familiar de la que se quiere añadir un miembro.
      *         in: path
      *         required: true
      *         type: string
@@ -72,11 +70,14 @@ module.exports = function (app) {
             if (!userResult) {
                 res.status(404).send({
                     "success": false,
-                    "message": "El usuario al que se intenta acceder no existe."
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else {
 
-                userResult.members.push(req.params.name);
+                var members = userResult.members;
+                members.push(req.params.name);
+                members.sort();
+                userResult.members = members;
                 // Saves the user with the new member
                 userResult.save(function (err) {
                     if (err) {
@@ -93,6 +94,66 @@ module.exports = function (app) {
                 });
             }
         });
+    });
+
+    /**
+     * @swagger
+     * /members/{email}/{name}:
+     *   put:
+     *     tags:
+     *       - Members
+     *     summary: Modificar miembro de la unidad familiar.
+     *     description: Modifica el nombre de un miembro de la unidad familiar.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *       - name: email
+     *         description: Email de la unidad familiar de la que se quiere modificar un miembro.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: name
+     *         description: Nombre actual del miembro que se desea modificar en la unidad familiar.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: newName
+     *         description: Nombre nuevo del miembro que se desea modificar en la unidad familiar.
+     *         in: path
+     *         required: true
+     *         type: string
+     *     responses:
+     *       200:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.put("/:email/:name", function (req, res) {
+
+
     });
 
     return router;

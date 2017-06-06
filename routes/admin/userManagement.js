@@ -14,7 +14,7 @@ module.exports = function (app) {
      *   put:
      *     tags:
      *       - Admin
-     *     summary: Modifica la información de un usuario
+     *     summary: Modificar la información de un usuario
      *     description: Permite a un administrador modificar una información
      *      determinada de un usuario en concreto.
      *     consumes:
@@ -122,7 +122,7 @@ module.exports = function (app) {
      *   put:
      *     tags:
      *       - Admin
-     *     summary: Reactiva una cuenta de usuario.
+     *     summary: Reactivar una cuenta de usuario.
      *     description: Permite a un administrador emplear sus todopoderosas
      *      bolas de dragón para reactivar una cuenta de usuario que éste
      *      había borrado.
