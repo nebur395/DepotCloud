@@ -77,7 +77,8 @@ La solución debería:
 - Notificar al usuario que un objeto debería estar en una almacén más accesible dependiendo de su actividad (p.ej., *"El objeto X almacenado en tu vivienda secundaria tiene mucha actividad, prueba a moverlo a tu vivienda principal para facilitar su uso"*).
 - Tener un tipo de usuario que sea administrador. No podrán registrarse nuevos usuarios administradores, por tanto tiene que haber mínimo una cuenta ya introducida de serie en el sistema.
 - Tener una interfaz de usuario para el administrador que esté pensada para dispositivos desktop.
-- El usuario administrador tiene que poder buscar y dar de baja en el sistema a unidades familiares.
+- El usuario administrador tiene que poder buscar y dar de alta en el sistema a unidades familiares que hayan borrado su cuenta anteriormente.
+- El usuario administrador tiene que poder buscar y editar el correo y el nombre de una unidad familiar.
 - El usuario administrador puede ver estadísticas con datos relevantes del sistema.
 - Ofrecer mediante una API acceso a los servicios principales del sistema para que empresas o sistemas automáticos puedan hacer uso de ellas.
 - Tener un API bien documentada y testeada para evitar usos indeseados del sistema.
