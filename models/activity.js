@@ -12,9 +12,9 @@ var activitySchema = mongoose.Schema({
     type : {type: String, required: true},
     action: {type: String, required: true},
     attribute: {type: String, required: true},
-    oldValue: {type: String, required: true},
-    newValue: {type: String, required: true},
-    author: {type: String, required: true},
+    oldValue: {type: String},
+    newValue: {type: String},
+    author: {type: String},
     activityDate: {type: Date, default: Date.now}
 });
 

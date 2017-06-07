@@ -1,4 +1,5 @@
 var express = require('express');
+var addActivity = require('../activity/activity').addActivity;
 
 module.exports = function (app) {
 
@@ -86,9 +87,11 @@ module.exports = function (app) {
                             "message": "Error interno del servidor."
                         });
                     } else {
-                        res.status(200).send({
-                            "success": true,
-                            "message": "Miembro añadido correctamente a la unidad familiar."
+                        addActivity('MEMBER','ADD','NAME',"",req.params.name,"", function () {
+                            res.status(200).send({
+                                "success": true,
+                                "message": "Miembro añadido correctamente a la unidad familiar."
+                            });
                         });
                     }
                 });
@@ -191,9 +194,11 @@ module.exports = function (app) {
                                 "message": "Error interno del servidor."
                             });
                         } else {
-                            res.status(200).send({
-                                "success": true,
-                                "message": "Miembro de la unidad familiar modificado correctamente."
+                            addActivity('MEMBER','MODIFY','NAME',req.params.name,req.body.newName,"", function () {
+                                res.status(200).send({
+                                    "success": true,
+                                    "message": "Miembro de la unidad familiar modificado correctamente."
+                                });
                             });
                         }
                     });
@@ -290,9 +295,11 @@ module.exports = function (app) {
                                 "message": "Error interno del servidor."
                             });
                         } else {
-                            res.status(200).send({
-                                "success": true,
-                                "message": "Miembro de la unidad familiar eliminado correctamente."
+                            addActivity('MEMBER','DELETE','NAME',req.params.name,"","", function () {
+                                res.status(200).send({
+                                    "success": true,
+                                    "message": "Miembro de la unidad familiar eliminado correctamente."
+                                });
                             });
                         }
                     });
