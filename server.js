@@ -4,10 +4,13 @@ var express = require("express"),
     swaggerJSDoc = require("swagger-jsdoc"),
     morgan = require("morgan"),
     config = require("./config"),
-    jwt = require("express-jwt");
+    jwt = require("express-jwt"),
+    http = require("http"),
+    WebSocket = require("ws");
 
 
 var app = express();
+var server = http.createServer(app);
 
 // Morgan used to log requests to the console in developer's mode
 app.use(morgan('dev'));
@@ -56,6 +59,23 @@ app.models = require('./models');
 
 require('./routes')(app);
 
+var wss = new WebSocket.Server({
+    host: "localhost",
+    server: server,
+    path: "/websocketStats"
+});
+wss.on('connection', function (ws, req) {
+    console.log(ws);
+    var id = setInterval(function () {
+        ws.send(JSON.stringify(process.memoryUsage()), function () { /* ignore errors */ });
+    }, 100);
+    console.log('started client interval');
+    ws.on('close', function () {
+        console.log('stopping client interval');
+        clearInterval(id);
+    });
+});
+
 // Database connection and server launching
 
 var dbUri = 'mongodb://localhost:27017/depotCloudDb';
@@ -64,7 +84,7 @@ mongoose.connection.once('open', function () {
 
     console.log("MongoDB connection created in " + dbUri);
 
-    app.listen(8080, function () {
+    server.listen(8080, function () {
         console.log("Server listening to PORT 8080");
     });
 

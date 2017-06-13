@@ -39,7 +39,8 @@
     "randomstring": "^1.1.5",
     "request": "^2.81.0",
     "swagger-jsdoc": "^1.9.2",
-    "utf8": "^2.1.2"
+    "utf8": "^2.1.2",
+    "ws": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
