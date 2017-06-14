@@ -83,6 +83,223 @@ describe('Depot', function () {
                 });
         });
 
+        it('should return an error since the user doesn\'t exists', function (done) {
+
+            chai.request(server)
+                .post('/depots/wrong@email.com')
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "Storage Room",
+                    distance: "[0-1km]",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('La unidad familiar a la que se intenta acceder no existe.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since name is blank', function (done) {
+
+            chai.request(server)
+                .post('/depots/' + email)
+                .send({
+                    name: "",
+                    location: "Depot Location",
+                    type: "Storage Room",
+                    distance: "[0-1km]",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since type is blank', function (done) {
+
+            chai.request(server)
+                .post('/depots/' + email)
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "",
+                    distance: "[0-1km]",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since distance is blank', function (done) {
+
+            chai.request(server)
+                .post('/depots/' + email)
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "Storage Room",
+                    distance: "",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since member is blank', function (done) {
+
+            chai.request(server)
+                .post('/depots/' + email)
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "Storage Room",
+                    distance: "[0-1km]",
+                    description: "Depot Description",
+                    member: ""
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since type is invalid', function (done) {
+
+            chai.request(server)
+                .post('/depots/' + email)
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "Wrong type",
+                    distance: "[0-1km]",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since distance is invalid', function (done) {
+
+            chai.request(server)
+                .post('/depots/' + email)
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "Storage Room",
+                    distance: "Wrong distance",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since member is invalid', function (done) {
+
+            chai.request(server)
+                .post('/depots/' + email)
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "Storage Room",
+                    distance: "[0-1km]",
+                    description: "Depot Description",
+                    member: "Wrong member"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('El miembro de la unidad familiar con el' +
+                        ' que se desea realizar la acción no existe o no pertenece a la misma.');
+
+                    done();
+
+                });
+        });
+
     });
 
 
