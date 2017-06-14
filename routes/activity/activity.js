@@ -2,13 +2,15 @@ var models = require('../../models');
 
 var Activity = models.Activity;
 /*
- * Create an activity with [type], [action], [attribute], [oldValue], [newValue], and [author] params.
+ * Create an activity with [type], [action], [attribute], [oldValue], [newValue], and [author] params
+ * belonging to the account [owner].
  * Execute a callback if exists when the activity is created.
  */
-function addActivity(type, action, attribute, oldValue, newValue, author, callback) {
+function addActivity(owner, type, action, attribute, oldValue, newValue, author, callback) {
 
     Activity.create({
 
+        owner: owner,
         type : type,
         action: action,
         attribute: attribute,

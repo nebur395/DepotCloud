@@ -9,6 +9,7 @@ var activitySchema = mongoose.Schema({
      * ACTION: ADD;MODIFY;DELETE;
      * ATTRIBUTE: NAME;LOCATION;TYPE;DISTANCE;DESCRIPTION;DEPOT;IMAGE;GUARANTEE;DATEOFEXPIRY;
      */
+    owner : {type: String, required: true},
     type : {type: String, required: true},
     action: {type: String, required: true},
     attribute: {type: String, required: true},
