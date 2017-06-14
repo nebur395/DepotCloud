@@ -87,8 +87,8 @@ module.exports = function (app) {
                             "message": "Error interno del servidor."
                         });
                     } else {
-                        addActivity(req.params.email, 'MEMBER', 'ADD', 'NAME', "", req.params.name,
-                            "", function () {
+                        addActivity(req.params.email, 'MEMBER', 'ADD', req.params.name, "",
+                            function () {
                                 res.status(200).send({
                                     "success": true,
                                     "message": "Miembro añadido correctamente a la unidad familiar."
@@ -195,8 +195,8 @@ module.exports = function (app) {
                                 "message": "Error interno del servidor."
                             });
                         } else {
-                            addActivity(req.params.email, 'MEMBER', 'MODIFY', 'NAME',
-                                req.params.name, req.body.newName, "", function () {
+                            addActivity(req.params.email, 'MEMBER', 'MODIFY', req.params.name, "",
+                                function () {
 
                                     res.status(200).send({
                                         "success": true,
@@ -298,8 +298,8 @@ module.exports = function (app) {
                                 "message": "Error interno del servidor."
                             });
                         } else {
-                            addActivity(req.params.email, 'MEMBER', 'DELETE', 'NAME',
-                                req.params.name, "", "", function () {
+                            addActivity(req.params.email, 'MEMBER', 'DELETE', req.params.name, "",
+                                function () {
                                     res.status(200).send({
                                         "success": true,
                                         "message": "Miembro de la unidad familiar eliminado correctamente."

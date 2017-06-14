@@ -7,14 +7,11 @@ var activitySchema = mongoose.Schema({
     /*
      * Type values: MEMBER;DEPOT;OBJECT
      * ACTION: ADD;MODIFY;DELETE;
-     * ATTRIBUTE: NAME;LOCATION;TYPE;DISTANCE;DESCRIPTION;DEPOT;IMAGE;GUARANTEE;DATEOFEXPIRY;
      */
     owner : {type: String, required: true},
     type : {type: String, required: true},
     action: {type: String, required: true},
-    attribute: {type: String, required: true},
-    oldValue: {type: String},
-    newValue: {type: String},
+    name: {type: String, required: true},
     author: {type: String},
     activityDate: {type: Date, default: Date.now}
 });

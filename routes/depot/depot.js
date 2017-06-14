@@ -225,7 +225,7 @@ module.exports = function (app) {
                             "message": "Error interno del servidor."
                         });
                     } else {
-                        addActivity(req.params.owner, 'DEPOT', 'ADD', 'NAME', "", req.body.name,
+                        addActivity(req.params.owner, 'DEPOT', 'ADD', req.body.name,
                             req.body.member, function () {
                                 res.status(200).send({
                                     "success": true,
@@ -359,6 +359,7 @@ module.exports = function (app) {
                         });
                     } else {
 
+                        var depotNameTemp = depotResult.name;
                         depotResult.name = req.body.name;
                         depotResult.location = req.body.location;
                         depotResult.type = req.body.type;
@@ -373,7 +374,7 @@ module.exports = function (app) {
                                     "message": "Error interno del servidor."
                                 });
                             } else {
-                                addActivity(req.params.owner, 'DEPOT', 'MODIFY', 'NAME', "", req.body.name,
+                                addActivity(req.params.owner, 'DEPOT', 'MODIFY', depotNameTemp,
                                     req.body.member, function () {
                                         res.status(200).send({
                                             "success": true,
@@ -476,7 +477,7 @@ module.exports = function (app) {
                         });
                     } else {
 
-                        addActivity(req.params.owner, 'DEPOT', 'DELETE', 'NAME', "", "",
+                        addActivity(req.params.owner, 'DEPOT', 'DELETE', depotResult.name,
                             req.body.member, function () {
                                 res.status(200).send({
                                     "success": true,
