@@ -241,7 +241,7 @@ module.exports = function (app) {
 
     /**
      * @swagger
-     * /depots/{owner}/{name}:
+     * /depots/{owner}/{id}:
      *   put:
      *     tags:
      *       - Depot
@@ -265,13 +265,13 @@ module.exports = function (app) {
      *         in: path
      *         required: true
      *         type: string
-     *       - name: name
-     *         description: Nombre viejo del almacén que se desea modificar.
+     *       - name: id
+     *         description: ID del almacén.
      *         in: path
      *         required: true
      *         type: string
      *       - name: name
-     *         description: Nombre nuevo del almacén que se desea modificar.
+     *         description: Nombre del almacén.
      *         in: body
      *         required: true
      *         type: string
@@ -296,6 +296,11 @@ module.exports = function (app) {
      *         description: Descripción del almacén.
      *         in: body
      *         type: string
+     *       - name: member
+     *         description: Miembro de la unidad familiar que está creando el almacén.
+     *         in: body
+     *         required: true
+     *         type: string
      *     responses:
      *       200:
      *         description: Mensaje de feedback para el usuario.
@@ -315,7 +320,7 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.put("/:owner/:name", function (req, res) {
+    router.put("/:owner/:id", function (req, res) {
         User.findOne({email: req.params.owner}, function (err, userResult) {
 
             if (err) {
@@ -329,7 +334,7 @@ module.exports = function (app) {
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else {
-                Depot.findOne({name: req.params.name}, function (err, depotResult) {
+                Depot.findOne({_id: req.params.id}, function (err, depotResult) {
                     if (err) {
                         res.status(500).send({
                             "success": false,
@@ -385,7 +390,7 @@ module.exports = function (app) {
 
     /**
      * @swagger
-     * /depots/{owner}/{name}:
+     * /depots/{owner}/{id}:
      *   delete:
      *     tags:
      *       - Depot
@@ -409,9 +414,14 @@ module.exports = function (app) {
      *         in: path
      *         required: true
      *         type: string
-     *       - name: name
-     *         description: Nombre del almacén.
+     *       - name: id
+     *         description: ID del almacén.
      *         in: path
+     *         required: true
+     *         type: string
+     *       - name: member
+     *         description: Miembro de la unidad familiar que está creando el almacén.
+     *         in: body
      *         required: true
      *         type: string
      *     responses:
@@ -433,8 +443,50 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.delete("/:owner/:name", function (req, res) {
+    router.delete("/:owner/:id", function (req, res) {
+        User.findOne({email: req.params.owner}, function (err, userResult) {
 
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            } else if (!userResult) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
+                });
+            } else {
+                Depot.findByIdAndRemove(req.params.id, function (err, depotResult) {
+                    if (err) {
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                    } else if (!depotResult) {
+                        res.status(404).send({
+                            "success": false,
+                            "message": "El almacén que se desea eliminar no existe."
+                        });
+                    } else if (!isMember(userResult.members, req.body.member)) {
+                        res.status(404).send({
+                            "success": false,
+                            "message": "El miembro de la unidad familiar con el que se desea realizar la" +
+                            " acción no existe o no pertenece a la misma."
+                        });
+                    } else {
+
+                        addActivity(req.params.owner, 'DEPOT', 'DELETE', 'NAME', "", "",
+                            req.body.member, function () {
+                                res.status(200).send({
+                                    "success": true,
+                                    "message": "Almacén eliminado correctamente."
+                                });
+                            });
+                    }
+                })
+            }
+        });
     });
 
     /*
