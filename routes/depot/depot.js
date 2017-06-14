@@ -60,47 +60,61 @@ module.exports = function (app) {
      */
     router.get("/:owner", function (req, res) {
 
-        Depot.find({owner: req.params.owner}, function (err, result) {
-
+        User.findOne({email: req.params.owner}, function (err, userResult) {
             if (err) {
                 res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
-                return;
-            }
-
-            var depots = [];
-            async.each(result, function (depot, callback) {
-
-                // User to be sent in the response
-                var depotResponse = {
-                    "_id": depot._id,
-                    "name": depot.name,
-                    "owner": depot.owner,
-                    "location": depot.location,
-                    "type": depot.type,
-                    "distance": depot.distance,
-                    "description": depot.description
-                };
-
-                depots.push(depotResponse);
-                callback();
-
-            }, function (err) {
-
-                if (err) {
-                    res.status(500).send({
-                        "success": false,
-                        "message": "Error interno del servidor."
-                    });
-                    return;
-                }
-
-                res.status(200).send({
-                    "depots": depots
+            } else if (!userResult) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
-            });
+            } else {
+                Depot.find({owner: req.params.owner}, function (err, depotResult) {
+
+                    if (err) {
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                        return;
+                    }
+
+                    var depots = [];
+                    async.each(depotResult, function (depot, callback) {
+
+                        // User to be sent in the response
+                        var depotResponse = {
+                            "_id": depot._id,
+                            "name": depot.name,
+                            "owner": depot.owner,
+                            "location": depot.location,
+                            "type": depot.type,
+                            "distance": depot.distance,
+                            "description": depot.description
+                        };
+
+                        depots.push(depotResponse);
+                        callback();
+
+                    }, function (err) {
+
+                        if (err) {
+                            res.status(500).send({
+                                "success": false,
+                                "message": "Error interno del servidor."
+                            });
+                            return;
+                        }
+
+                        res.status(200).send({
+                            "depots": depots
+                        });
+                    });
+                });
+            }
         });
     });
 
