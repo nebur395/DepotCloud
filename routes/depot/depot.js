@@ -5,6 +5,7 @@ var addActivity = require('../activity/activity').addActivity;
 module.exports = function (app) {
 
     var router = express.Router();
+    var User = app.models.User;
     var Depot = app.models.Depot;
 
     /**
@@ -28,7 +29,7 @@ module.exports = function (app) {
      *         required: true
      *         type: string
      *         format: byte
-     *       - name: email
+     *       - name: owner
      *         description: Email de la unidad familiar a la que pertenecen los almacenes.
      *         in: path
      *         required: true
@@ -124,7 +125,7 @@ module.exports = function (app) {
      *         required: true
      *         type: string
      *         format: byte
-     *       - name: email
+     *       - name: owner
      *         description: Email de la unidad familiar a la que pertenecen los almacenes.
      *         in: path
      *         required: true
@@ -137,7 +138,6 @@ module.exports = function (app) {
      *       - name: location
      *         description: Localización física real del almacén.
      *         in: body
-     *         required: true
      *         type: string
      *       - name: type
      *         description: |
@@ -155,6 +155,11 @@ module.exports = function (app) {
      *       - name: description
      *         description: Descripción del almacén.
      *         in: body
+     *         type: string
+     *       - name: member
+     *         description: Miembro de la unidad familiar que está creando el almacén.
+     *         in: body
+     *         required: true
      *         type: string
      *     responses:
      *       200:
@@ -177,6 +182,63 @@ module.exports = function (app) {
      */
     router.post("/:owner", function (req, res) {
 
+        User.findOne({email: req.params.owner}, function (err, userResult) {
+
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            if (!userResult) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
+                });
+            } else if (!req.body.name || !req.body.type || !req.body.distance || !req.body.member ||
+                !isValidType(req.body.type) || !isValidDistance(req.body.distance)) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "Los datos que se han introducido en el almacén son incorrectos."
+                });
+            } else if (!isMember(userResult.members, req.body.member)) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "El miembro de la unidad familiar con el que se desea realizar la" +
+                    " acción no existe o no pertenece a la misma."
+                });
+            } else {
+
+                Depot.create({
+
+                    name: req.body.name,
+                    owner: req.params.owner,
+                    location: req.body.location,
+                    type: req.body.type,
+                    distance: req.body.distance,
+                    description: req.body.description
+
+                }, function (err) {
+
+                    if (err) {
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                    } else {
+                        addActivity(req.params.email, 'DEPOT', 'ADD', 'NAME', "", req.body.name,
+                            req.body.member, function () {
+                                res.status(200).send({
+                                    "success": true,
+                                    "message": "Almacén creado correctamente."
+                                });
+                            });
+                    }
+                });
+            }
+
+        });
     });
 
     /**
@@ -200,7 +262,7 @@ module.exports = function (app) {
      *         required: true
      *         type: string
      *         format: byte
-     *       - name: email
+     *       - name: owner
      *         description: Email de la unidad familiar a la que pertenecen los almacenes.
      *         in: path
      *         required: true
@@ -213,7 +275,6 @@ module.exports = function (app) {
      *       - name: location
      *         description: Localización física real del almacén.
      *         in: body
-     *         required: true
      *         type: string
      *       - name: type
      *         description: |
@@ -276,7 +337,7 @@ module.exports = function (app) {
      *         required: true
      *         type: string
      *         format: byte
-     *       - name: email
+     *       - name: owner
      *         description: Email de la unidad familiar a la que pertenecen los almacenes.
      *         in: path
      *         required: true
@@ -308,6 +369,29 @@ module.exports = function (app) {
     router.delete("/:owner/:name", function (req, res) {
 
     });
+
+    /*
+     * Return true if [type] is a valid value of type.
+     */
+    function isValidType(type) {
+        return (type === "Storage Room") || (type === "House") || (type === "Wardrobe");
+    }
+
+    /*
+     * Return true if [distance] is a valid value of distance.
+     */
+    function isValidDistance(distance) {
+        return (distance === "[0-1km]") || (distance === "[1km-2km]") || (distance === "[2km-10km]"
+            || (distance === "[10km-100km]") || (distance === "[100km-300km]") || (distance === "[300km, +]") );
+    }
+
+    /*
+     * Return true if [member] exist in [accountMembers].
+     */
+    function isMember(accountMembers, member) {
+        var index = accountMembers.indexOf(member);
+        return index !== -1;
+    }
 
     return router;
 };
