@@ -110,7 +110,8 @@ describe('Admin', function () {
      * after every test is finished.
      */
     after(function (done) {
-        User.collection.remove({"email": email});
-        done();
+        User.collection.remove({"email": email}, function () {
+            done();
+        });
     });
 });

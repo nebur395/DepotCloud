@@ -175,8 +175,9 @@ describe('User', function () {
          * Removes the user created during the signIn tests.
          */
         after(function (done) {
-            User.collection.remove({"email": email});
-            done();
+            User.collection.remove({"email": email}, function () {
+                done();
+            });
         });
 
     });
