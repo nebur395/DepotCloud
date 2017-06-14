@@ -163,9 +163,12 @@ module.exports = function (app) {
      *         type: string
      *     responses:
      *       200:
-     *         description: Mensaje de feedback para el usuario.
+     *         description: El Depot que se acaba de crear.
      *         schema:
-     *           $ref: '#/definitions/FeedbackMessage'
+     *           type: object
+     *           properties:
+     *              depot:
+     *                $ref: '#/definitions/Depot'
      *       401:
      *         description: Mensaje de feedback para el usuario. Normalmente causado por no
      *           tener un token correcto o tenerlo caducado.
@@ -217,7 +220,7 @@ module.exports = function (app) {
                     distance: req.body.distance,
                     description: req.body.description
 
-                }, function (err) {
+                }, function (err, depotResult) {
 
                     if (err) {
                         res.status(500).send({
@@ -227,9 +230,17 @@ module.exports = function (app) {
                     } else {
                         addActivity(req.params.owner, 'DEPOT', 'ADD', req.body.name,
                             req.body.member, function () {
+                                var depotResponse = {
+                                    "_id": depotResult._id,
+                                    "name": depotResult.name,
+                                    "owner": depotResult.owner,
+                                    "location": depotResult.location,
+                                    "type": depotResult.type,
+                                    "distance": depotResult.distance,
+                                    "description": depotResult.description
+                                };
                                 res.status(200).send({
-                                    "success": true,
-                                    "message": "Almacén creado correctamente."
+                                    "depot": depotResponse
                                 });
                             });
                     }
