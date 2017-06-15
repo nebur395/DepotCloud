@@ -18,10 +18,8 @@ function addActivity(owner, type, action, name, author, callback) {
 
     }, function (err) {
 
-        if (!err) {
-            if (callback) {
-                callback();
-            }
+        if (!err && callback) {
+            callback();
         }
     });
 }
