@@ -68,10 +68,101 @@ module.exports = function (app) {
      */
     router.get("/:depot", function (req, res) {
 
+        // Sets the mongo database connection to gridfs in order to store and retrieve files in the DB.
+        gfs = grid(mongoose.connection.db);
 
+        Depot.findOne({_id: req.params.depot}, function (err, depotResult) {
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            } else if (!depotResult) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "El almacén al que se intenta acceder no existe."
+                });
+            } else {
+                DepotObject.find({depot: req.params.depot}, function (err, depotObjectResult) {
+
+                    if (err) {
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                        return;
+                    }
+
+                    var depotObjects = [];
+                    // Iterates all the DepotObjects stored in the system
+                    async.each(depotObjectResult, function (depotObject, callback) {
+
+                        // User to be sent in the response
+                        var depotObjectResponse = {
+                            "_id": depotObject._id,
+                            "name": depotObject.name,
+                            "owner": depotObject.owner,
+                            "depot": depotObject.depot,
+                            "guarantee": depotObject.guarantee,
+                            "dateOfExpiry": depotObject.dateOfExpiry,
+                            "description": depotObject.description
+                        };
+                        // Checks if there's an image attached to the DepotObject and retrieves
+                        // it if it's the case.
+                        if (depotObject.image) {
+                            retrieveImage(depotObject.image, function (data) {
+                                depotObjectResponse.image = data;
+                                depotObjects.push(depotObjectResponse);
+                                callback();
+                            });
+                        } else {
+                            depotObjectResponse.image = "";
+                            depotObjects.push(depotObjectResponse);
+                            callback();
+                        }
+
+                    }, function (err) {
+
+                        if (err) {
+                            res.status(500).send({
+                                "success": false,
+                                "message": "Error interno del servidor."
+                            });
+                            return;
+                        }
+
+                        res.status(200).send({
+                            "depotObjects": depotObjects
+                        });
+                    });
+                });
+            }
+        });
     });
 
+    /**
+     * Gets the image data from the system, returning
+     * a string encoded in base-64.
+     */
+    function retrieveImage(imageId, callback){
+        var buffer = new Buffer('');
+        var readstream = gfs.createReadStream({
+            _id: imageId
+        });
 
+        readstream.on("data", function(chunk){
+            if(!buffer){
+                buffer = chunk;
+            }
+            else{
+                buffer = Buffer.concat([buffer, chunk]);
+            }
+        });
+
+        readstream.on("end", function(){
+            return callback(buffer.toString());
+        });
+    }
 
     return router;
 };
