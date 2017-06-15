@@ -127,6 +127,33 @@ describe('Depot', function () {
                 });
         });
 
+        it('should return an error since id of the depot is wrong', function (done) {
+
+            chai.request(server)
+                .put('/depots/' + email + '/' + new ObjectId())
+                .send({
+                    name: "Depot name",
+                    location: "Depot Location",
+                    type: "Storage Room",
+                    distance: "[0-1km]",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('El almacén que se desea modificar no existe.');
+
+                    done();
+
+                });
+        });
+
         it('should return an error since the user isn\'t the owner of the depot', function (done) {
 
             chai.request(server)
