@@ -181,12 +181,12 @@ module.exports = function (app) {
      *         in: body
      *         type: string
      *       - name: guarantee
-     *         description: Fecha en el que cumple garantía el objeto.
+     *         description: Fecha en el que cumple garantía el objeto (YYYY-MM-DD).
      *         in: body
      *         type: string
      *         format: date
      *       - name: dateOfExpiry
-     *         description: Fecha en la que caduca el objeto.
+     *         description: Fecha en la que caduca el objeto (YYYY-MM-DD).
      *         in: body
      *         type: string
      *         format: date
@@ -223,10 +223,19 @@ module.exports = function (app) {
      */
     router.post("/:depot", function (req, res) {
 
+        // Sets the mongo database connection to gridfs in order to store and retrieve files in the DB.
+        gfs = grid(mongoose.connection.db);
+
         if (!req.body.owner || !req.body.name || !req.body.member) {
             res.status(404).send({
                 "success": false,
                 "message": "Los datos que se han introducido en el almacén son incorrectos."
+            });
+        } else if((req.body.guarantee && !isValidDate(req.body.guarantee))
+            || (req.body.dateOfExpiry && !isValidDate(req.body.dateOfExpiry))) {
+            return res.status(404).send({
+                "success": false,
+                "message": "El formato de las fechas es incorrecto."
             });
         }
 
@@ -266,12 +275,11 @@ module.exports = function (app) {
                             name: req.body.name,
                             owner: req.body.owner,
                             depot: req.params.depot,
-                            guarantee: req.params.guarantee,
-                            dateOfExpiry: req.params.dateOfExpiry,
-                            description: req.params.description
+                            guarantee: req.body.guarantee,
+                            dateOfExpiry: req.body.dateOfExpiry,
+                            description: req.body.description
                         });
                         if (!req.body.image) {
-                            depotObject.image = "";
                             depotObject.save(function (err, depotObjectResult) {
                                 if (err) {
                                     res.status(500).send({
@@ -281,9 +289,18 @@ module.exports = function (app) {
                                 } else {
                                     addActivity(req.body.owner, 'OBJECT', 'ADD', req.body.name,
                                         req.body.member, function () {
-                                            depotObject._id = depotObjectResult._id;
+                                            // User to be sent in the response
+                                            var depotObjectResponse = {
+                                                "_id": depotObjectResult._id,
+                                                "name": depotObjectResult.name,
+                                                "owner": depotObjectResult.owner,
+                                                "depot": depotObjectResult.depot,
+                                                "guarantee": depotObjectResult.guarantee,
+                                                "dateOfExpiry": depotObjectResult.dateOfExpiry,
+                                                "description": depotObjectResult.description
+                                            };
                                             res.status(200).send({
-                                                "depotObject": depotObject
+                                                "depotObject": depotObjectResponse
                                             });
                                         });
                                 }
@@ -305,11 +322,19 @@ module.exports = function (app) {
                                     } else {
                                         addActivity(req.body.owner, 'OBJECT', 'ADD', req.body.name,
                                             req.body.member, function () {
-                                                depotObject._id = depotObjectResult._id;
-                                                retrieveImage(imageId, function (data) {
-                                                    depotObject.image = data;
+                                                retrieveImage(depotObjectResult.image, function (data) {
+                                                    var depotObjectResponse = {
+                                                        "_id": depotObjectResult._id,
+                                                        "name": depotObjectResult.name,
+                                                        "owner": depotObjectResult.owner,
+                                                        "depot": depotObjectResult.depot,
+                                                        "guarantee": depotObjectResult.guarantee,
+                                                        "dateOfExpiry": depotObjectResult.dateOfExpiry,
+                                                        "description": depotObjectResult.description,
+                                                        "image": data
+                                                    };
                                                     res.status(200).send({
-                                                        "depotObject": depotObject
+                                                        "depotObject": depotObjectResponse
                                                     });
                                                 });
                                             });
@@ -324,11 +349,32 @@ module.exports = function (app) {
     });
 
     /*
+     * Return true if [date] is a valid date.
+     */
+    function isValidDate(date) {
+        var regExp = new RegExp("^[0-9]{4}\-[0-1][1-9]\-[0-3][0-9]$");
+        return regExp.test(date);
+    }
+
+    /*
      * Return true if [member] exist in [accountMembers].
      */
     function isMember(accountMembers, member) {
         var index = accountMembers.indexOf(member);
         return index !== -1;
+    }
+
+    /**
+     *  Stores a new image in the system.
+     */
+    function storeImage(name, readStream, callback){
+        var writestream = gfs.createWriteStream({
+            filename: name
+        });
+        readStream.pipe(writestream);
+        writestream.on('close', function(file){
+            return callback(file._id)
+        });
     }
 
     /**

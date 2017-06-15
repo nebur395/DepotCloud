@@ -3,6 +3,7 @@ var express = require("express"),
     mongoose = require('mongoose'),
     swaggerJSDoc = require("swagger-jsdoc"),
     morgan = require("morgan"),
+    fs = require("fs"),
     config = require("./config"),
     jwt = require("express-jwt"),
     http = require("http"),
@@ -46,8 +47,8 @@ app.use(express.static('./public'));
 // Midelware to access handler and JWT
 require('./security/jwt-handler')(app);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({limit: '20mb'}));
+app.use(bodyParser.urlencoded({limit: '20mb', extended : true}));
 
 // serve swagger
 app.get('/swagger.json', function (req, res) {

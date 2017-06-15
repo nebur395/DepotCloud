@@ -33,11 +33,11 @@ mongoose.Promise = global.Promise;
  *       guarantee:
  *         type: string
  *         format: date
- *         description: Fecha en el que cumple garantía el objeto.
+ *         description: Fecha en el que cumple garantía el objeto (YYYY-MM-DD).
  *       dateOfExpiry:
  *         type: string
  *         format: date
- *         description: Fecha en la que caduca el objeto.
+ *         description: Fecha en la que caduca el objeto (YYYY-MM-DD).
  *       description:
  *         type: string
  *         description: Descripción del objeto.
@@ -49,8 +49,8 @@ var depotObjectSchema = mongoose.Schema({
     image: {type: mongoose.Schema.Types.ObjectId, default: null},
     owner: {type: String, required: true},
     depot: {type: mongoose.Schema.Types.ObjectId, required: true},
-    guarantee: {type: Date},
-    dateOfExpiry: {type: Date},
+    guarantee: {type: String},
+    dateOfExpiry: {type: String},
     description: {type: String},
     creationDate: {type: Date, default: Date.now}
 });
