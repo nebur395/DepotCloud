@@ -223,6 +223,104 @@ module.exports = function (app) {
      */
     router.post("/:depot", function (req, res) {
 
+        if (!req.body.owner || !req.body.name || !req.body.member) {
+            res.status(404).send({
+                "success": false,
+                "message": "Los datos que se han introducido en el almacén son incorrectos."
+            });
+        }
+
+        User.findOne({email: req.body.owner}, function (err, userResult) {
+
+            if (err) {
+                res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            } else if (!userResult) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
+                });
+            } else if (!isMember(userResult.members, req.body.member)) {
+                res.status(404).send({
+                    "success": false,
+                    "message": "El miembro de la unidad familiar con el que se desea realizar la" +
+                    " acción no existe o no pertenece a la misma."
+                });
+            } else {
+
+                Depot.findOne({_id: req.params.depot}, function (err, depotResult) {
+                    if (err) {
+                        res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                    } else if (!depotResult) {
+                        res.status(404).send({
+                            "success": false,
+                            "message": "El almacén al que se intenta acceder no existe."
+                        });
+                    } else {
+                        var depotObject = new DepotObject({
+                            name: req.body.name,
+                            owner: req.body.owner,
+                            depot: req.params.depot,
+                            guarantee: req.params.guarantee,
+                            dateOfExpiry: req.params.dateOfExpiry,
+                            description: req.params.description
+                        });
+                        if (!req.body.image) {
+                            depotObject.image = "";
+                            depotObject.save(function (err, depotObjectResult) {
+                                if (err) {
+                                    res.status(500).send({
+                                        "success": false,
+                                        "message": "Error interno del servidor."
+                                    });
+                                } else {
+                                    addActivity(req.body.owner, 'OBJECT', 'ADD', req.body.name,
+                                        req.body.member, function () {
+                                            depotObject._id = depotObjectResult._id;
+                                            res.status(200).send({
+                                                "depotObject": depotObject
+                                            });
+                                        });
+                                }
+                            });
+                        } else {
+                            var imageName = req.body.name + "_image";
+                            // Creates a readable stream with the image string that is in base64
+                            var imageStream = new Readable();
+                            imageStream.push(req.body.image);
+                            imageStream.push(null);
+                            storeImage(imageName, imageStream, function (imageId) {
+                                depotObject.image = imageId;
+                                depotObject.save(function (err, depotObjectResult) {
+                                    if (err) {
+                                        res.status(500).send({
+                                            "success": false,
+                                            "message": "Error interno del servidor."
+                                        });
+                                    } else {
+                                        addActivity(req.body.owner, 'OBJECT', 'ADD', req.body.name,
+                                            req.body.member, function () {
+                                                depotObject._id = depotObjectResult._id;
+                                                retrieveImage(imageId, function (data) {
+                                                    depotObject.image = data;
+                                                    res.status(200).send({
+                                                        "depotObject": depotObject
+                                                    });
+                                                });
+                                            });
+                                    }
+                                });
+                            });
+                        }
+                    }
+                });
+            }
+        });
     });
 
     /*
