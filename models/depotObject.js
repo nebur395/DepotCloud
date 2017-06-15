@@ -40,7 +40,7 @@ mongoose.Promise = global.Promise;
  *         description: Fecha en la que caduca el objeto.
  *       description:
  *         type: string
- *         description: Descripción del almacén.
+ *         description: Descripción del objeto.
  */
 
 // Create the Schema
