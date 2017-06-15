@@ -73,7 +73,7 @@ describe('Depot', function () {
      */
     describe("#modifyDepot()", function () {
 
-        it('should successfully add a depot', function (done) {
+        it('should successfully modify a depot', function (done) {
 
             chai.request(server)
                 .put('/depots/' + email + '/' + depotsId[0])
