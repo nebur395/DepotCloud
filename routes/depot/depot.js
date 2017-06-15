@@ -382,6 +382,12 @@ module.exports = function (app) {
                             "message": "El miembro de la unidad familiar con el que se desea realizar la" +
                             " acción no existe o no pertenece a la misma."
                         });
+                    } else if (depotResult.owner !== req.params.owner) {
+                        res.status(404).send({
+                            "success": false,
+                            "message": "Fallo al modificar el almacén. Se ha de ser el" +
+                            " propietario del mismo."
+                        });
                     } else {
 
                         var depotNameTemp = depotResult.name;
