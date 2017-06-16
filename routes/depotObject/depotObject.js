@@ -348,6 +348,91 @@ module.exports = function (app) {
         });
     });
 
+    /**
+     * @swagger
+     * /depotObjects/{depot}/{name}:
+     *   put:
+     *     tags:
+     *       - DepotObject
+     *     summary: Modificar un objeto al almacén.
+     *     description: Modifica un objeto de un almacén de la unidad familiar.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *       - name: depot
+     *         description: ID del almacén en el que se va a modificar el objeto.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: name
+     *         description: ID del objeto que se va a modificar.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: owner
+     *         description: Email de la unidad familiar a la que pertenece el objeto.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: name
+     *         description: Nombre del objeto.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: image
+     *         description: String en base64 que representa la imagen adjunta al objecto.
+     *         in: body
+     *         type: string
+     *       - name: guarantee
+     *         description: Fecha en el que cumple garantía el objeto (YYYY-MM-DD).
+     *         in: body
+     *         type: string
+     *         format: date
+     *       - name: dateOfExpiry
+     *         description: Fecha en la que caduca el objeto (YYYY-MM-DD).
+     *         in: body
+     *         type: string
+     *         format: date
+     *       - name: description
+     *         description: Descripción del objeto.
+     *         in: body
+     *         type: string
+     *       - name: member
+     *         description: Miembro de la unidad familiar que está modificando el almacén.
+     *         in: body
+     *         required: true
+     *         type: string
+     *     responses:
+     *       200:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+
+
     /*
      * Return true if [date] is a valid date.
      */
