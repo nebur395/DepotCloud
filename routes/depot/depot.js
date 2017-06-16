@@ -62,12 +62,12 @@ module.exports = function (app) {
 
         User.findOne({email: req.params.owner}, function (err, userResult) {
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
             } else if (!userResult) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
@@ -75,11 +75,10 @@ module.exports = function (app) {
                 Depot.find({owner: req.params.owner}, function (err, depotResult) {
 
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
-                        return;
                     }
 
                     var depots = [];
@@ -102,14 +101,13 @@ module.exports = function (app) {
                     }, function (err) {
 
                         if (err) {
-                            res.status(500).send({
+                            return res.status(500).send({
                                 "success": false,
                                 "message": "Error interno del servidor."
                             });
-                            return;
                         }
 
-                        res.status(200).send({
+                        return res.status(200).send({
                             "depots": depots
                         });
                     });
@@ -202,23 +200,23 @@ module.exports = function (app) {
         User.findOne({email: req.params.owner}, function (err, userResult) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
             } else if (!userResult) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else if (!req.body.name || !req.body.type || !req.body.distance || !req.body.member ||
                 !isValidType(req.body.type) || !isValidDistance(req.body.distance)) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "Los datos que se han introducido en el almacén son incorrectos."
                 });
             } else if (!isMember(userResult.members, req.body.member)) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "El miembro de la unidad familiar con el que se desea realizar la" +
                     " acción no existe o no pertenece a la misma."
@@ -237,7 +235,7 @@ module.exports = function (app) {
                 }, function (err, depotResult) {
 
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
@@ -253,7 +251,7 @@ module.exports = function (app) {
                                     "distance": depotResult.distance,
                                     "description": depotResult.description
                                 };
-                                res.status(200).send({
+                                return res.status(200).send({
                                     "depot": depotResponse
                                 });
                             });
@@ -349,41 +347,41 @@ module.exports = function (app) {
         User.findOne({email: req.params.owner}, function (err, userResult) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
             } else if (!userResult) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else {
                 Depot.findOne({_id: req.params.id}, function (err, depotResult) {
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
                     } else if (!depotResult) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "El almacén que se desea modificar no existe."
                         });
                     } else if (!req.body.name || !req.body.type || !req.body.distance || !req.body.member ||
                         !isValidType(req.body.type) || !isValidDistance(req.body.distance)) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "Los datos que se han introducido en el almacén son incorrectos."
                         });
                     } else if (!isMember(userResult.members, req.body.member)) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "El miembro de la unidad familiar con el que se desea realizar la" +
                             " acción no existe o no pertenece a la misma."
                         });
                     } else if (depotResult.owner !== req.params.owner) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "Fallo al modificar el almacén. Se ha de ser el" +
                             " propietario del mismo."
@@ -400,14 +398,14 @@ module.exports = function (app) {
                         depotResult.save(function (err) {
 
                             if (err) {
-                                res.status(500).send({
+                                return res.status(500).send({
                                     "success": false,
                                     "message": "Error interno del servidor."
                                 });
                             } else {
                                 addActivity(req.params.owner, 'DEPOT', 'MODIFY', depotNameTemp,
                                     req.body.member, function () {
-                                        res.status(200).send({
+                                        return res.status(200).send({
                                             "success": true,
                                             "message": "Almacén modificado correctamente."
                                         });
@@ -479,35 +477,35 @@ module.exports = function (app) {
         User.findOne({email: req.params.owner}, function (err, userResult) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
             } else if (!userResult) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else {
                 Depot.findByIdAndRemove(req.params.id, function (err, depotResult) {
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
                     } else if (!depotResult) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "El almacén que se desea eliminar no existe."
                         });
                     } else if (!isMember(userResult.members, req.body.member)) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "El miembro de la unidad familiar con el que se desea realizar la" +
                             " acción no existe o no pertenece a la misma."
                         });
                     } else if (depotResult.owner !== req.params.owner) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "Fallo al modificar el almacén. Se ha de ser el" +
                             " propietario del mismo."
@@ -516,7 +514,7 @@ module.exports = function (app) {
 
                         addActivity(req.params.owner, 'DEPOT', 'DELETE', depotResult.name,
                             req.body.member, function () {
-                                res.status(200).send({
+                                return res.status(200).send({
                                     "success": true,
                                     "message": "Almacén eliminado correctamente."
                                 });

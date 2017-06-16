@@ -68,11 +68,10 @@ module.exports = function (app) {
         User.findOneAndUpdate({email: email}, {lastLoginDate: Date.now()}, function(err, result) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error recuperando datos."
                 });
-                return;
             }
 
             // Hashes the password in order to compare it with the stored one
@@ -86,20 +85,18 @@ module.exports = function (app) {
 
                 // Checks if the user's account is active
                 if (!result.isActive) {
-                    res.status(404).send({
+                    return res.status(404).send({
                         "success": false,
                         "message": "La cuenta no está activa. Contacte con el administrador."
                     });
-                    return;
                 }
 
                 // If the account is active and have no ban on it, checks if the password is correct
                 if (hashPass !== result.password) {
-                    res.status(404).send({
+                    return res.status(404).send({
                         "success": false,
                         "message": "Email o contraseña incorrectos."
                     });
-                    return;
                 }
 
                 // User to be sent in the response
@@ -116,13 +113,13 @@ module.exports = function (app) {
                     expiresIn: "1h"     // expires in 1 hour
                 });
 
-                res.status(200).send({
+                return res.status(200).send({
                     "token": token
                 });
             }
             // If there's no user with that email or the password is incorrect
             else {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "Email o contraseña incorrectos."
                 });

@@ -80,21 +80,19 @@ module.exports = function (app) {
     router.get("/", function (req, res) {
 
         if (!req.user.admin) {
-            res.status(403).send({
+            return res.status(403).send({
                 "success": false,
                 "message": "No estás autorizado a acceder a esta operación."
             });
-            return;
         }
 
         User.find({admin: false}, function (err, result) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
-                return;
             }
 
             var users = [];
@@ -115,14 +113,13 @@ module.exports = function (app) {
             }, function (err) {
 
                 if (err) {
-                    res.status(500).send({
+                    return res.status(500).send({
                         "success": false,
                         "message": "Error interno del servidor."
                     });
-                    return;
                 }
 
-                res.status(200).send({
+                return res.status(200).send({
                     "users": users
                 });
             });
@@ -188,35 +185,32 @@ module.exports = function (app) {
 
         // Checks all body fields
         if (!req.body.name || !req.body.password || !req.body.rePassword || !req.body.email) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "Nombre, contraseña o email incorrectos."
             });
-            return;
         }
 
         // Checks if both passwords are equals
         if (req.body.password !== req.body.rePassword) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "Las contraseñas no coinciden."
             });
-            return;
         }
 
         // Checks if passwords are of adequate length
         if ((req.body.password.length < 5) || (req.body.password.length > 20)) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "La contraseña no tiene el tamaño adecuado."
             });
-            return;
         }
 
         User.findOne({email: req.body.email}, function (err, result) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
@@ -224,7 +218,7 @@ module.exports = function (app) {
 
             // Checks if a user already exist
             if (result) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "Ya existe una cuenta con ese correo."
                 });
@@ -245,12 +239,12 @@ module.exports = function (app) {
                 }, function (err) {
 
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
                     } else {
-                        res.status(200).send({
+                        return res.status(200).send({
                             "success": true,
                             "message": "Usuario creado correctamente."
                         });
@@ -325,30 +319,27 @@ module.exports = function (app) {
     router.put("/:email", function (req, res) {
 
         if (!req.body.current || !req.body.name) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "Datos de perfil incorrectos."
             });
-            return;
         }
 
         // Checks if new password are of adequate length
         if (req.body.new && (req.body.new.length < 5) || (req.body.new.length > 20)) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "La contraseña nueva no tiene el tamaño adecuado."
             });
-            return;
         }
 
         User.findOne({email: req.params.email}, function (err, result) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
-                return;
             }
 
             var hashPass = require('crypto')
@@ -371,14 +362,13 @@ module.exports = function (app) {
                     }, function (err) {
 
                         if (err) {
-                            res.status(500).send({
+                            return res.status(500).send({
                                 "succes": false,
                                 "message": "Error interno del servidor."
                             });
-                            return;
                         }
 
-                        res.status(200).send({
+                        return res.status(200).send({
                             "success": true,
                             "message": "Usuario actualizado correctamente."
                         });
@@ -390,14 +380,13 @@ module.exports = function (app) {
                     }, function (err) {
 
                         if (err) {
-                            res.status(500).send({
+                            return res.status(500).send({
                                 "succes": false,
                                 "message": "Error interno del servidor."
                             });
-                            return;
                         }
 
-                        res.status(200).send({
+                        return res.status(200).send({
                             "success": true,
                             "message": "Usuario actualizado correctamente."
                         });
@@ -406,7 +395,7 @@ module.exports = function (app) {
                 }
 
             } else {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "Email o contraseña actual incorrectos."
                 });
@@ -467,21 +456,19 @@ module.exports = function (app) {
     router.delete("/:email", function (req, res) {
 
         if (!req.body.current) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "Contraseña incorrecta."
             });
-            return;
         }
 
         User.findOne({email: req.params.email}, function (err, result) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
-                return;
             }
 
             // Hashes the password in order to compare it with the stored one
@@ -497,20 +484,19 @@ module.exports = function (app) {
                     deactivationDate: new Date()
                 }, function (err) {
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
-                        return;
                     }
 
-                    res.status(200).send({
+                    return res.status(200).send({
                         "success": true,
                         "message": "Cuenta de usuario eliminada correctamente."
                     });
                 });
             } else { //No result
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "Email o contraseña incorrectos."
                 });

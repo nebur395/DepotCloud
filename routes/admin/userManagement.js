@@ -72,7 +72,7 @@ module.exports = function (app) {
     router.put("/users/:email", function (req, res) {
 
         if (!req.user.admin) {
-            res.status(403).send({
+            return res.status(403).send({
                 "success": false,
                 "message": "No estás autorizado a acceder a esta operación."
             });
@@ -81,7 +81,7 @@ module.exports = function (app) {
 
         // Checks all body fields
         if (!req.body.name || !req.body.newEmail) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "Datos a actualizar incorrectos incorrectos."
             });
@@ -94,7 +94,7 @@ module.exports = function (app) {
         }, function (err, result) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
@@ -102,12 +102,12 @@ module.exports = function (app) {
             }
 
             if (result) {
-                res.status(200).send({
+                return res.status(200).send({
                     "success": true,
                     "message": "Usuario actualizado correctamente."
                 });
             } else {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "El usuario no existe."
                 });
@@ -171,7 +171,7 @@ module.exports = function (app) {
     router.put("/users/:email/active", function (req, res) {
 
         if (!req.user.admin) {
-            res.status(403).send({
+            return res.status(403).send({
                 "success": false,
                 "message": "No estás autorizado a acceder a esta operación."
             });
@@ -184,7 +184,7 @@ module.exports = function (app) {
         }, function (err, result) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
@@ -192,12 +192,12 @@ module.exports = function (app) {
             }
 
             if (result) {
-                res.status(200).send({
+                return res.status(200).send({
                     "success": true,
                     "message": "Cuenta de usuario reactivada correctamente."
                 });
             } else {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "El usuario no existe."
                 });
