@@ -487,7 +487,7 @@ module.exports = function (app) {
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else {
-                Depot.findByIdAndRemove(req.params.id, function (err, depotResult) {
+                Depot.findOneAndRemove({"_id": req.params.id, "owner": req.params.owner}, function (err, depotResult) {
                     if (err) {
                         return res.status(500).send({
                             "success": false,
@@ -496,19 +496,13 @@ module.exports = function (app) {
                     } else if (!depotResult) {
                         return res.status(404).send({
                             "success": false,
-                            "message": "El almacén que se desea eliminar no existe."
+                            "message": "El almacén no existe o no eres su propietario."
                         });
                     } else if (!isMember(userResult.members, req.body.member)) {
                         return res.status(404).send({
                             "success": false,
                             "message": "El miembro de la unidad familiar con el que se desea realizar la" +
                             " acción no existe o no pertenece a la misma."
-                        });
-                    } else if (depotResult.owner !== req.params.owner) {
-                        return res.status(404).send({
-                            "success": false,
-                            "message": "Fallo al modificar el almacén. Se ha de ser el" +
-                            " propietario del mismo."
                         });
                     } else {
 

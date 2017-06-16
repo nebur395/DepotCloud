@@ -144,7 +144,7 @@ describe('Depot', function () {
                     result.body.should.have.property('success');
                     result.body.success.should.equal(false);
                     result.body.should.have.property('message');
-                    result.body.message.should.equal('Fallo al modificar el almacén. Se ha de ser el propietario del mismo.');
+                    result.body.message.should.equal('El almacén no existe o no eres su propietario.');
 
                     done();
 
@@ -166,7 +166,7 @@ describe('Depot', function () {
                     result.body.should.have.property('success');
                     result.body.success.should.equal(false);
                     result.body.should.have.property('message');
-                    result.body.message.should.equal('El almacén que se desea eliminar no existe.');
+                    result.body.message.should.equal('El almacén no existe o no eres su propietario.');
 
                     done();
 
