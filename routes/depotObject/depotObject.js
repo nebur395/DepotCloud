@@ -73,12 +73,12 @@ module.exports = function (app) {
 
         Depot.findOne({_id: req.params.depot}, function (err, depotResult) {
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
             } else if (!depotResult) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "El almacén al que se intenta acceder no existe."
                 });
@@ -86,7 +86,7 @@ module.exports = function (app) {
                 DepotObject.find({depot: req.params.depot}, function (err, depotObjectResult) {
 
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
@@ -124,14 +124,14 @@ module.exports = function (app) {
                     }, function (err) {
 
                         if (err) {
-                            res.status(500).send({
+                            return res.status(500).send({
                                 "success": false,
                                 "message": "Error interno del servidor."
                             });
                             return;
                         }
 
-                        res.status(200).send({
+                        return res.status(200).send({
                             "depotObjects": depotObjects
                         });
                     });
@@ -227,7 +227,7 @@ module.exports = function (app) {
         gfs = grid(mongoose.connection.db);
 
         if (!req.body.owner || !req.body.name || !req.body.member) {
-            res.status(404).send({
+            return res.status(404).send({
                 "success": false,
                 "message": "Los datos que se han introducido en el almacén son incorrectos."
             });
@@ -242,17 +242,17 @@ module.exports = function (app) {
         User.findOne({email: req.body.owner}, function (err, userResult) {
 
             if (err) {
-                res.status(500).send({
+                return res.status(500).send({
                     "success": false,
                     "message": "Error interno del servidor."
                 });
             } else if (!userResult) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else if (!isMember(userResult.members, req.body.member)) {
-                res.status(404).send({
+                return res.status(404).send({
                     "success": false,
                     "message": "El miembro de la unidad familiar con el que se desea realizar la" +
                     " acción no existe o no pertenece a la misma."
@@ -261,12 +261,12 @@ module.exports = function (app) {
 
                 Depot.findOne({_id: req.params.depot}, function (err, depotResult) {
                     if (err) {
-                        res.status(500).send({
+                        return res.status(500).send({
                             "success": false,
                             "message": "Error interno del servidor."
                         });
                     } else if (!depotResult) {
-                        res.status(404).send({
+                        return res.status(404).send({
                             "success": false,
                             "message": "El almacén al que se intenta acceder no existe."
                         });
@@ -282,7 +282,7 @@ module.exports = function (app) {
                         if (!req.body.image) {
                             depotObject.save(function (err, depotObjectResult) {
                                 if (err) {
-                                    res.status(500).send({
+                                    return res.status(500).send({
                                         "success": false,
                                         "message": "Error interno del servidor."
                                     });
@@ -299,7 +299,7 @@ module.exports = function (app) {
                                                 "dateOfExpiry": depotObjectResult.dateOfExpiry,
                                                 "description": depotObjectResult.description
                                             };
-                                            res.status(200).send({
+                                            return res.status(200).send({
                                                 "depotObject": depotObjectResponse
                                             });
                                         });
@@ -315,7 +315,7 @@ module.exports = function (app) {
                                 depotObject.image = imageId;
                                 depotObject.save(function (err, depotObjectResult) {
                                     if (err) {
-                                        res.status(500).send({
+                                        return res.status(500).send({
                                             "success": false,
                                             "message": "Error interno del servidor."
                                         });
@@ -333,7 +333,7 @@ module.exports = function (app) {
                                                         "description": depotObjectResult.description,
                                                         "image": data
                                                     };
-                                                    res.status(200).send({
+                                                    return res.status(200).send({
                                                         "depotObject": depotObjectResponse
                                                     });
                                                 });
@@ -431,7 +431,152 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
+    router.put("/:depot/:name", function (req, res) {
 
+        // Sets the mongo database connection to gridfs in order to store and retrieve files in the DB.
+        gfs = grid(mongoose.connection.db);
+
+        if (!req.body.owner || !req.body.name || !req.body.member) {
+            return res.status(404).send({
+                "success": false,
+                "message": "Los datos que se han introducido en el almacén son incorrectos."
+            });
+        } else if((req.body.guarantee && !isValidDate(req.body.guarantee))
+            || (req.body.dateOfExpiry && !isValidDate(req.body.dateOfExpiry))) {
+            return res.status(404).send({
+                "success": false,
+                "message": "El formato de las fechas es incorrecto."
+            });
+        }
+
+        User.findOne({email: req.body.owner}, function (err, userResult) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            } else if (!userResult) {
+                return res.status(404).send({
+                    "success": false,
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
+                });
+            } else if (!isMember(userResult.members, req.body.member)) {
+                return res.status(404).send({
+                    "success": false,
+                    "message": "El miembro de la unidad familiar con el que se desea realizar la" +
+                    " acción no existe o no pertenece a la misma."
+                });
+            } else {
+
+                Depot.findOne({_id: req.params.depot}, function (err, depotResult) {
+                    if (err) {
+                        return res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                    } else if (!depotResult) {
+                        return res.status(404).send({
+                            "success": false,
+                            "message": "El almacén al que se intenta acceder no existe."
+                        });
+                    } else {
+                        DepotObject.findOne({_id: req.params.name}, function (err, depotObjectResult) {
+                            if (err) {
+                                return res.status(500).send({
+                                    "success": false,
+                                    "message": "Error interno del servidor."
+                                });
+                            } else if (!depotObjectResult) {
+                                return res.status(404).send({
+                                    "success": false,
+                                    "message": "El ojeto al que se intenta acceder no existe."
+                                });
+                            } else {
+                                var oldName = depotObjectResult.name;
+                                depotObjectResult.name = req.body.name;
+                                depotObjectResult.owner = req.body.owner;
+                                depotObjectResult.depot = req.params.depot;
+                                depotObjectResult.guarantee = req.body.guarantee;
+                                depotObjectResult.dateOfExpiry = req.body.dateOfExpiry;
+                                depotObjectResult.description = req.body.description;
+                                if (!req.body.image) {
+                                    depotObjectResult.save(function (err) {
+                                        if (err) {
+                                            return res.status(500).send({
+                                                "success": false,
+                                                "message": "Error interno del servidor."
+                                            });
+                                        } else {
+                                            addActivity(req.body.owner, 'OBJECT', 'MODIFY', oldName,
+                                                req.body.member, function () {
+                                                    return res.status(200).send({
+                                                        "success": true,
+                                                        "message": "Objeto modificado correctamente."
+                                                    });
+                                                });
+                                        }
+                                    });
+                                } else if(req.body.image && !depotObjectResult.image) {
+                                    var imageName = req.body.name + "_image";
+                                    // Creates a readable stream with the image string that is in base64
+                                    var imageStream = new Readable();
+                                    imageStream.push(req.body.image);
+                                    imageStream.push(null);
+                                    storeImage(imageName, imageStream, function (imageId) {
+                                        depotObjectResult.image = imageId;
+                                        depotObjectResult.save(function (err) {
+                                            if (err) {
+                                                return res.status(500).send({
+                                                    "success": false,
+                                                    "message": "Error interno del servidor."
+                                                });
+                                            } else {
+                                                addActivity(req.body.owner, 'OBJECT', 'MODIFY', oldName,
+                                                    req.body.member, function () {
+                                                        return res.status(200).send({
+                                                            "success": true,
+                                                            "message": "Objeto modificado correctamente."
+                                                        });
+                                                    });
+                                            }
+                                        });
+                                    });
+                                } else if (req.body.image && depotObjectResult.image) {
+                                    removeImage(depotObjectResult.image, function () {
+                                        var imageName = req.body.name + "_image";
+                                        // Creates a readable stream with the image string that is in base64
+                                        var imageStream = new Readable();
+                                        imageStream.push(req.body.image);
+                                        imageStream.push(null);
+                                        storeImage(imageName, imageStream, function (imageId) {
+                                            depotObjectResult.image = imageId;
+                                            depotObjectResult.save(function (err) {
+                                                if (err) {
+                                                    return res.status(500).send({
+                                                        "success": false,
+                                                        "message": "Error interno del servidor."
+                                                    });
+                                                } else {
+                                                    addActivity(req.body.owner, 'OBJECT', 'MODIFY', oldName,
+                                                        req.body.member, function () {
+                                                            return res.status(200).send({
+                                                                "success": true,
+                                                                "message": "Objeto modificado correctamente."
+                                                            });
+                                                        });
+                                                }
+                                            });
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
 
     /*
      * Return true if [date] is a valid date.
@@ -460,6 +605,14 @@ module.exports = function (app) {
         writestream.on('close', function(file){
             return callback(file._id)
         });
+    }
+
+    function removeImage(imageId, callback) {
+        gfs.remove({
+            _id: imageId
+        }, function(){
+            return callback();
+        })
     }
 
     /**
