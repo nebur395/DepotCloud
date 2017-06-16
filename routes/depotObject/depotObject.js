@@ -500,7 +500,7 @@ module.exports = function (app) {
                                 depotObjectResult.guarantee = req.body.guarantee;
                                 depotObjectResult.dateOfExpiry = req.body.dateOfExpiry;
                                 depotObjectResult.description = req.body.description;
-                                if (!req.body.image) {
+                                if (!req.body.image && !depotObjectResult.image) {
                                     depotObjectResult.save(function (err) {
                                         if (err) {
                                             return res.status(500).send({
@@ -516,6 +516,26 @@ module.exports = function (app) {
                                                     });
                                                 });
                                         }
+                                    });
+                                } else if (!req.body.image && depotObjectResult.image) {
+                                    removeImage(depotObjectResult.image, function () {
+                                        depotObjectResult.image = null;
+                                        depotObjectResult.save(function (err) {
+                                            if (err) {
+                                                return res.status(500).send({
+                                                    "success": false,
+                                                    "message": "Error interno del servidor."
+                                                });
+                                            } else {
+                                                addActivity(req.body.owner, 'OBJECT', 'MODIFY', oldName,
+                                                    req.body.member, function () {
+                                                        return res.status(200).send({
+                                                            "success": true,
+                                                            "message": "Objeto modificado correctamente."
+                                                        });
+                                                    });
+                                            }
+                                        });
                                     });
                                 } else if(req.body.image && !depotObjectResult.image) {
                                     var imageName = req.body.name + "_image";
