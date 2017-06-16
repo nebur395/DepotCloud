@@ -439,7 +439,7 @@ module.exports = function (app) {
         if (!req.body.owner || !req.body.name || !req.body.member) {
             return res.status(404).send({
                 "success": false,
-                "message": "Los datos que se han introducido en el almacén son incorrectos."
+                "message": "Los datos que se han introducido en el objeto son incorrectos."
             });
         } else if((req.body.guarantee && !isValidDate(req.body.guarantee))
             || (req.body.dateOfExpiry && !isValidDate(req.body.dateOfExpiry))) {
@@ -594,6 +594,134 @@ module.exports = function (app) {
                         });
                     }
                 });
+            }
+        });
+    });
+
+    /**
+     * @swagger
+     * /depotObjects/{depot}/{name}:
+     *   delete:
+     *     tags:
+     *       - DepotObject
+     *     summary: Eliminar un objeto al almacén.
+     *     description: Elimina un objeto de un almacén de la unidad familiar.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *       - name: depot
+     *         description: ID del almacén en el que se va a eliminar el objeto.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: name
+     *         description: ID del objeto que se va a eliminar.
+     *         in: path
+     *         required: true
+     *         type: string
+     *       - name: owner
+     *         description: Email de la unidad familiar a la que pertenece el objeto.
+     *         in: body
+     *         required: true
+     *         type: string
+     *       - name: member
+     *         description: Miembro de la unidad familiar que está eliminando el almacén.
+     *         in: body
+     *         required: true
+     *         type: string
+     *     responses:
+     *       200:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.delete("/:depot/:name", function (req, res) {
+
+        // Sets the mongo database connection to gridfs in order to store and retrieve files in the DB.
+        gfs = grid(mongoose.connection.db);
+
+        if (!req.body.owner || !req.body.member) {
+            return res.status(404).send({
+                "success": false,
+                "message": "Los datos que se han introducido en el objeto son incorrectos."
+            });
+        }
+
+        User.findOne({email: req.body.owner}, function (err, userResult) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            } else if (!userResult) {
+                return res.status(404).send({
+                    "success": false,
+                    "message": "La unidad familiar a la que se intenta acceder no existe."
+                });
+            } else if (!isMember(userResult.members, req.body.member)) {
+                return res.status(404).send({
+                    "success": false,
+                    "message": "El miembro de la unidad familiar con el que se desea realizar la" +
+                    " acción no existe o no pertenece a la misma."
+                });
+            } else {
+                DepotObject.findOneAndRemove({"_id": req.params.name, "owner": req.body.owner}, function (err, depotObjectResult) {
+                    if (err) {
+                        return res.status(500).send({
+                            "success": false,
+                            "message": "Error interno del servidor."
+                        });
+                    } else if (!depotObjectResult) {
+                        return res.status(404).send({
+                            "success": false,
+                            "message": "El objeto no existe o no eres su propietario."
+                        });
+                    } else {
+                        if(depotObjectResult.image) {
+                            removeImage(depotObjectResult.image, function () {
+                                addActivity(req.body.owner, 'OBJECT', 'DELETE', depotObjectResult.name,
+                                    req.body.member, function () {
+                                        return res.status(200).send({
+                                            "success": true,
+                                            "message": "Objeto eliminado correctamente."
+                                        });
+                                    });
+                            });
+                        } else {
+                            addActivity(req.body.owner, 'OBJECT', 'DELETE', depotObjectResult.name,
+                                req.body.member, function () {
+                                    return res.status(200).send({
+                                        "success": true,
+                                        "message": "Objeto eliminado correctamente."
+                                    });
+                                });
+                        }
+                    }
+                })
             }
         });
     });
