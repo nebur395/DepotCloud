@@ -90,7 +90,6 @@ module.exports = function (app) {
                             "success": false,
                             "message": "Error interno del servidor."
                         });
-                        return;
                     }
 
                     var depotObjects = [];
@@ -128,7 +127,6 @@ module.exports = function (app) {
                                 "success": false,
                                 "message": "Error interno del servidor."
                             });
-                            return;
                         }
 
                         return res.status(200).send({

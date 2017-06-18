@@ -26,7 +26,6 @@ describe('DepotObject', function () {
         .digest('base64');
     var depotsId = [];
     var depotObjectsId = [];
-    var imageId = [];
 
     var image = "iVBORw0KGgoAAAANSUhEUgAAATQAAAEuCAIAAACPrn" +
         "k1AAAAKnRFWHRDcmVhdGlvbiBUaW1lAOh0IDIwIFhJIDIwMDgg" +
