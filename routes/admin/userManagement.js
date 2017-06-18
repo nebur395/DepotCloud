@@ -76,7 +76,6 @@ module.exports = function (app) {
                 "success": false,
                 "message": "No estás autorizado a acceder a esta operación."
             });
-            return;
         }
 
         // Checks all body fields
@@ -85,7 +84,6 @@ module.exports = function (app) {
                 "success": false,
                 "message": "Datos a actualizar incorrectos incorrectos."
             });
-            return;
         }
 
         User.findOneAndUpdate({email: req.params.email}, {
@@ -98,7 +96,6 @@ module.exports = function (app) {
                     "success": false,
                     "message": "Error interno del servidor."
                 });
-                return;
             }
 
             if (result) {
