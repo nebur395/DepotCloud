@@ -72,7 +72,7 @@ describe('DepotObject', function () {
             members: ["Pepe"]
 
         }, function () {
-            Depot.create ({
+            Depot.create({
 
                 name: "Depot name",
                 owner: email,
@@ -83,7 +83,22 @@ describe('DepotObject', function () {
 
             }, function (err,result) {
                 depotsId.push(new ObjectId(result._id));
-                done();
+                DepotObject.create({
+
+                    depot: depotsId[0],
+                    owner: email,
+                    name: "test depot object",
+                    image: null,
+                    guarantee: "2017-06-17",
+                    dateOfExpiry: "2017-06-17",
+                    description: "Depot Description",
+                    member: "Pepe"
+
+                }, function (err,result) {
+                    depotObjectsId.push(new ObjectId(result._id));
+
+                    done();
+                });
             });
         });
 
@@ -91,14 +106,42 @@ describe('DepotObject', function () {
     });
 
     /**
-     * Tests for addDepotObject functionality.
+     * Tests for modifyDepotObject functionality.
      */
-    describe("#addDepotObject()", function () {
+    describe("#modifyDepotObject()", function () {
 
-        it('should successfully add a complete depotObject', function (done) {
+        it('should successfully modify a depotObject that hasn\'t an image without another one', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
+                .send({
+                    owner: email,
+                    name: "test depot object",
+                    image: "",
+                    guarantee: "2017-06-17",
+                    dateOfExpiry: "2017-06-17",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(200);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(true);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Objeto modificado correctamente.');
+
+                    done();
+
+                });
+        });
+
+        it('should successfully modify a depotObject that hasn\'t an image with another one', function (done) {
+
+            chai.request(server)
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "test depot object",
@@ -113,30 +156,24 @@ describe('DepotObject', function () {
 
                     result.should.have.status(200);
                     result.body.should.be.a('object');
-                    result.body.should.have.property('depotObject');
-                    result.body.depotObject.should.be.a('object');
-                    result.body.depotObject.should.have.property('_id');
-                    result.body.depotObject.should.have.property('depot');
-                    result.body.depotObject.should.have.property('name');
-                    result.body.depotObject.should.have.property('owner');
-                    result.body.depotObject.should.have.property('image');
-                    result.body.depotObject.should.have.property('guarantee');
-                    result.body.depotObject.should.have.property('dateOfExpiry');
-                    result.body.depotObject.should.have.property('description');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(true);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Objeto modificado correctamente.');
 
-                    depotObjectsId.push(new ObjectId(result.body.depotObject._id));
                     done();
 
                 });
         });
 
-        it('should successfully add a depotObject without a image', function (done) {
+        it('should successfully modify a depotObject that has an image with another one', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "test depot object",
+                    image: image,
                     guarantee: "2017-06-17",
                     dateOfExpiry: "2017-06-17",
                     description: "Depot Description",
@@ -147,17 +184,39 @@ describe('DepotObject', function () {
 
                     result.should.have.status(200);
                     result.body.should.be.a('object');
-                    result.body.should.have.property('depotObject');
-                    result.body.depotObject.should.be.a('object');
-                    result.body.depotObject.should.have.property('_id');
-                    result.body.depotObject.should.have.property('depot');
-                    result.body.depotObject.should.have.property('name');
-                    result.body.depotObject.should.have.property('owner');
-                    result.body.depotObject.should.have.property('guarantee');
-                    result.body.depotObject.should.have.property('dateOfExpiry');
-                    result.body.depotObject.should.have.property('description');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(true);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Objeto modificado correctamente.');
 
-                    depotObjectsId.push(new ObjectId(result.body.depotObject._id));
+                    done();
+
+                });
+        });
+
+        it('should successfully modify a depotObject that has an image without another one', function (done) {
+
+            chai.request(server)
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
+                .send({
+                    owner: email,
+                    name: "test depot object",
+                    image: "",
+                    guarantee: "2017-06-17",
+                    dateOfExpiry: "2017-06-17",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(200);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(true);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('Objeto modificado correctamente.');
+
                     done();
 
                 });
@@ -166,7 +225,7 @@ describe('DepotObject', function () {
         it('should return an error since owner is blank', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: "",
                     name: "test depot object",
@@ -183,7 +242,7 @@ describe('DepotObject', function () {
                     result.body.should.have.property('success');
                     result.body.success.should.equal(false);
                     result.body.should.have.property('message');
-                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+                    result.body.message.should.equal('Los datos que se han introducido en el objeto son incorrectos.');
 
                     done();
 
@@ -193,7 +252,7 @@ describe('DepotObject', function () {
         it('should return an error since name is blank', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "",
@@ -210,7 +269,7 @@ describe('DepotObject', function () {
                     result.body.should.have.property('success');
                     result.body.success.should.equal(false);
                     result.body.should.have.property('message');
-                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+                    result.body.message.should.equal('Los datos que se han introducido en el objeto son incorrectos.');
 
                     done();
 
@@ -220,7 +279,7 @@ describe('DepotObject', function () {
         it('should return an error since member is blank', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "test depot object",
@@ -237,7 +296,7 @@ describe('DepotObject', function () {
                     result.body.should.have.property('success');
                     result.body.success.should.equal(false);
                     result.body.should.have.property('message');
-                    result.body.message.should.equal('Los datos que se han introducido en el almacén son incorrectos.');
+                    result.body.message.should.equal('Los datos que se han introducido en el objeto son incorrectos.');
 
                     done();
 
@@ -247,7 +306,7 @@ describe('DepotObject', function () {
         it('should return an error since guarantee is invalid', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "test depot object",
@@ -274,7 +333,7 @@ describe('DepotObject', function () {
         it('should return an error since dateOfExpiry is invalid', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "test depot object",
@@ -301,7 +360,7 @@ describe('DepotObject', function () {
         it('should return an error since the user doesn\'t exists', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: "wrong@email.com",
                     name: "test depot object",
@@ -328,7 +387,7 @@ describe('DepotObject', function () {
         it('should return an error since member is invalid', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotsId[0])
+                .put('/depotObjects/' + depotsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "test depot object",
@@ -353,10 +412,10 @@ describe('DepotObject', function () {
                 });
         });
 
-        it('should return an error since member is invalid', function (done) {
+        it('should return an error since the depot doesn\'t exists', function (done) {
 
             chai.request(server)
-                .post('/depotObjects/' + depotObjectsId[0])
+                .put('/depotObjects/' + depotObjectsId[0] + '/' + depotObjectsId[0])
                 .send({
                     owner: email,
                     name: "test depot object",
@@ -374,6 +433,33 @@ describe('DepotObject', function () {
                     result.body.success.should.equal(false);
                     result.body.should.have.property('message');
                     result.body.message.should.equal('El almacén al que se intenta acceder no existe.');
+
+                    done();
+
+                });
+        });
+
+        it('should return an error since the depotObject doesn\'t exists', function (done) {
+
+            chai.request(server)
+                .put('/depotObjects/' + depotsId[0] + '/' + depotsId[0])
+                .send({
+                    owner: email,
+                    name: "test depot object",
+                    guarantee: "2017-06-17",
+                    dateOfExpiry: "2017-06-17",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('El ojeto al que se intenta acceder no existe.');
 
                     done();
 

@@ -353,7 +353,7 @@ describe('DepotObject', function () {
                 });
         });
 
-        it('should return an error since member is invalid', function (done) {
+        it('should return an error since the depot doesn\'t exists', function (done) {
 
             chai.request(server)
                 .post('/depotObjects/' + depotObjectsId[0])
