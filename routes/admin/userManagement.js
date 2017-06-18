@@ -175,7 +175,6 @@ module.exports = function (app) {
                 "success": false,
                 "message": "No estás autorizado a acceder a esta operación."
             });
-            return;
         }
 
         User.findOneAndUpdate({email: req.params.email}, {
@@ -188,7 +187,6 @@ module.exports = function (app) {
                     "success": false,
                     "message": "Error interno del servidor."
                 });
-                return;
             }
 
             if (result) {
