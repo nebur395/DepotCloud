@@ -1,7 +1,6 @@
 var express = require('express');
-var base64 = require('base-64');
+var async = require("async");
 var utf8 = require('utf8');
-var jwt = require ('jsonwebtoken');
 
 
 module.exports = function (app) {
@@ -75,7 +74,7 @@ module.exports = function (app) {
                     "success": false,
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
-            } else if (result) {
+            } else {
 
                 Activity.find({owner: req.params.user}, function(err, activityResult) {
 
@@ -96,7 +95,7 @@ module.exports = function (app) {
                             "action": activity.action,
                             "name": activity.name,
                             "author": activity.author,
-                            "activityDate": activity.activityDate,
+                            "activityDate": activity.activityDate
                         };
 
                         activities.push(activityResponse);
