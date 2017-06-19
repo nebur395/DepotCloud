@@ -49,8 +49,8 @@ describe('Depot', function () {
                 distance: "[0-1km]",
                 description: "Depot Description"
 
-            }, function (err,result1) {
-                depotsId.push(new ObjectId(result1._id));
+            }, function (err,result) {
+                depotsId.push(new ObjectId(result._id));
                 Depot.create({
 
                     name: "Depot name",
@@ -60,8 +60,8 @@ describe('Depot', function () {
                     distance: "[0-1km]",
                     description: "Depot Description"
 
-                }, function (err,result2) {
-                    depotsId.push(new ObjectId(result2._id));
+                }, function (err,result) {
+                    depotsId.push(new ObjectId(result._id));
                     User.create ({
 
                         email: wrongEmail,
@@ -149,6 +149,41 @@ describe('Depot', function () {
                     done();
 
                 });
+        });
+
+        it('should return an error since member is invalid', function (done) {
+
+            Depot.create({
+
+                name: "Depot name",
+                owner: email,
+                location: "Depot Location",
+                type: "Storage Room",
+                distance: "[0-1km]",
+                description: "Depot Description"
+
+            }, function (err,result) {
+                depotsId.push(new ObjectId(result._id));
+                chai.request(server)
+                    .delete('/depots/' + email + '/' + depotsId[depotsId.length - 1])
+                    .send({
+                        member: "Marta"
+                    })
+                    .set('Authorization','Bearer ' + createUserToken(name, false))
+                    .end(function (err, result) {
+
+                        result.should.have.status(404);
+                        result.body.should.be.a('object');
+                        result.body.should.have.property('success');
+                        result.body.success.should.equal(false);
+                        result.body.should.have.property('message');
+                        result.body.message.should.equal('El miembro de la unidad familiar con el' +
+                            ' que se desea realizar la acción no existe o no pertenece a la misma.');
+
+                        done();
+
+                    });
+            });
         });
 
         it('should return an error since id of the depot is wrong', function (done) {
