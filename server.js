@@ -33,7 +33,8 @@ var options = {
     swaggerDefinition: swaggerDefinition,
     // path to the API docs
     apis: ['./routes/admin/*.js', './routes/user/*.js', './routes/session/*.js', './routes/depot/*.js',
-        './routes/depotObject/*.js', './models/user.js', './models/depot.js', './models/depotObject.js']
+        './routes/depotObject/*.js', './routes/activity/*.js', './models/user.js', './models/depot.js',
+        './models/depotObject.js', './models/activity.js']
 };
 
 // initialize swagger-jsdoc

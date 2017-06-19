@@ -50,7 +50,7 @@ module.exports = function (app) {
      *         format: byte
      *     responses:
      *       200:
-     *         description: Mensaje de feedback para el usuario.
+     *         description: Lista de usuarios del sistema.
      *         schema:
      *           type: object
      *           properties:
