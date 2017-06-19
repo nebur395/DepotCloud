@@ -1,12 +1,9 @@
 var express = require('express');
 var async = require("async");
-var addActivity = require('../activity/activity').addActivity;
+var addActivity = require('../activity/activityCreator').addActivity;
 var grid = require("gridfs-stream");
-var semaphore = require("semaphore")(1);
 var mongoose = require("mongoose");
-var fs = require("fs");
 var Readable = require('stream').Readable;
-var bs58 = require("bs58");
 grid.mongo = mongoose.mongo;
 
 module.exports = function (app) {

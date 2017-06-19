@@ -1,6 +1,6 @@
 var express = require('express');
 var async = require("async");
-var addActivity = require('../activity/activity').addActivity;
+var addActivity = require('../activity/activityCreator').addActivity;
 
 module.exports = function (app) {
 
