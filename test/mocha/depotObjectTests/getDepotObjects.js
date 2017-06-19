@@ -110,6 +110,7 @@ describe('DepotObject', function () {
     describe("#getDepotObjects()", function () {
 
         it('should successfully get a list of depots', function (done) {
+
             chai.request(server)
                 .post('/depotObjects/' + depotsId[0])
                 .send({
