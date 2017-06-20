@@ -60,10 +60,6 @@ app.models = require('./models');
 
 require('./routes')(app);
 
-// Initialize Websocket communication to stats functionalities
-var statsWebSocket = require('./routes/admin/stats').statsWebSocket;
-statsWebSocket(server);
-
 // Database connection and server launching
 var dbUri = 'mongodb://localhost:27017/depotCloudDb';
 mongoose.connect(dbUri);
@@ -76,6 +72,11 @@ mongoose.connection.once('open', function () {
     });
 
 });
+
+
+// Initialize Websocket communication to stats functionalities
+var statsWebSocket = require('./routes/admin/stats').statsWebSocket;
+statsWebSocket(server);
 
 var guaranteeChecker = require('./routes/reportGenerator/reportGenerator').guaranteeChecker;
 /*
@@ -91,4 +92,4 @@ var dateOfExpiryChecker = require('./routes/reportGenerator/reportGenerator').da
  */
 setInterval(dateOfExpiryChecker, 100);
 
-module.exports = {app: app, server: server};
+module.exports = app;
