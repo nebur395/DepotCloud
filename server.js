@@ -6,8 +6,7 @@ var express = require("express"),
     fs = require("fs"),
     config = require("./config"),
     jwt = require("express-jwt"),
-    http = require("http"),
-    WebSocket = require("ws");
+    http = require("http");
 
 
 var app = express();
@@ -61,25 +60,11 @@ app.models = require('./models');
 
 require('./routes')(app);
 
-var wss = new WebSocket.Server({
-    host: "localhost",
-    server: server,
-    path: "/websocketStats"
-});
-wss.on('connection', function (ws, req) {
-    console.log(ws);
-    var id = setInterval(function () {
-        ws.send(JSON.stringify(process.memoryUsage()), function () { /* ignore errors */ });
-    }, 100);
-    console.log('started client interval');
-    ws.on('close', function () {
-        console.log('stopping client interval');
-        clearInterval(id);
-    });
-});
+// Initialize Websocket communication to stats functionalities
+var statsWebSocket = require('./routes/admin/stats').statsWebSocket;
+statsWebSocket(server);
 
 // Database connection and server launching
-
 var dbUri = 'mongodb://localhost:27017/depotCloudDb';
 mongoose.connect(dbUri);
 mongoose.connection.once('open', function () {
@@ -106,4 +91,4 @@ var dateOfExpiryChecker = require('./routes/reportGenerator/reportGenerator').da
  */
 setInterval(dateOfExpiryChecker, 100);
 
-module.exports = app;
+module.exports = {app: app, server: server};
