@@ -97,13 +97,13 @@ var guaranteeChecker = require('./routes/reportGenerator/reportGenerator').guara
  * Check once per day (86400000)
  * Debug Mode: Check once per 5 minutes (300000) or 2 minutes (120000)
  */
-setInterval(guaranteeChecker, 120000);
+setInterval(guaranteeChecker, 100);
 
 var dateOfExpiryChecker = require('./routes/reportGenerator/reportGenerator').dateOfExpiryChecker;
 /*
  * Check once per day (86400000)
  * Debug Mode: Check once per 5 minutes (300000) or 2 minutes (120000)
  */
-setInterval(dateOfExpiryChecker, 120000);
+setInterval(dateOfExpiryChecker, 100);
 
 module.exports = app;
