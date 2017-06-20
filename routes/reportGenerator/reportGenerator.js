@@ -3,19 +3,15 @@ var async = require("async");
 
 var DepotObject = models.DepotObject;
 /*
- * Create an activity with [type], [action], [name], and [author] params belonging to the
- * account [owner].
- * Execute a callback if exists when the activity is created.
+ * Check if the guarantee of any DepotObject is expired.
  */
 function guaranteeChecker() {
 
-    console.log("--------------------- GUARANTEE CHECKER ----------------------");
-
     DepotObject.find(function (err, depotObjectResult) {
-        async.each(depotObjectResult, function (depotObject, callback) {//YYYY-MM-DD
+        async.each(depotObjectResult, function (depotObject, callback) {
 
             if (checkDates(depotObject.guarantee)) {
-                console.log("caducado: " + depotObject.guarantee);
+                //notify
             }
 
             callback();
@@ -26,15 +22,16 @@ function guaranteeChecker() {
     });
 }
 
+/*
+ * Check if the dateOfExpiry of any DepotObject is expired.
+ */
 function dateOfExpiryChecker() {
 
-    console.log("--------------------- dateOfExpiry CHECKER ----------------------");
-
     DepotObject.find(function (err, depotObjectResult) {
-        async.each(depotObjectResult, function (depotObject, callback) {//YYYY-MM-DD
+        async.each(depotObjectResult, function (depotObject, callback) {
 
             if (checkDates(depotObject.dateOfExpiry)) {
-                console.log("caducado: " + depotObject.dateOfExpiry);
+                //notify
             }
 
             callback();
