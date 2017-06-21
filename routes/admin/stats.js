@@ -586,5 +586,59 @@ module.exports = function (app) {
         });
     });
 
+    /**
+     * @swagger
+     * /adminStats/lastRegistrations:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de registros de usuarios por mes durante el último año
+     *     description: Devuelve el número de registros de usuarios en el sistema
+     *       durante el último año, agrupados por meses.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         description: Número de registros de usuarios por mes.
+     *         schema:
+     *           type: object
+     *           properties:
+     *              lastRegistrations:
+     *               type: array
+     *               description: Array de tamaño 12, una entrada por cada mes
+     *               items:
+     *                type: integer
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+
+
     return router;
 };
