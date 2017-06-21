@@ -578,7 +578,7 @@ module.exports = function (app) {
                         "message": "Error interno del servidor."
                     });
                 }
-                res.status(200).send({
+                return res.status(200).send({
                     "lastLogins": lastLogins
                 });
 
@@ -675,7 +675,7 @@ module.exports = function (app) {
                         "message": "Error interno del servidor."
                     });
                 }
-                res.status(200).send({
+                return res.status(200).send({
                     "lastRegistrations": lastRegistrations
                 });
 
@@ -772,7 +772,7 @@ module.exports = function (app) {
                         "message": "Error interno del servidor."
                     });
                 }
-                res.status(200).send({
+                return res.status(200).send({
                     "lastRegistrations": lastRegistrations
                 });
 
@@ -846,7 +846,7 @@ module.exports = function (app) {
         var month = date.getMonth() + 1;
         var day = date.getDate();
 
-        DepotObject.find({creationDate: {$gte: new Date(year, month, day)}}, '-_id creationDate', function (err, depotCreations) {
+        Depot.find({creationDate: {$gte: new Date(year, month, day)}}, '-_id creationDate', function (err, depotCreations) {
 
             if (err) {
                 return res.status(500).send({
@@ -869,13 +869,166 @@ module.exports = function (app) {
                         "message": "Error interno del servidor."
                     });
                 }
-                res.status(200).send({
+                return res.status(200).send({
                     "creationDateDepots": creationDateDepots
                 });
 
             });
         });
     });
+
+    /**
+     * @swagger
+     * /adminStats/creationDateDepotObjects:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de creaciones de objetos por mes durante el último año
+     *     description: Devuelve el número de creaciones de objetos en el sistema
+     *       durante el último año, agrupados por meses.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         description: Número de creaciones de objetos por mes.
+     *         schema:
+     *           type: object
+     *           properties:
+     *              creationDateDepotObjects:
+     *               type: array
+     *               description: Array de tamaño 12, una entrada por cada mes
+     *               items:
+     *                type: integer
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.get("/creationDateDepotObjects", function (req, res) {
+
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+
+        var date = new Date();
+        var year = date.getFullYear() - 1;
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+
+        DepotObject.find({creationDate: {$gte: new Date(year, month, day)}}, '-_id creationDate', function (err, depotObjectCreations) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            var creationDateDepotObjects = new Array(12).fill(0);
+            async.each(depotObjectCreations, function (depotObjectCreation, callback) {
+
+                creationDateDepotObjects[depotObjectCreation.creationDate.getMonth()] += 1;
+                callback();
+
+            }, function (err) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+                return res.status(200).send({
+                    "creationDateDepotObjects": creationDateDepotObjects
+                });
+
+            });
+        });
+    });
+
+    /**
+     * @swagger
+     * /adminStats/depotTypes:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de almacenes según el tipo
+     *     description: Devuelve el número de almacenes creados en el sistema de cada tipo.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         schema:
+     *           type: object
+     *           properties:
+     *              storageRooms:
+     *                type: integer
+     *                description: Array de tamaño 12, una entrada por cada mes
+     *              houses:
+     *                type: integer
+     *                description: Array de tamaño 12, una entrada por cada mes
+     *              wardrobes:
+     *                type: integer
+     *                description: Array de tamaño 12, una entrada por cada mes
+     *
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
 
 
     return router;
