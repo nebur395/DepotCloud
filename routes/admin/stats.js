@@ -1002,13 +1002,13 @@ module.exports = function (app) {
      *           properties:
      *              storageRooms:
      *                type: integer
-     *                description: Array de tamaño 12, una entrada por cada mes
+     *                description: Número de almacenes de tipo: "Storage Room".
      *              houses:
      *                type: integer
-     *                description: Array de tamaño 12, una entrada por cada mes
+     *                description: Número de almacenes de tipo: "House".
      *              wardrobes:
      *                type: integer
-     *                description: Array de tamaño 12, una entrada por cada mes
+     *                description: Número de almacenes de tipo: "Wardrobe".
      *
      *       401:
      *         description: Mensaje de feedback para el usuario. Normalmente causado por no
@@ -1084,6 +1084,71 @@ module.exports = function (app) {
             });
         });
     });
+
+    /**
+     * @swagger
+     * /adminStats/depotDistance:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de almacenes según la distancia
+     *     description: Devuelve el número de almacenes creados en el sistema según su distancia.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         schema:
+     *           type: object
+     *           properties:
+     *              [0-1km]:
+     *                type: integer
+     *                description: Número de almacenes con distancia: "[0-1km]".
+     *              [1km-2km]:
+     *                type: integer
+     *                description: Número de almacenes con distancia: "[1km-2km]".
+     *              [2km-10km]:
+     *                type: integer
+     *                description: Número de almacenes con distancia: "[2km-10km]".
+     *              [10km-100km]:
+     *                type: integer
+     *                description: Número de almacenes con distancia: "[10km-100km]".
+     *              [100km-300km]:
+     *                type: integer
+     *                description: Número de almacenes con distancia: "[100km-300km]".
+     *              [300km, +]:
+     *                type: integer
+     *                description: Número de almacenes con distancia: "[300km, +]".
+     *
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
 
     return router;
 };
