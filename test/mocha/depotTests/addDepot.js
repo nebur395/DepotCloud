@@ -2,12 +2,11 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var crypto = require("crypto");
-var base64 = require('base-64');
-var User = server.models.User;
 var Depot = server.models.Depot;
 var ObjectId = require('mongoose').Types.ObjectId;
 var createUserToken = require('../jwtCreator').createUserToken;
+var createUser = require('../userCreator').createUser;
+var deleteUser = require('../userCreator').deleteUser;
 
 chai.use(chaiHttp);
 
@@ -19,10 +18,6 @@ describe('Depot', function () {
     var name = "testUser";
     var email = "testUser@email.com";
     var password = "testPass";
-    var hashPass = require('crypto')
-        .createHash('sha1')
-        .update(password)
-        .digest('base64');
     var depotsId = [];
 
     /*
@@ -30,18 +25,7 @@ describe('Depot', function () {
      */
     before(function (done) {
 
-        User.create({
-
-            email: email,
-            name: name,
-            password: hashPass,
-            admin: false,
-            members: ["Pepe"]
-
-        }, function () {
-            done();
-        });
-
+        createUser(name, false, email, password, ["Pepe"], done);
 
     });
 
