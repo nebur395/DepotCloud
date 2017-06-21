@@ -1078,7 +1078,9 @@ module.exports = function (app) {
                     });
                 }
                 return res.status(200).send({
-                    "depotTypes": creationDateDepotObjects
+                    "storageRooms": response.storageRooms,
+                    "houses": response.houses,
+                    "wardrobes": response.wardrobes
                 });
 
             });
@@ -1087,7 +1089,7 @@ module.exports = function (app) {
 
     /**
      * @swagger
-     * /adminStats/depotDistance:
+     * /adminStats/depotDistances:
      *   get:
      *     tags:
      *       - AdminStats
@@ -1111,25 +1113,13 @@ module.exports = function (app) {
      *         schema:
      *           type: object
      *           properties:
-     *              [0-1km]:
-     *                type: integer
-     *                description: Número de almacenes con distancia: "[0-1km]".
-     *              [1km-2km]:
-     *                type: integer
-     *                description: Número de almacenes con distancia: "[1km-2km]".
-     *              [2km-10km]:
-     *                type: integer
-     *                description: Número de almacenes con distancia: "[2km-10km]".
-     *              [10km-100km]:
-     *                type: integer
-     *                description: Número de almacenes con distancia: "[10km-100km]".
-     *              [100km-300km]:
-     *                type: integer
-     *                description: Número de almacenes con distancia: "[100km-300km]".
-     *              [300km, +]:
-     *                type: integer
-     *                description: Número de almacenes con distancia: "[300km, +]".
-     *
+     *             depotDistances:
+     *               type: array
+     *               items:
+     *                 type: integer
+     *                 description: |
+     *                   Lista con el número de almacenes según distancia: ["[1km-2km]", "[1km-2km]",
+     *                   "[2km-10km]", "[10km-100km]", "[100km-300km]", "[300km, +]"].
      *       401:
      *         description: Mensaje de feedback para el usuario. Normalmente causado por no
      *           tener un token correcto o tenerlo caducado.
@@ -1149,6 +1139,73 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
+    router.get("/depotDistances", function (req, res) {
+
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+
+        var response = [
+            0, //"[0-1km]"
+            0, //"[1km-2km]"
+            0, //"[2km-10km]"
+            0, //"[10km-100km]"
+            0, //"[100km-300km]"
+            0  //"[300km, +]"
+        ];
+
+        Depot.find(function (err, depotResults) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            async.each(depotResults, function (depot, callback) {
+
+                switch (depot.type){
+                    case '[0-1km]':
+                        response[0] += 1;
+                        break;
+                    case '[1km-2km]':
+                        response[1] += 1;
+                        break;
+                    case '[2km-10km]':
+                        response[2] += 1;
+                        break;
+                    case '[10km-100km]':
+                        response[3] += 1;
+                        break;
+                    case '[100km-300km]':
+                        response[4] += 1;
+                        break;
+                    case '[300km, +]':
+                        response[5] += 1;
+                        break;
+                }
+
+                callback();
+
+            }, function (err) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+                return res.status(200).send({
+                    "depotDistances": response
+                });
+
+            });
+        });
+    });
 
     return router;
 };
