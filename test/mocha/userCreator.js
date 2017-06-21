@@ -22,9 +22,9 @@ function createUser(name, admin, email, password, members, callback){
         members: members
 
     }, function () {
-        if (callback) {
-            callback();
-        }
+
+        callback();
+
     });
 }
 

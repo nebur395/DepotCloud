@@ -2,11 +2,11 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var Depot = server.models.Depot;
 var ObjectId = require('mongoose').Types.ObjectId;
 var createUserToken = require('../jwtCreator').createUserToken;
 var createUser = require('../userCreator').createUser;
 var deleteUser = require('../userCreator').deleteUser;
+var deleteDepots = require('../depotCreator').deleteDepots;
 
 chai.use(chaiHttp);
 
@@ -292,10 +292,10 @@ describe('Depot', function () {
      * after every test is finished.
      */
     after(function (done) {
-        Depot.collection.remove({"_id": {$in: depotsId}}, function(){
-            User.collection.remove({"email":email}, function(){
-                done();
-            })
+
+        deleteDepots(depotsId, function () {
+            deleteUser(email, done);
         });
+
     });
 });

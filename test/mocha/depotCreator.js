@@ -1,6 +1,5 @@
 var server = require('../../server');
 var ObjectId = require('mongoose').Types.ObjectId;
-var User = server.models.User;
 var Depot = server.models.Depot;
 
 /*
@@ -19,22 +18,17 @@ function createDepot(name, owner, location, type, distance, description, depotsI
 
     }, function (err, result) {
 
-        if (depotsId) {
+        depotsId.push(new ObjectId(result._id));
 
-            depotsId.push(new ObjectId(result._id));
+        callback();
 
-        } else if (callback) {
-
-            callback();
-
-        }
     });
 }
 
 /*
  * Delete a depot
  */
-function deleteDepot(depotsId, callback){
+function deleteDepots(depotsId, callback){
 
     Depot.collection.remove({"_id": {$in: depotsId}}, function(){
 
@@ -44,4 +38,4 @@ function deleteDepot(depotsId, callback){
 }
 
 exports.createDepot = createDepot;
-exports.deleteDepot = deleteDepot;
+exports.deleteDepots = deleteDepots;

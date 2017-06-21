@@ -2,12 +2,12 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var crypto = require("crypto");
-var base64 = require('base-64');
-var User = server.models.User;
-var Depot = server.models.Depot;
 var ObjectId = require('mongoose').Types.ObjectId;
 var createUserToken = require('../jwtCreator').createUserToken;
+var createUser = require('../userCreator').createUser;
+var deleteUser = require('../userCreator').deleteUser;
+var createDepot = require('../depotCreator').createDepot;
+var deleteDepots = require('../depotCreator').deleteDepots;
 
 chai.use(chaiHttp);
 
@@ -20,10 +20,6 @@ describe('Depot', function () {
     var email = "testUser@email.com";
     var wrongEmail = "testUser2@email.com";
     var password = "testPass";
-    var hashPass = require('crypto')
-        .createHash('sha1')
-        .update(password)
-        .digest('base64');
     var depotsId = [];
 
     /*
@@ -31,40 +27,15 @@ describe('Depot', function () {
      */
     before(function (done) {
 
-        User.create({
+        createUser(name, false, email, password, ["Pepe"], function () {
 
-            email: email,
-            name: name,
-            password: hashPass,
-            admin: false,
-            members: ["Pepe"]
+            createDepot("Depot name", email, "Depot Location", "Storage Room", "[0-1km]",
+                "Depot Description", depotsId, function () {
 
-        }, function () {
-            Depot.create ({
+                    createUser(name, false, wrongEmail, password, ["Pepe"], done);
 
-                name: "Depot name",
-                owner: email,
-                location: "Depot Location",
-                type: "Storage Room",
-                distance: "[0-1km]",
-                description: "Depot Description"
-
-            }, function (err,result) {
-                depotsId.push(new ObjectId(result._id));
-                User.create ({
-
-                    email: wrongEmail,
-                    name: name,
-                    password: hashPass,
-                    admin: false,
-                    members: ["Pepe"]
-
-                }, function () {
-                    done();
                 });
-            });
         });
-
 
     });
 
@@ -379,11 +350,10 @@ describe('Depot', function () {
      * after every test is finished.
      */
     after(function (done) {
-        Depot.collection.remove({"_id": {$in: depotsId}}, function(){
-            User.collection.remove({"email":email}, function(){
-                User.collection.remove({"email":wrongEmail}, function(){
-                    done();
-                });
+
+        deleteDepots(depotsId, function () {
+            deleteUser(email, function () {
+                deleteUser(wrongEmail, done);
             });
         });
     });
