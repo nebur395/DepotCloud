@@ -2,11 +2,10 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var crypto = require("crypto");
-var base64 = require('base-64');
-var User = server.models.User;
 var config = require("../../../config");
 var jwt = require('jsonwebtoken');
+var createUser = require('../userCreator').createUser;
+var deleteUser = require('../userCreator').deleteUser;
 
 chai.use(chaiHttp);
 
@@ -18,27 +17,13 @@ describe('Session', function () {
     var name = "Testing";
     var email = "testUser@email.com";
     var password = "testPass";
-    var hashPass = require('crypto')
-        .createHash('sha1')
-        .update(password)
-        .digest('base64');
 
     /*
      * It creates a new user before the test suite starts executing.
      */
     before(function (done) {
 
-        User.create({
-
-            email: email,
-            name: name,
-            password: hashPass,
-            admin: false
-
-        }, function () {
-            done();
-        });
-
+        createUser(name, false, email, password, [], done);
 
     });
 
@@ -175,8 +160,8 @@ describe('Session', function () {
      * after every test is finished.
      */
     after(function (done) {
-        User.collection.remove({"email": email}, function () {
-            done();
-        });
+
+        deleteUser(email, done);
+
     });
 });
