@@ -18,7 +18,7 @@ module.exports = function (app) {
      *       - AdminStats
      *     summary: Número de usuarios totales del sistema
      *     description: Devuelve el número de usuarios totales registrados en el sistema,
-     *      incluidos usuarios con cuentas desactivadas.
+     *       incluidos usuarios con cuentas desactivadas.
      *     consumes:
      *       - application/json
      *       - charset=utf-8
@@ -40,25 +40,39 @@ module.exports = function (app) {
      *           properties:
      *              totalUsers:
      *               type: integer
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
      *       500:
      *         description: Mensaje de feedback para el usuario.
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.get("/totalUsers", function(req, res){
+    router.get("/totalUsers", function (req, res) {
 
         if (!req.user.admin) {
-            return res.status(401).send({
+            return res.status(403).send({
                 "success": false,
-                "message": "No estás autorizado a acceder."
+                "message": "No estás autorizado a acceder a esta operación."
             });
         }
 
-        User.count({admin: false}, function(err, users){
-            if(err) {
+        User.count({admin: false}, function (err, users) {
+            if (err) {
                 return res.status(500).send({
                     "success": false,
-                    "message": "Error recuperando datos"
+                    "message": "Error interno del servidor."
                 });
             }
 
@@ -97,25 +111,39 @@ module.exports = function (app) {
      *           properties:
      *              totalDepots:
      *               type: integer
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
      *       500:
      *         description: Mensaje de feedback para el usuario.
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.get("/totalDepots", function(req, res){
+    router.get("/totalDepots", function (req, res) {
 
         if (!req.user.admin) {
-            return res.status(401).send({
+            return res.status(403).send({
                 "success": false,
-                "message": "No estás autorizado a acceder."
+                "message": "No estás autorizado a acceder a esta operación."
             });
         }
 
-        Depot.count(function(err, depots){
-            if(err) {
+        Depot.count(function (err, depots) {
+            if (err) {
                 return res.status(500).send({
                     "success": false,
-                    "message": "Error recuperando datos"
+                    "message": "Error interno del servidor."
                 });
             }
 
@@ -154,30 +182,143 @@ module.exports = function (app) {
      *           properties:
      *              totalDepotObjects:
      *               type: integer
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
      *       500:
      *         description: Mensaje de feedback para el usuario.
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.get("/totalDepotObjects", function(req, res){
+    router.get("/totalDepotObjects", function (req, res) {
 
         if (!req.user.admin) {
-            return res.status(401).send({
+            return res.status(403).send({
                 "success": false,
-                "message": "No estás autorizado a acceder."
+                "message": "No estás autorizado a acceder a esta operación."
             });
         }
 
-        Depot.count(function(err, depotObjects){
-            if(err) {
+        DepotObject.count(function (err, depotObjects) {
+            if (err) {
                 return res.status(500).send({
                     "success": false,
-                    "message": "Error recuperando datos"
+                    "message": "Error interno del servidor."
                 });
             }
 
             return res.status(200).send({
                 "totalDepotObjects": depotObjects
+            });
+        });
+    });
+
+    /**
+     * @swagger
+     * /adminStats/usersStatus:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de usuarios activos,e inactivos
+     *     description: Devuelve el número de usuarios cuyas cuentas se cuentran actualmente
+     *       activas,e inactivas.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         description: Número de usuarios en cada estado distinto.
+     *         schema:
+     *           type: object
+     *           properties:
+     *              usersStatus:
+     *               type: array
+     *               items:
+     *                type: object
+     *                properties:
+     *                  activeUsers:
+     *                   type: integer
+     *                   description: Número de usuarios activos.
+     *                  inactiveUsers:
+     *                   type: integer
+     *                   description: Número de usuarios inactivos.
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.get("/usersStatus", function (req, res) {
+
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+        var activeUsers = 0;
+        var inactiveUsers = 0;
+
+        // Searches for all active users
+        User.count({isActive: true}, function (err, actives) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+            activeUsers = actives;
+
+            // Searches for all inactive users
+            User.count({isActive: false}, function (err, inactives) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+                inactiveUsers = inactives;
+
+                return res.status(200).send({
+                    "activeUsers": activeUsers,
+                    "inactiveUsers": inactiveUsers
+                });
             });
         });
     });
