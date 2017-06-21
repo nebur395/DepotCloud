@@ -1029,7 +1029,61 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
+    router.get("/depotTypes", function (req, res) {
 
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+
+        var response = {
+            "storageRooms": 0,
+            "houses": 0,
+            "wardrobes": 0
+        };
+
+        Depot.find(function (err, depotResults) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            async.each(depotResults, function (depot, callback) {
+
+                switch (depot.type){
+                    case 'Storage Room':
+                        response.storageRooms += 1;
+                        break;
+                    case 'House':
+                        response.houses += 1;
+                        break;
+                    case 'Wardrobe':
+                        response.wardrobes += 1;
+                        break;
+                }
+
+                callback();
+
+            }, function (err) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+                return res.status(200).send({
+                    "depotTypes": creationDateDepotObjects
+                });
+
+            });
+        });
+    });
 
     return router;
 };
