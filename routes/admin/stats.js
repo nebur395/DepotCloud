@@ -1002,13 +1002,16 @@ module.exports = function (app) {
      *           properties:
      *              storageRooms:
      *                type: integer
-     *                description: Número de almacenes de tipo: "Storage Room".
+     *                description: |
+     *                  Número de almacenes de tipo: "Storage Room".
      *              houses:
      *                type: integer
-     *                description: Número de almacenes de tipo: "House".
+     *                description: |
+     *                  Número de almacenes de tipo: "House".
      *              wardrobes:
      *                type: integer
-     *                description: Número de almacenes de tipo: "Wardrobe".
+     *                description: |
+     *                  Número de almacenes de tipo: "Wardrobe".
      *
      *       401:
      *         description: Mensaje de feedback para el usuario. Normalmente causado por no
