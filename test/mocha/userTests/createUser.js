@@ -2,7 +2,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var User = server.models.User;
+var deleteUser = require('../userCreator').deleteUser;
 
 chai.use(chaiHttp);
 
@@ -175,9 +175,9 @@ describe('User', function () {
          * Removes the user created during the signIn tests.
          */
         after(function (done) {
-            User.collection.remove({"email": email}, function () {
-                done();
-            });
+
+            deleteUser(email, done);
+
         });
 
     });
