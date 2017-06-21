@@ -1,62 +1,72 @@
-var WebSocket = require("ws");
-var models = require('../../models');
+var express = require('express');
+var async = require("async");
 
-var User = models.User;
-var Depot = models.Depot;
-var DepotObject = models.DepotObject;
+module.exports = function (app) {
 
-function statsWebSocket (server) {
-    getUsers(server)
-}
+    var router = express.Router();
+
+    var User = app.models.User;
+    var Depot = app.models.Depot;
+    var DepotObject = app.models.DepotObject;
 
 
-/*
- * Websocket communication in: ws://localhost:8080/websocketStats/totalUsers
- *
- * Response:
- *
- *   Success: {totalUsers: number}
- *
- *   Error: {success: Boolean, message: String}
- */
-function getUsers (server) {
-    var wss = new WebSocket.Server({
-        host: "localhost",
-        server: server,
-        path: "/websocketStats/totalUsers"
-    });
+    /**
+     * @swagger
+     * /adminStats/totalUsers:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de usuarios totales del sistema
+     *     description: Devuelve el número de usuarios totales registrados en el sistema,
+     *      incluidos usuarios con cuentas desactivadas.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         description: Número de usuarios totales del sistema.
+     *         schema:
+     *           type: object
+     *           properties:
+     *              totalUsers:
+     *               type: integer
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.get("/totalUsers", function(req, res){
 
-    var response;
-
-    wss.on('connection', function (ws, req) {
-
-        var id = setInterval(function () {
-
-            User.count({admin: false}, function(err, userResult){
-
-                if(err) {
-                    response = {
-                        "success": false,
-                        "message": "Error recuperando datos"
-                    };
-                    ws.send(JSON.stringify(response), function () { /* ignore errors */ });
-                } else {
-                    response = {
-                        "totalUsers": userResult
-                    };
-                    ws.send(JSON.stringify(response), function () { /* ignore errors */ });
-                }
+        if (!req.user.admin) {
+            return res.status(401).send({
+                "success": false,
+                "message": "No estás autorizado a acceder."
             });
+        }
 
+        User.count({admin: false}, function(err, users){
+            if(err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error recuperando datos"
+                });
+            }
 
-        }, 100);
-        console.log('started client interval');
-        ws.on('close', function () {
-            console.log('stopping client interval');
-            clearInterval(id);
+            return res.status(200).send({
+                "totalUsers": users
+            });
         });
     });
-}
 
-
-exports.statsWebSocket = statsWebSocket;
+    return router;
+};

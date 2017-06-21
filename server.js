@@ -73,11 +73,6 @@ mongoose.connection.once('open', function () {
 
 });
 
-
-// Initialize Websocket communication to stats functionalities
-var statsWebSocket = require('./routes/admin/stats').statsWebSocket;
-statsWebSocket(server);
-
 var guaranteeChecker = require('./routes/reportGenerator/reportGenerator').guaranteeChecker;
 /*
  * Check once per day (86400000)
