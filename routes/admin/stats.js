@@ -683,5 +683,157 @@ module.exports = function (app) {
         });
     });
 
+    /**
+     * @swagger
+     * /adminStats/lastRegistrations:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de registros de usuarios por mes durante el último año
+     *     description: Devuelve el número de registros de usuarios en el sistema
+     *       durante el último año, agrupados por meses.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         description: Número de registros de usuarios por mes.
+     *         schema:
+     *           type: object
+     *           properties:
+     *              lastRegistrations:
+     *               type: array
+     *               description: Array de tamaño 12, una entrada por cada mes
+     *               items:
+     *                type: integer
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.get("/lastRegistrations", function (req, res) {
+
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+
+        var date = new Date();
+        var year = date.getFullYear() - 1;
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+
+        User.find({registerDate: {$gte: new Date(year, month, day)}}, '-_id registerDate', function (err, registers) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            var lastRegistrations = new Array(12).fill(0);
+            async.each(registers, function (register, callback) {
+
+                lastLogins[register.registerDate.getMonth()] += 1;
+                callback();
+
+            }, function (err) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+                res.status(200).send({
+                    "lastRegistrations": lastRegistrations
+                });
+
+            });
+        });
+    });
+
+    /**
+     * @swagger
+     * /adminStats/creationDateDepots:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de creaciones de almacenes por mes durante el último año
+     *     description: Devuelve el número de creaciones de almacenes en el sistema
+     *       durante el último año, agrupados por meses.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         description: Número de creaciones de almacenes por mes.
+     *         schema:
+     *           type: object
+     *           properties:
+     *              creationDateDepots:
+     *               type: array
+     *               description: Array de tamaño 12, una entrada por cada mes
+     *               items:
+     *                type: integer
+     *       401:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por no
+     *           tener un token correcto o tenerlo caducado.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       403:
+     *         description: Mensaje de feedback para el usuario. Normalmente causado por acceder
+     *           a operaciones de administrador sin los privilegios necesarios.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       404:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+
+
+
     return router;
 };
