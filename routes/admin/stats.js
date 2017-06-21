@@ -68,5 +68,62 @@ module.exports = function (app) {
         });
     });
 
+    /**
+     * @swagger
+     * /adminStats/totalDepots:
+     *   get:
+     *     tags:
+     *       - AdminStats
+     *     summary: Número de almacenes totales del sistema
+     *     description: Devuelve el número de almacenes totales registrados en el sistema.
+     *     consumes:
+     *       - application/json
+     *       - charset=utf-8
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: Authorization
+     *         description: |
+     *           JWT estándar: `Authorization: Bearer + JWT`.
+     *         in: header
+     *         required: true
+     *         type: string
+     *         format: byte
+     *     responses:
+     *       200:
+     *         description: Número de almacenes totales del sistema.
+     *         schema:
+     *           type: object
+     *           properties:
+     *              totalDepots:
+     *               type: integer
+     *       500:
+     *         description: Mensaje de feedback para el usuario.
+     *         schema:
+     *           $ref: '#/definitions/FeedbackMessage'
+     */
+    router.get("/totalDepots", function(req, res){
+
+        if (!req.user.admin) {
+            return res.status(401).send({
+                "success": false,
+                "message": "No estás autorizado a acceder."
+            });
+        }
+
+        Depot.count(function(err, depots){
+            if(err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error recuperando datos"
+                });
+            }
+
+            return res.status(200).send({
+                "totalDepots": depots
+            });
+        });
+    });
+
     return router;
 };
