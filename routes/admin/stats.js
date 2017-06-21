@@ -832,7 +832,50 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
+    router.get("/creationDateDepots", function (req, res) {
 
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+
+        var date = new Date();
+        var year = date.getFullYear() - 1;
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+
+        DepotObject.find({creationDate: {$gte: new Date(year, month, day)}}, '-_id creationDate', function (err, depotCreations) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            var creationDateDepots = new Array(12).fill(0);
+            async.each(depotCreations, function (depotCreation, callback) {
+
+                creationDateDepots[depotCreation.creationDate.getMonth()] += 1;
+                callback();
+
+            }, function (err) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+                res.status(200).send({
+                    "creationDateDepots": creationDateDepots
+                });
+
+            });
+        });
+    });
 
 
     return router;
