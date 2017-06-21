@@ -638,7 +638,50 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
+    router.get("/lastRegistrations", function (req, res) {
 
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+
+        var date = new Date();
+        var year = date.getFullYear() - 1;
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+
+        User.find({registerDate: {$gte: new Date(year, month, day)}}, '-_id registerDate', function (err, registers) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            var lastRegistrations = new Array(12).fill(0);
+            async.each(registers, function (register, callback) {
+
+                lastLogins[register.registerDate.getMonth()] += 1;
+                callback();
+
+            }, function (err) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+                res.status(200).send({
+                    "lastRegistrations": lastRegistrations
+                });
+
+            });
+        });
+    });
 
     return router;
 };
