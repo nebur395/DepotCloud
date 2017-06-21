@@ -455,7 +455,39 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
+    router.get("/depotObjectsPerUser", function (req, res) {
 
+        if (!req.user.admin) {
+            return res.status(403).send({
+                "success": false,
+                "message": "No estás autorizado a acceder a esta operación."
+            });
+        }
+
+        User.count({admin: false}, function (err, users) {
+
+            if (err) {
+                return res.status(500).send({
+                    "success": false,
+                    "message": "Error interno del servidor."
+                });
+            }
+
+            DepotObject.count({}, function (err, depotObject) {
+
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                }
+
+                return res.status(200).send({
+                    "depotObjectsPerUser": depotObject / users
+                });
+            });
+        });
+    });
 
     return router;
 };
