@@ -1,10 +1,20 @@
 <div id="adminStatsStyle">
   <div class="container">
 
-    <strong>Server Stats</strong><br>
-    RSS: <div id='rss'></div><br>
-    Heap total: <div id='heapTotal'></div><br>
-    Heap used: <div id='heapUsed'></div><br>
+    <h1 id="firstContent" class="text-center">Estadísticas del sistema</h1>
+
+    <!-- Most rated owned POI -->
+    <div class="row" style="margin-top: 5%">
+      <div class="col-sm-4"><p class="text-justify">Total de usuarios, almacenes y objetos en el
+        sistema.</p></div>
+      <div class="col-sm-8">
+        <canvas class="chart chart-pie" chart-data="data1Stat" chart-labels="labels1Stat"
+                chart-options="optionsPieStat"></canvas>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <!-- Most favorite owned POI -->
 
   </div>
 </div>
