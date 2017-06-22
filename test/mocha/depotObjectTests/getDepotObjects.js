@@ -2,13 +2,15 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var crypto = require("crypto");
-var base64 = require('base-64');
-var User = server.models.User;
 var Depot = server.models.Depot;
-var DepotObject = server.models.DepotObject;
 var ObjectId = require('mongoose').Types.ObjectId;
 var createUserToken = require('../jwtCreator').createUserToken;
+var createUser = require('../userCreator').createUser;
+var deleteUser = require('../userCreator').deleteUser;
+var createDepot = require('../depotCreator').createDepot;
+var deleteDepots = require('../depotCreator').deleteDepots;
+var createDepotObject = require('../depotObjectCreator').createDepotObject;
+var deleteDepotObjects = require('../depotObjectCreator').deleteDepotObjects;
 
 chai.use(chaiHttp);
 
@@ -20,10 +22,6 @@ describe('DepotObject', function () {
     var name = "testUser";
     var email = "testUser@email.com";
     var password = "testPass";
-    var hashPass = require('crypto')
-        .createHash('sha1')
-        .update(password)
-        .digest('base64');
     var depotsId = [];
     var depotObjectsId = [];
 
@@ -62,43 +60,14 @@ describe('DepotObject', function () {
      */
     before(function (done) {
 
-        User.create({
+        createUser(name, false, email, password, ["Pepe"], function () {
 
-            email: email,
-            name: name,
-            password: hashPass,
-            admin: false,
-            members: ["Pepe"]
+            createDepot("Depot name", email, "Depot Location", "Storage Room", "[0-1km]",
+                "Depot Description", depotsId, function () {
 
-        }, function () {
-            Depot.create({
-
-                name: "Depot name",
-                owner: email,
-                location: "Depot Location",
-                type: "Storage Room",
-                distance: "[0-1km]",
-                description: "Depot Description"
-
-            }, function (err,result) {
-                depotsId.push(new ObjectId(result._id));
-                DepotObject.create({
-
-                    depot: depotsId[0],
-                    owner: email,
-                    name: "test depot object",
-                    image: null,
-                    guarantee: "2017-06-17",
-                    dateOfExpiry: "2017-06-17",
-                    description: "Depot Description",
-                    member: "Pepe"
-
-                }, function (err,result) {
-                    depotObjectsId.push(new ObjectId(result._id));
-
-                    done();
+                    createDepotObject(depotsId[0], email, "test depot object", null, "2017-06-17",
+                        "2017-06-17", "Depot Description", depotObjectsId, done);
                 });
-            });
         });
 
 
@@ -173,12 +142,12 @@ describe('DepotObject', function () {
      * after every test is finished.
      */
     after(function (done) {
-        DepotObject.collection.remove({"_id": {$in: depotObjectsId}}, function () {
-            Depot.collection.remove({"_id": {$in: depotsId}}, function(){
-                User.collection.remove({"email":email}, function(){
-                    done();
-                })
+
+        deleteDepotObjects(depotObjectsId, function () {
+            deleteDepots(depotsId, function () {
+                deleteUser(email, done);
             });
         });
+
     });
 });
