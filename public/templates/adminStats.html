@@ -3,7 +3,7 @@
 
     <h1 id="firstContent" class="text-center">Estadísticas del sistema</h1>
 
-    <!-- Most rated owned POI -->
+    <!-- Total system entities -->
     <div class="row" style="margin-top: 5%">
       <div class="col-sm-4"><p class="text-justify">Total de usuarios, almacenes y objetos en el
         sistema.</p></div>
@@ -14,7 +14,14 @@
     </div>
 
     <div class="divider"></div>
-    <!-- Most favorite owned POI -->
+    <!-- Active/Inactive users -->
+    <div class="row">
+      <div class="col-sm-8">
+        <canvas class="chart chart-pie" chart-data="data2Stat" chart-labels="labels2Stat"
+                chart-options="optionsPieStat"></canvas>
+      </div>
+      <div class="col-sm-4"><p class="text-justify">Usuarios activos e inactivos.</p></div>
+    </div>
 
   </div>
 </div>

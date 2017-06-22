@@ -46,4 +46,13 @@ angular.module('depotCloudApp')
                 $scope.data1Stat[2] = depotObjects;
             }, notificationService.showError);
 
+
+            // SECTION: Users Status Stat
+            $scope.labels2Stat = ["Usuarios activos", "Usuarios inactivos"];
+            $scope.data2Stat = [0, 0];
+
+            statsService.getUsersStatus(function (actives, inactives) {
+                $scope.data2Stat[0] = actives;
+                $scope.data2Stat[1] = inactives;
+            }, notificationService.showError);
         }]);
