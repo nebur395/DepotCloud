@@ -2,14 +2,11 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var ObjectId = require('mongoose').Types.ObjectId;
 var createUserToken = require('../jwtCreator').createUserToken;
 var createUser = require('../userCreator').createUser;
 var deleteUser = require('../userCreator').deleteUser;
 var createDepot = require('../depotCreator').createDepot;
 var deleteDepots = require('../depotCreator').deleteDepots;
-var createDepotObject = require('../depotObjectCreator').createDepotObject;
-var deleteDepotObjects = require('../depotObjectCreator').deleteDepotObjects;
 
 chai.use(chaiHttp);
 
@@ -22,7 +19,6 @@ describe('Stats', function () {
     var email = "testUser@email.com";
     var password = "testPass";
     var depotsId = [];
-    var depotObjectsId = [];
 
     /*
      * It creates a new user before the test suite starts executing.
