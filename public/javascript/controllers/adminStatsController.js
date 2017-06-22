@@ -55,4 +55,19 @@ angular.module('depotCloudApp')
                 $scope.data2Stat[0] = actives;
                 $scope.data2Stat[1] = inactives;
             }, notificationService.showError);
+
+
+            // SECTION: Depots Per User Stat, DepotObjects Per User Stat
+            $scope.labels3Stat = ["Almacenes por usuario", "Objetos por usuario"];
+            $scope.data3Stat = [0, 0];
+
+            statsService.getDepotsPerUser(function (depots) {
+                $scope.data3Stat[0] = depots;
+            }, notificationService.showError);
+
+            statsService.getDepotObjectsPerUser(function (depotObjects) {
+                $scope.data3Stat[1] = depotObjects;
+            }, notificationService.showError);
+
+
         }]);

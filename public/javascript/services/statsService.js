@@ -63,6 +63,36 @@ angular.module('depotCloudApp')
                 }, function (errorData) {
                     callbackError('&#10008',errorData.data.message);
                 });
+            },
+
+            // GET request that get the depotsPerUser stats
+            getDepotsPerUser: function (callbackSuccess, callbackError) {
+                $http({
+                    method: 'GET',
+                    url: 'adminStats/depotsPerUser',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).then(function (successData) {
+                    callbackSuccess(successData.data.depotsPerUser);
+                }, function (errorData) {
+                    callbackError('&#10008',errorData.data.message);
+                });
+            },
+
+            // GET request that get the depotObjectsPerUser stats
+            getDepotObjectsPerUser: function (callbackSuccess, callbackError) {
+                $http({
+                    method: 'GET',
+                    url: 'adminStats/depotObjectsPerUser',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).then(function (successData) {
+                    callbackSuccess(successData.data.depotObjectsPerUser);
+                }, function (errorData) {
+                    callbackError('&#10008',errorData.data.message);
+                });
             }
         };
     });

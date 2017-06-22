@@ -294,7 +294,7 @@ module.exports = function (app) {
         var inactiveUsers = 0;
 
         // Searches for all active users
-        User.count({isActive: true}, function (err, actives) {
+        User.count({isActive: true, admin: false}, function (err, actives) {
 
             if (err) {
                 return res.status(500).send({
@@ -305,7 +305,7 @@ module.exports = function (app) {
             activeUsers = actives;
 
             // Searches for all inactive users
-            User.count({isActive: false}, function (err, inactives) {
+            User.count({isActive: false, admin: false}, function (err, inactives) {
 
                 if (err) {
                     return res.status(500).send({
