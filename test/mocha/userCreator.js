@@ -29,6 +29,32 @@ function createUser(name, admin, email, password, members, callback){
 }
 
 /*
+ * Create an inactive user
+ */
+function createInactiveUser(name, admin, email, password, members, callback){
+
+    var hashPass = require('crypto')
+        .createHash('sha1')
+        .update(password)
+        .digest('base64');
+
+    User.create({
+
+        email: email,
+        name: name,
+        password: hashPass,
+        admin: admin,
+        members: members,
+        isActive: false
+
+    }, function () {
+
+        callback();
+
+    });
+}
+
+/*
  * Delete a user
  */
 function deleteUser(email, callback){
@@ -39,4 +65,5 @@ function deleteUser(email, callback){
 }
 
 exports.createUser = createUser;
+exports.createInactiveUser = createInactiveUser;
 exports.deleteUser = deleteUser;
