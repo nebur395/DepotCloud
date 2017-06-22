@@ -664,7 +664,7 @@ module.exports = function (app) {
             var lastRegistrations = new Array(12).fill(0);
             async.each(registers, function (register, callback) {
 
-                lastLogins[register.registerDate.getMonth()] += 1;
+                lastRegistrations[register.registerDate.getMonth()] += 1;
                 callback();
 
             }, function (err) {
