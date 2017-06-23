@@ -31,22 +31,6 @@ angular.module('depotCloudApp')
                 }
             };
 
-            $scope.monthList = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
-                'Septiembre','Octubre','Noviembre','Diciembre'];
-
-            $scope.fillLastYearMonths = function (currentMonth) {
-                var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
-                    'Septiembre','Octubre','Noviembre','Diciembre'];
-
-                for (i=0;i<12;i++) {
-                    $scope.monthList[i] = months[(i + currentMonth) % 12]
-                }
-
-                $scope.monthList.reverse();
-            };
-
-            $scope.fillLastYearMonths(new Date().getMonth());
-
             // SECTION: Total User Stat, Total Depots Stat, Total DepotObjects Stat
             $scope.labels1Stat = ["Usuarios totales en el sistema", "Almacenes totales en el" +
             " sistema ", "Objetos totales en el sistema"];
@@ -90,21 +74,34 @@ angular.module('depotCloudApp')
             }, notificationService.showError);
 
             // SECTION: lastLogins
-            $scope.labels4Stat = $scope.monthList;
-            $scope.data4Stat = [[0,0,0,0,0,0,0,0,0,0,0,0]];
-            $scope.series4Stat = ["Número de inicios de sesión registrados durante el último año"];
+            $scope.labels4Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.data4Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.series4Stat = ["Número de los últimos inicios de sesión registrados durante el" +
+            " último año"];
 
             statsService.getLastLogins(function (lastLogins) {
                 $scope.data4Stat[0] = lastLogins;
             }, notificationService.showError);
 
             // SECTION: lastRegistrations
-            $scope.labels5Stat = $scope.monthList;
-            $scope.data5Stat = [[0,0,0,0,0,0,0,0,0,0,0,0]];
+            $scope.labels5Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.data5Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.series5Stat = ["Número de creaciones de usuarios durante el último año"];
 
             statsService.getLastRegistrations(function (lastRegistrations) {
                 $scope.data5Stat[0] = lastRegistrations;
+            }, notificationService.showError);
+
+            // SECTION: lastRegistrations
+            $scope.labels6Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.data6Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.series6Stat = ["Número de creaciones de almacenes durante el último año"];
+
+            statsService.getCreationDateDepots(function (creationDateDepots) {
+                $scope.data6Stat[0] = creationDateDepots;
             }, notificationService.showError);
 
         }]);
