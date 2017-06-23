@@ -114,4 +114,15 @@ angular.module('depotCloudApp')
                 $scope.data7Stat[0] = creationDateDepotObjects;
             }, notificationService.showError);
 
+            // SECTION: depotTypes
+            $scope.labels8Stat = ['Trasteros', 'Casas', 'Armarios'];
+            $scope.data8Stat = [[0, 0, 0]];
+            $scope.series8Stat = ["Número actual existentes en el sistema"];
+
+            statsService.getDepotTypes(function (storageRooms, houses, wardrobes) {
+                $scope.data8Stat[0][0] = storageRooms;
+                $scope.data8Stat[0][1] = houses;
+                $scope.data8Stat[0][2] = wardrobes;
+            }, notificationService.showError);
+
         }]);

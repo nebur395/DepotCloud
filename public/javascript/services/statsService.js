@@ -153,6 +153,22 @@ angular.module('depotCloudApp')
                 }, function (errorData) {
                     callbackError('&#10008',errorData.data.message);
                 });
+            },
+
+            // GET request that get the depotTypes stats
+            getDepotTypes: function (callbackSuccess, callbackError) {
+                $http({
+                    method: 'GET',
+                    url: 'adminStats/depotTypes',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).then(function (successData) {
+                    callbackSuccess(successData.data.storageRooms, successData.data.houses,
+                        successData.data.wardrobes);
+                }, function (errorData) {
+                    callbackError('&#10008',errorData.data.message);
+                });
             }
         };
     });
