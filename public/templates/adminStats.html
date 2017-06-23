@@ -5,32 +5,36 @@
 
     <!-- Total system entities -->
     <div class="row" style="margin-top: 5%">
-      <div class="col-sm-4"><p class="text-justify">Total de usuarios, almacenes y objetos en el
-        sistema.</p></div>
-      <div class="col-sm-8">
-        <canvas class="chart chart-pie" chart-data="data1Stat" chart-labels="labels1Stat"
-                chart-options="optionsPieStat"></canvas>
-      </div>
+      <canvas class="chart chart-pie" chart-data="data1Stat" chart-labels="labels1Stat"
+              chart-options="optionsPieStat"></canvas>
     </div>
 
     <div class="divider"></div>
     <!-- Active/Inactive users -->
     <div class="row">
-      <div class="col-sm-8">
-        <canvas class="chart chart-pie" chart-data="data2Stat" chart-labels="labels2Stat"
-                chart-options="optionsPieStat"></canvas>
-      </div>
-      <div class="col-sm-4"><p class="text-justify">Usuarios activos e inactivos.</p></div>
+      <canvas class="chart chart-pie" chart-data="data2Stat" chart-labels="labels2Stat"
+              chart-options="optionsPieStat"></canvas>
     </div>
 
     <div class="divider"></div>
     <!-- Total system entities -->
     <div class="row">
-      <div class="col-sm-4"><p class="text-justify">Almacenes y objetos medios por usuario.</p></div>
-      <div class="col-sm-8">
-        <canvas class="chart chart-pie" chart-data="data3Stat" chart-labels="labels3Stat"
-                chart-options="optionsPieStat"></canvas>
-      </div>
+      <canvas class="chart chart-pie" chart-data="data3Stat" chart-labels="labels3Stat"
+              chart-options="optionsPieStat"></canvas>
+    </div>
+
+    <div class="divider"></div>
+    <!-- Last Logins -->
+    <div class="row">
+      <canvas class="chart chart-line" chart-data="data4Stat" chart-labels="labels4Stat"
+              chart-options="optionsLineStat", chart-series="series4Stat"></canvas>
+    </div>
+
+    <div class="divider"></div>
+    <!-- Last Registrations -->
+    <div class="row">
+      <canvas class="chart chart-line" chart-data="data5Stat" chart-labels="labels5Stat"
+              chart-options="optionsLineStat", chart-series="series5Stat"></canvas>
     </div>
 
   </div>

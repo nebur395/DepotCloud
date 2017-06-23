@@ -10,6 +10,7 @@ angular.module('depotCloudApp')
             };
 
             $scope.optionsRadarStat = {
+                legend: {display: true},
                 responsive: true, maintainAspectRatio: false,
                 scale: {
                     ticks: {
@@ -19,19 +20,36 @@ angular.module('depotCloudApp')
             };
 
             $scope.optionsLineStat = {
+                legend: {display: true},
                 scales: {
                     yAxes: [{
                         id: 'y-axis-1',
                         type: 'linear',
                         position: 'left',
-                        ticks: {min: 0, max:100}
+                        ticks: {min: 0}
                     }]
                 }
             };
 
+            $scope.monthList = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+                'Septiembre','Octubre','Noviembre','Diciembre'];
+
+            $scope.fillLastYearMonths = function (currentMonth) {
+                var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+                    'Septiembre','Octubre','Noviembre','Diciembre'];
+
+                for (i=0;i<12;i++) {
+                    $scope.monthList[i] = months[(i + currentMonth) % 12]
+                }
+
+                $scope.monthList.reverse();
+            };
+
+            $scope.fillLastYearMonths(new Date().getMonth());
 
             // SECTION: Total User Stat, Total Depots Stat, Total DepotObjects Stat
-            $scope.labels1Stat = ["Usuarios", "Almacenes", "Objetos"];
+            $scope.labels1Stat = ["Usuarios totales en el sistema", "Almacenes totales en el" +
+            " sistema ", "Objetos totales en el sistema"];
             $scope.data1Stat = [0, 0, 0];
 
             statsService.getTotalUsers(function (users) {
@@ -48,7 +66,8 @@ angular.module('depotCloudApp')
 
 
             // SECTION: Users Status Stat
-            $scope.labels2Stat = ["Usuarios activos", "Usuarios inactivos"];
+            $scope.labels2Stat = ["Usuarios activos en el sistema", "Usuarios inactivos en el" +
+            " sistema"];
             $scope.data2Stat = [0, 0];
 
             statsService.getUsersStatus(function (actives, inactives) {
@@ -58,7 +77,8 @@ angular.module('depotCloudApp')
 
 
             // SECTION: Depots Per User Stat, DepotObjects Per User Stat
-            $scope.labels3Stat = ["Almacenes por usuario", "Objetos por usuario"];
+            $scope.labels3Stat = ["Número medio de almacenes por usuario", "Número medio de" +
+            " objetos por usuario"];
             $scope.data3Stat = [0, 0];
 
             statsService.getDepotsPerUser(function (depots) {
@@ -69,5 +89,22 @@ angular.module('depotCloudApp')
                 $scope.data3Stat[1] = depotObjects;
             }, notificationService.showError);
 
+            // SECTION: lastLogins
+            $scope.labels4Stat = $scope.monthList;
+            $scope.data4Stat = [[0,0,0,0,0,0,0,0,0,0,0,0]];
+            $scope.series4Stat = ["Número de inicios de sesión registrados durante el último año"];
+
+            statsService.getLastLogins(function (lastLogins) {
+                $scope.data4Stat[0] = lastLogins;
+            }, notificationService.showError);
+
+            // SECTION: lastRegistrations
+            $scope.labels5Stat = $scope.monthList;
+            $scope.data5Stat = [[0,0,0,0,0,0,0,0,0,0,0,0]];
+            $scope.series5Stat = ["Número de creaciones de usuarios durante el último año"];
+
+            statsService.getLastRegistrations(function (lastRegistrations) {
+                $scope.data5Stat[0] = lastRegistrations;
+            }, notificationService.showError);
 
         }]);
