@@ -169,6 +169,21 @@ angular.module('depotCloudApp')
                 }, function (errorData) {
                     callbackError('&#10008',errorData.data.message);
                 });
+            },
+
+            // GET request that get the depotDistances stats
+            getDepotDistances: function (callbackSuccess, callbackError) {
+                $http({
+                    method: 'GET',
+                    url: 'adminStats/depotDistances',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).then(function (successData) {
+                    callbackSuccess(successData.data.depotDistances);
+                }, function (errorData) {
+                    callbackError('&#10008',errorData.data.message);
+                });
             }
         };
     });

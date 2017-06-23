@@ -117,12 +117,22 @@ angular.module('depotCloudApp')
             // SECTION: depotTypes
             $scope.labels8Stat = ['Trasteros', 'Casas', 'Armarios'];
             $scope.data8Stat = [[0, 0, 0]];
-            $scope.series8Stat = ["Número actual existentes en el sistema"];
+            $scope.series8Stat = ["Tipo de almacenes existentes en el sistema"];
 
             statsService.getDepotTypes(function (storageRooms, houses, wardrobes) {
                 $scope.data8Stat[0][0] = storageRooms;
                 $scope.data8Stat[0][1] = houses;
                 $scope.data8Stat[0][2] = wardrobes;
+            }, notificationService.showError);
+
+            // SECTION: depotDistances
+            $scope.labels9Stat = ["[0-1km]", "[1km-2km]", "[2km-10km]", "[10km-100km]",
+                "[100km-300km]", "[300km, +]"];
+            $scope.data9Stat = [[0, 0, 0, 0, 0, 0]];
+            $scope.series9Stat = ["Distancia de los almacenes existentes en el sistema"];
+
+            statsService.getDepotDistances(function (distances) {
+                $scope.data9Stat[0] = distances;
             }, notificationService.showError);
 
         }]);
