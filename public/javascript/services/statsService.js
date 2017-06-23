@@ -138,6 +138,21 @@ angular.module('depotCloudApp')
                 }, function (errorData) {
                     callbackError('&#10008',errorData.data.message);
                 });
+            },
+
+            // GET request that get the creationDateDepotObjects stats
+            getCreationDateDepotObjects: function (callbackSuccess, callbackError) {
+                $http({
+                    method: 'GET',
+                    url: 'adminStats/creationDateDepotObjects',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).then(function (successData) {
+                    callbackSuccess(successData.data.creationDateDepotObjects);
+                }, function (errorData) {
+                    callbackError('&#10008',errorData.data.message);
+                });
             }
         };
     });

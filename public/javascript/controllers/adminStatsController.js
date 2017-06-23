@@ -94,7 +94,7 @@ angular.module('depotCloudApp')
                 $scope.data5Stat[0] = lastRegistrations;
             }, notificationService.showError);
 
-            // SECTION: lastRegistrations
+            // SECTION: creationDateDepots
             $scope.labels6Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
                 'Septiembre','Octubre','Noviembre','Diciembre'];
             $scope.data6Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
@@ -102,6 +102,16 @@ angular.module('depotCloudApp')
 
             statsService.getCreationDateDepots(function (creationDateDepots) {
                 $scope.data6Stat[0] = creationDateDepots;
+            }, notificationService.showError);
+
+            // SECTION: creationDateDepotObjects
+            $scope.labels7Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.data7Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.series7Stat = ["Número de creaciones de objetos durante el último año"];
+
+            statsService.getCreationDateDepotObjects(function (creationDateDepotObjects) {
+                $scope.data7Stat[0] = creationDateDepotObjects;
             }, notificationService.showError);
 
         }]);
