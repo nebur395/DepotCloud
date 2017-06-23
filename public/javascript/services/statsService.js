@@ -1,7 +1,7 @@
 angular.module('depotCloudApp')
 
 // 'statsService' service manage the stats functions of the page with the server
-    .factory('statsService', function ($http, authService) {
+    .factory('statsService', function ($http) {
 
         return {
 

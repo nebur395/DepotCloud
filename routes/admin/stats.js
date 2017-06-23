@@ -564,7 +564,7 @@ module.exports = function (app) {
                 });
             }
 
-            var lastLogins = new Array(12).fill(0);
+            var lastLogins = [0,0,0,0,0,0,0,0,0,0,0,0];
             async.each(logins, function (login, callback) {
 
                 lastLogins[login.lastLoginDate.getMonth()] += 1;
@@ -661,7 +661,7 @@ module.exports = function (app) {
                 });
             }
 
-            var lastRegistrations = new Array(12).fill(0);
+            var lastRegistrations = [0,0,0,0,0,0,0,0,0,0,0,0];
             async.each(registers, function (register, callback) {
 
                 lastRegistrations[register.registerDate.getMonth()] += 1;
@@ -758,7 +758,7 @@ module.exports = function (app) {
                 });
             }
 
-            var creationDateDepots = new Array(12).fill(0);
+            var creationDateDepots = [0,0,0,0,0,0,0,0,0,0,0,0];
             async.each(depotCreations, function (depotCreation, callback) {
 
                 creationDateDepots[depotCreation.creationDate.getMonth()] += 1;
@@ -855,7 +855,7 @@ module.exports = function (app) {
                 });
             }
 
-            var creationDateDepotObjects = new Array(12).fill(0);
+            var creationDateDepotObjects = [0,0,0,0,0,0,0,0,0,0,0,0];
             async.each(depotObjectCreations, function (depotObjectCreation, callback) {
 
                 creationDateDepotObjects[depotObjectCreation.creationDate.getMonth()] += 1;
@@ -968,9 +968,9 @@ module.exports = function (app) {
                     case 'House':
                         response.houses += 1;
                         break;
-                    case 'Wardrobe':
+                    default:
                         response.wardrobes += 1;
-                        break;
+
                 }
 
                 callback();
@@ -1074,7 +1074,6 @@ module.exports = function (app) {
 
             async.each(depotResults, function (depot, callback) {
 
-                console.log(depot.distance);
                 switch (depot.distance){
                     case '[0-1km]':
                         response[0] += 1;
@@ -1091,9 +1090,8 @@ module.exports = function (app) {
                     case '[100km-300km]':
                         response[4] += 1;
                         break;
-                    case '[300km, +]':
+                    default:
                         response[5] += 1;
-                        break;
                 }
 
                 callback();

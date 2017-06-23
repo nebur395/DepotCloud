@@ -16,8 +16,6 @@ function guaranteeChecker() {
 
             callback();
 
-        }, function (err) {
-
         });
     });
 }
@@ -35,8 +33,6 @@ function dateOfExpiryChecker() {
             }
 
             callback();
-
-        }, function (err) {
 
         });
     });
