@@ -8,5 +8,6 @@ module.exports = function (app) {
     app.use("/depotObjects", require('./depotObject/depotObject')(app));
     app.use("/activities", require('./activity/activity')(app));
     app.use("/adminStats", require('./admin/stats')(app));
+    app.use("/reports", require('./reportGenerator/report')(app));
 
 };

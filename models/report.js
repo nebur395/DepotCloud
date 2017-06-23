@@ -19,7 +19,11 @@ mongoose.Promise = global.Promise;
  *         type: string
  *         required: true
  *         description: |
- *           Tipo de informe generado. Puede ser: GUARANTEE, DATEOFEXPIRY.
+ *           Tipo de informe generado. Puede ser: Guarantee, dateOfExpiry.
+ *       depotObject:
+ *         type: string
+ *         required: true
+ *         description: Nombre del objeto al que se refiere el informe.
  *       reportDate:
  *         type: string
  *         required: true
@@ -30,6 +34,7 @@ mongoose.Promise = global.Promise;
 var reportSchema = mongoose.Schema({
 
     owner : {type: String, required: true},
+    depotObject : {type: mongoose.Schema.Types.ObjectId, required: true},
     type : {type: String, required: true},
     reportDate: {type: Date, default: Date.now}
 
