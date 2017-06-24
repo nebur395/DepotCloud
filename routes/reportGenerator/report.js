@@ -1,6 +1,5 @@
 var express = require('express');
 var async = require("async");
-var utf8 = require('utf8');
 
 
 module.exports = function (app) {
@@ -89,7 +88,7 @@ module.exports = function (app) {
                     var reports = [];
                     async.each(reportResult, function (report, callback) {
 
-                        DepotObject.findOne({_id: reportResult.depotObject}, function (err, depotObjectResult) {
+                        DepotObject.findOne({_id: report.depotObject}, function (err, depotObjectResult) {
                             if (err) {
                                 return res.status(500).send({
                                     "success": false,
@@ -98,10 +97,10 @@ module.exports = function (app) {
                             } else if (depotObjectResult) {
                                 // User to be sent in the response
                                 var reportResponse = {
-                                    "owner": reportResult.owner,
+                                    "owner": report.owner,
                                     "depotObject": depotObjectResult.name,
-                                    "type": reportResult.type,
-                                    "reportDate": reportResult.reportDate
+                                    "type": report.type,
+                                    "reportDate": report.reportDate
                                 };
 
                                 reports.push(reportResponse);
