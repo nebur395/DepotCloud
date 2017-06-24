@@ -89,24 +89,24 @@ module.exports = function (app) {
                     var reports = [];
                     async.each(reportResult, function (report, callback) {
 
-                        DepotObject.find({_id: reportResult._id}, function (err, depotObjectResult) {
+                        DepotObject.findOne({_id: reportResult.depotObject}, function (err, depotObjectResult) {
                             if (err) {
                                 return res.status(500).send({
                                     "success": false,
                                     "message": "Error interno del servidor."
                                 });
+                            } else if (depotObjectResult) {
+                                // User to be sent in the response
+                                var reportResponse = {
+                                    "owner": reportResult.owner,
+                                    "depotObject": depotObjectResult.name,
+                                    "type": reportResult.type,
+                                    "reportDate": reportResult.reportDate
+                                };
+
+                                reports.push(reportResponse);
+                                callback();
                             }
-
-                            // User to be sent in the response
-                            var reportResponse = {
-                                "owner": reportResult.owner,
-                                "depotObject": depotObjectResult.name,
-                                "type": reportResult.type,
-                                "reportDate": reportResult.reportDate
-                            };
-
-                            reports.push(reportResponse);
-                            callback();
                         });
 
                     }, function (err) {

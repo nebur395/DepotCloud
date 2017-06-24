@@ -19,7 +19,7 @@ mongoose.Promise = global.Promise;
  *         type: string
  *         required: true
  *         description: |
- *           Tipo de informe generado. Puede ser: Guarantee, dateOfExpiry.
+ *           Tipo de informe generado. Puede ser: guarantee, dateOfExpiry.
  *       depotObject:
  *         type: string
  *         required: true

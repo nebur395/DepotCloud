@@ -2,6 +2,7 @@ var models = require('../../models');
 var async = require("async");
 
 var DepotObject = models.DepotObject;
+var Report = models.Report;
 /*
  * Check if the guarantee of any DepotObject is expired.
  */
@@ -11,11 +12,24 @@ function guaranteeChecker() {
         async.each(depotObjectResult, function (depotObject, callback) {
 
             if (checkDates(depotObject.guarantee)) {
-                //notify
+
+                Report.findOne({depotObject: depotObject._id, type: "guarantee"}, function (err, reportResult) {
+                    // The report is created if it doesn't exist
+                    if (!reportResult) {
+                        Report.create({
+
+                            owner : depotObject.owner,
+                            depotObject : depotObject._id,
+                            type : "guarantee"
+
+                        }, function () {
+                            callback();
+                        });
+                    } else {
+                        callback();
+                    }
+                });
             }
-
-            callback();
-
         });
     });
 }
@@ -29,11 +43,24 @@ function dateOfExpiryChecker() {
         async.each(depotObjectResult, function (depotObject, callback) {
 
             if (checkDates(depotObject.dateOfExpiry)) {
-                //notify
+
+                Report.findOne({depotObject: depotObject._id, type: "dateOfExpiry"}, function (err, reportResult) {
+                    // The report is created if it doesn't exist
+                    if (!reportResult) {
+                        Report.create({
+
+                            owner : depotObject.owner,
+                            depotObject : depotObject._id,
+                            type : "dateOfExpiry"
+
+                        }, function () {
+                            callback();
+                        });
+                    } else {
+                        callback();
+                    }
+                });
             }
-
-            callback();
-
         });
     });
 }
