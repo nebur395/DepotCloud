@@ -105,6 +105,8 @@ module.exports = function (app) {
 
                                 reports.push(reportResponse);
                                 callback();
+                            } else {
+                                callback();
                             }
                         });
 
