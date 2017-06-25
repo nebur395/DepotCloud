@@ -17,7 +17,6 @@ function createReport(owner, depotObject, type, reportsId, callback){
 
         reportsId.push(new ObjectId(result._id));
 
-        console.log(":.........................................................................");
         callback();
 
     });
