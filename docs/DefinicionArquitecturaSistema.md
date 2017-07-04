@@ -19,8 +19,8 @@
 ### Componentes de hardware y sus relaciones
 **Catálogo de la vista**  
 Siguiendo un orden de flujo de interacción se encuentran los siguientes componentes:
-* El cliente Android, componiéndose de un dispositivo móvil que puede ser iOS y Android. Incluye el navegador web Cordova para conseguir un funcionamiento híbrido. Este nodo se encarga de contener el cliente de la aplicación para usuarios **no** administradores, comunicándose con los protocolos HTTP sobre Wi-Fi con el servidor.
-* El cliente Desktop, que se compone de un dispositivo desktop, en el cual se incluye un navegador web. Este nodo se encarga de contener el cliente para usuarios de tipo administrador comunicándose con los protocolos HTTP sobre TCP/IP con el servidor.
+* El cliente Android, componiéndose de un dispositivo móvil que puede ser iOS, Android, y Windows Phone. Incluye el navegador web Cordova para conseguir el funcionamiento híbrido. Este nodo se encarga de contener el cliente de la aplicación para usuarios **no** administradores, comunicándose con los protocolos HTTP sobre Wi-Fi con el servidor en el puerto 8100.
+* El cliente Desktop, que se compone de un dispositivo desktop, en el cual se incluye un navegador web. Este nodo se encarga de contener el cliente para usuarios de tipo administrador comunicándose con los protocolos HTTP sobre TCP/IP con el servidor en el puerto 8080.
 * El servidor web, componiéndose del entorno de ejecución Node.js en el cual se despliega Express, una aplicación framework que actúa como middleware, conteniendo a su vez la lógica de la aplicación.
 * El servidor de base de datos documental MongoDB, el cual se conecta con la aplicación del servidor mediante un DB Driver, en este caso Mongoose.
 
@@ -33,18 +33,22 @@ Además, se ha decidido utilizar el stack MEAN para garantizar que todos los com
 
 ### Componentes de software y sus relaciones
 **Catálogo de la vista**  
-* **DepotCloudApp:** Es el cliente para dispositivos móviles de la aplicación. Contiene todo el cliente desarrollado sobre Ionic2 y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST, salvo con el componente Notifications, que se comunica mediante WebSockets para mandar notificaciones en tiempo real, y con el componente Statistics con el cual no se comunica.
-* **DepotCloudAdminApp:** Es el cliente para dispositivos desktop de la aplicación. Contiene todo el cliente desarrollado sobre AngularJS para los usuarios administradores y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST. Este componente solo va a hacer uso de las interfaces RESTful de los componentes User y Statistics.
-* **Control Access:** Es el encargado de gestionar el control de acceso al sistema. Este control de accesos se va a realizar con la tecnología [JSON Web Tokens](https://jwt.io/). Solo se puede hacer uso de los componentes habiendo iniciado sesión. Los usuarios administradores solo pueden acceder a los componentes de User y Statistics. Los usuarios normales pueden acceder a todos los componentes salvo Statistics.
-* **Statistics:** Ofrece la interfaz para acceder a las estadísticas que necesita el usuario administrador para visualizar en el cliente.
+* **DepotCloud App:** Es el cliente para dispositivos móviles de la aplicación. Contiene todo el cliente desarrollado sobre Ionic2 y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST, salvo con el componente Stats y UserManagement con los cuales no se comunica.
+* **DepotCloud Admin App:** Es el cliente para dispositivos desktop de la aplicación. Contiene todo el cliente desarrollado sobre AngularJS para los usuarios administradores y se comunica vía HTTP haciendo las conexiones con los end-points vía API REST. Este componente solo va a hacer uso de las interfaces RESTful de los componentes User, UserManagement, Session y Stats.
+* **Server:** Representación del server.js que inicializa todo el sistema, ejecuta en segundo plano el componente ReportGenerator, y realiza todo el enrutado a los módulos que gestionan las peticiones, así como del módulo del control de acceso de usuarios. Requiere el componente jwt-handler dado que todas las peticiones pasan primero por el filtro para comprobar que la petición la ha realizado un usuario válido y que ha iniciado sesión.
+* **jwt-handler:** Es el encargado de gestionar el control de acceso al sistema. Este control de accesos se va a realizar con la tecnología [JSON Web Tokens](https://jwt.io/). Solo se puede hacer uso de los componentes habiendo iniciado sesión. Los usuarios normales pueden acceder a todos los componentes salvo UserManagement y Stats.
+* **Session:** Es el encargado de gestionar el inicio de sesión y generar un JSON Web Token válido y con la información del usuario.
+* **User Management:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de usuarios del administrador (editar y reactivar usuario).
 * **User:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de usuarios.
+* **Stats:** Ofrece la interfaz para acceder a las estadísticas que necesita el usuario administrador para visualizar en el cliente de escritorio.
+* **Members:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de los miembros de la unidad familiar.
 * **Depot:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de almacenes.
-* **DepotObject:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de los objetos que se guardan en los almacenes.
-* **Dashboard:** Es el componente que ofrece las notificaciones a todos los miembros de la unidad familiar acerca de cualquier acción realizada sobre los almacenes y los objetos almacenados.
-* **Notifications:** Es el componente que se encarga de comunicar cualquier notificación en tiempo real.
-* **Duplicates:** Es el componente que se encarga de detectar mediante reconocimiento de imágenes, objetos duplicados que haya en el sistema. Dicho componente trabaja de forma periódica con el de DepotObject para ir detectando los duplicados y posteriormente notificarlo al usuario mediante el componente de Notifications.
-* **Report Generator:** Es el encargado de realizar los informes y recomendaciones acerca de los objetos almacenados para los usuarios. Es un componente que trabaja de forma periódica con el de DepotObject para detectara cualquier tipo de recomendación o informe que pueda generarse, y comunicarlo mediante el componente Notifications en tiempo real al usuario final.
-* **User Schema, Depot Schema, y DepotObject Schema:** Son los componentes encargados de facilitar schemas para los objetos modelos de usuario, almacén y objeto de almacén que se implementan con el driver Mongoose para el acceso a MongoDB.
+* **Depot Object:** Ofrece la interfaz para acceder a las funcionalidades relacionadas con la gestión de los objetos que se guardan en los almacenes.
+* **Activity:** Es el componente que ofrece el listado de actividades a todos los miembros de la unidad familiar acerca de cualquier acción realizada sobre los almacenes y los objetos almacenados.
+* **Reoprt:** Es el componente que se encarga de ofrecer el listado de todos los informes generados de los objetos en el sistema.
+* **Report Generator:** Componente en background establecido con un timeout e inicializado desde el componente Server que se encarga de generar los informes en el caso de que un objeto de almacén esté caducado o haya pasado su garantía.
+* **Activity Creator:** Es el encargado de generar una actividad relacionada con una acción y guardarla en el sistema.
+* **User Schema, Depot Schema, DepotObject Schema, Activity Schema, y Report Schema:** Son los componentes encargados de facilitar schemas para los objetos modelos de usuario, almacén, objeto de almacén, actividad e informe que se implementan con el driver Mongoose para el acceso a MongoDB.
 
 **Exposición de razones**  
 La arquitectura presentada de los componentes software se ha decidido que siga los principios de los servicios web RESTful. Esta decisión de diseño se ha tomado en base al objetivo de querer conseguir un sistema que pueda escalar gracias a las características de estos servicios, y porque se adaptaba bien a una arquitectura orientada a los recursos web, en vez de a las funcionalidades (para las cuales se podría hacer uso de otros servicios web como SOAP y WISDL).
@@ -58,20 +62,20 @@ Su importancia de cara al proyecto puede graduarse de forma parecida al alcance 
 
 | Requisito no funcional | Prioridad | Cómo es apoyado por la arquitectura |
 | ---------------------- | --------- | ----------- |
-| Usabilidad | Alta | El sistema debe someterse a la técnica [KLM](https://en.wikipedia.org/wiki/Keystroke-level_model), y algunas métricas probadas con posibles usuarios finales. Los tiempos analizados resultantes con KLM de las actividades principales deberían ser inferiores a 2 minutos. Podría tener una forma rápida para traducir la aplicación. Quedan fuera por ahora aspectos de accesibilidad.
-| Rendimiento | Media | Cualquier tiempo de respuesta de la aplición no debería tener tiempos de respuesta altos. Esto se quiere conseguir gracias a la implementación de una arquitectura RESTful.
-| Capacidad | Media | Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación.
-| Escalabilidad | Alta | El sistema debe plantear una arquitectura que sea mínimamente escabale, esto se va a conseguir escalando el sistema de forma horizontal gracias a la tecnología de NodeJS. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema.
-| Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs.
-| Disponibilidad | Media | Se va a seguir una metología de integración continua para intentar garantizar que todos los despliegues del sistema se hagan de forma automática y reducir el tiempo que pueda pasar al sistema desconectado debido a fallos o falta de despliegue automático.
-| Resilencia | Baja | Se va a plantear externalizar estos riesgos (con lo que ello conlleva) a una tercera parte haciendo uso de los servicios de [Amazon S3](https://aws.amazon.com/s3/), la cual garantiza un 99,99% de disponibilidad en la nube.
-| Recuperación | Baja | Se va a plantear externalizar estos riesgos (con lo que ello conlleva) a una tercera parte haciendo uso de los servicios de [Amazon S3](https://aws.amazon.com/s3/), la cual garantiza un 99,999999999% de durabilidad de los objetos en la nube.
+| Usabilidad | Alta | El sistema debe someterse a la técnica [KLM](https://en.wikipedia.org/wiki/Keystroke-level_model), y algunas métricas probadas con posibles usuarios finales. Los tiempos analizados resultantes con KLM de las actividades principales deberían ser inferiores a 2 minutos. Quedan fuera por ahora aspectos de accesibilidad (**falta**).
+| Rendimiento | Media | Cualquier tiempo de respuesta de la aplición no debería tener tiempos de respuesta altos. Esto se quiere conseguir gracias a la implementación de una arquitectura RESTful (**hecho**).
+| Capacidad | Media | Se va a trabajar con imágenes Full HD como máximo, siendo estos los datos más pesados en la transmisión. Al menos 3 personas deben poder acceder concurrentemente a la aplicación (**hecho, se aceptan hasta 20mb de tamaño**).
+| Escalabilidad | Alta | El sistema debe plantear una arquitectura que sea mínimamente escabale, esto se va a conseguir escalando el sistema de forma horizontal gracias a la tecnología de NodeJS. Podría hacerse uso de herramientas como Apache Jmeter para analizar la carga del sistema (**hecho, se redactará mejor en la memoria**).
+| Seguridad | Media | La aplicación va hacer uso de tráfico cifrado mediante https. Debe cifrar al menos las contraseñas en la base de datos. Se deben documentar aspectos pensados con la protección contra sistemas de SPAM y de BOTs (**falta**).
+| Disponibilidad | Media | Se va a seguir una metología de integración continua para intentar garantizar que todos los despliegues del sistema se hagan de forma automática y reducir el tiempo que pueda pasar al sistema desconectado debido a fallos o falta de despliegue automático (**hecho**).
+| Resilencia | Baja | Se va a plantear externalizar estos riesgos (con lo que ello conlleva) a una tercera parte haciendo uso de los servicios de [Amazon S3](https://aws.amazon.com/s3/), la cual garantiza un 99,99% de disponibilidad en la nube (**falta**).
+| Recuperación | Baja | Se va a plantear externalizar estos riesgos (con lo que ello conlleva) a una tercera parte haciendo uso de los servicios de [Amazon S3](https://aws.amazon.com/s3/), la cual garantiza un 99,999999999% de durabilidad de los objetos en la nube (**falta**).
 ### Mantenibilidad
 Se busca un sistema que al menos tenga una vida útil de más de 2 años para sistemas de Android Marshmallow 6.0.  
 
-Con eso en mente, se ha de pensar en un sistema claramente modularizado y organizado, con una buena documentación y un código legible. Para ello, el sistema podría contar con una serie de estándares y definiciones de hecho, así como el uso de algunas herramientas de *Quality Assurance* como SonarQube.
+Con eso en mente, se ha de pensar en un sistema claramente modularizado y organizado, con una buena documentación y un código legible. Para ello, el sistema podría contar con una serie de estándares y definiciones de hecho, así como el uso de algunas herramientas de *Quality Assurance* como SonarQube (**hecho**).
  
-Por otro lado, para conseguir una buena documentación de la API de forma mantenible, el sistema podría hacer uso de la herramienta *swagger*.
+Por otro lado, para conseguir una buena documentación de la API de forma mantenible, el sistema podría hacer uso de la herramienta *swagger* (**hecho**).
 
 ## Entornos técnicos
 ### Plataforma de desarrollo
