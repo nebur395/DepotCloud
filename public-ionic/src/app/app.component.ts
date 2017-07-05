@@ -4,7 +4,7 @@ import { Platform, Nav, Config }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { ContentPage }    from '../pages/content/content';
+import { ContentPageComponent }    from '../pages/content/content-page.component';
 import { ListMasterPage } from '../pages/list-master/list-master';
 import { SearchPage }     from '../pages/search/search';
 import { SettingsPage }   from '../pages/settings/settings';
@@ -24,8 +24,8 @@ export class AppComponent {
   pages: any[] = [
     { title: 'Almacenes', component: ListMasterPage },
     { title: 'Buscar trastos', component: SearchPage },
-    { title: 'Actividades', component: ContentPage },
-    { title: 'Recomendaciones', component: ContentPage },
+    { title: 'Actividades', component: ContentPageComponent },
+    { title: 'Recomendaciones', component: ContentPageComponent },
     { title: 'Settings', component: SettingsPage },
     { title: 'Tutorial', component: TutorialPage }
   ];

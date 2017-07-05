@@ -6,7 +6,7 @@ import { Storage, IonicStorageModule }              from '@ionic/storage';
 
 import { AppComponent }       from './app.component';
 
-import { ContentPage }    from '../pages/content/content';
+import { ContentPageComponent }    from '../pages/content/content-page.component';
 import { ItemCreatePage } from '../pages/item-create/item-create';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { ListMasterPage } from '../pages/list-master/list-master';
@@ -53,7 +53,7 @@ export function provideSettings(storage: Storage) {
 @NgModule({
   declarations: [
     AppComponent,
-    ContentPage,
+    ContentPageComponent,
     ItemCreatePage,
     ItemDetailPage,
     ListMasterPage,
@@ -80,7 +80,7 @@ export function provideSettings(storage: Storage) {
   bootstrap: [IonicApp],
   entryComponents: [
     AppComponent,
-    ContentPage,
+    ContentPageComponent,
     ItemCreatePage,
     ItemDetailPage,
     ListMasterPage,
