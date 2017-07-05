@@ -1,47 +1,42 @@
-import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, Config } from 'ionic-angular';
+import { Component, ViewChild }   from '@angular/core';
+import { Platform, Nav, Config }  from 'ionic-angular';
 
-import { StatusBar } from '@ionic-native/status-bar';
+import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { ContentPage } from '../pages/content/content';
+import { ContentPage }    from '../pages/content/content';
 import { ListMasterPage } from '../pages/list-master/list-master';
-import { LoginPage } from '../pages/login/login';
-import { SearchPage } from '../pages/search/search';
-import { SettingsPage } from '../pages/settings/settings';
-import { SignupPage } from '../pages/signup/signup';
-import { TutorialPage } from '../pages/tutorial/tutorial';
-import { WelcomePage } from '../pages/welcome/welcome';
-
-import { Settings } from '../providers/providers';
+import { SearchPage }     from '../pages/search/search';
+import { SettingsPage }   from '../pages/settings/settings';
+import { TutorialPage }   from '../pages/tutorial/tutorial';
+import { WelcomePage }    from '../pages/welcome/welcome';
 
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   templateUrl: `app.component.html`
 })
-export class MyApp {
-  rootPage = TutorialPage;
+export class AppComponent {
+  rootPage = WelcomePage;
 
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    { title: 'Tutorial', component: TutorialPage },
-    { title: 'Welcome', component: WelcomePage },
-    { title: 'Content', component: ContentPage },
-    { title: 'Login', component: LoginPage },
-    { title: 'Signup', component: SignupPage },
-    { title: 'Master Detail', component: ListMasterPage },
+    { title: 'Almacenes', component: ListMasterPage },
+    { title: 'Buscar trastos', component: SearchPage },
+    { title: 'Actividades', component: ContentPage },
+    { title: 'Recomendaciones', component: ContentPage },
     { title: 'Settings', component: SettingsPage },
-    { title: 'Search', component: SearchPage }
-  ]
+    { title: 'Tutorial', component: TutorialPage }
+  ];
 
   constructor(
     private translate: TranslateService,
-    private platform: Platform, settings: Settings,
+    private platform: Platform,
     private config: Config,
     private statusBar: StatusBar,
-    private splashScreen: SplashScreen) {
+    private splashScreen: SplashScreen
+  ) {
     this.initTranslate();
   }
 
