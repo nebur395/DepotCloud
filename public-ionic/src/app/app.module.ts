@@ -14,7 +14,7 @@ import { LoginPageComponent }      from '../pages/login/login-page.component';
 import { SearchPageComponent }     from '../pages/search/search-page.component';
 import { SettingsPageComponent }   from '../pages/settings/settings-page.component';
 import { SignupPageComponent }     from '../pages/signup/signup-page.component';
-import { TutorialPage }   from '../pages/tutorial/tutorial';
+import { TutorialPageComponent }   from '../pages/tutorial/tutorial-page.component';
 import { WelcomePage }    from '../pages/welcome/welcome';
 
 import { Api }      from '../providers/api';
@@ -61,7 +61,7 @@ export function provideSettings(storage: Storage) {
     SearchPageComponent,
     SettingsPageComponent,
     SignupPageComponent,
-    TutorialPage,
+    TutorialPageComponent,
     WelcomePage
   ],
   imports: [
@@ -88,7 +88,7 @@ export function provideSettings(storage: Storage) {
     SearchPageComponent,
     SettingsPageComponent,
     SignupPageComponent,
-    TutorialPage,
+    TutorialPageComponent,
     WelcomePage
   ],
   providers: [

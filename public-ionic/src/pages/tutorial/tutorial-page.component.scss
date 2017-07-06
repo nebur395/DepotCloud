@@ -1,4 +1,9 @@
-page-tutorial {
+tutorial-page {
+
+  button.swiper-pagination-bullet-active {
+    background: color($colors, secondary, base);
+  }
+
   .toolbar-background {
     background: transparent;
     border-color: transparent;

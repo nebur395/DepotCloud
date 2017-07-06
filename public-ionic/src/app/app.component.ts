@@ -8,7 +8,7 @@ import { ContentPageComponent }    from '../pages/content/content-page.component
 import { DepotsPageComponent } from '../pages/depots/depots-page.component';
 import { SearchPageComponent }     from '../pages/search/search-page.component';
 import { SettingsPageComponent }   from '../pages/settings/settings-page.component';
-import { TutorialPage }   from '../pages/tutorial/tutorial';
+import { TutorialPageComponent }   from '../pages/tutorial/tutorial-page.component';
 import { WelcomePage }    from '../pages/welcome/welcome';
 
 import { TranslateService } from '@ngx-translate/core'
@@ -27,7 +27,7 @@ export class AppComponent {
     { title: 'Actividades', component: ContentPageComponent },
     { title: 'Recomendaciones', component: ContentPageComponent },
     { title: 'Settings', component: SettingsPageComponent },
-    { title: 'Tutorial', component: TutorialPage }
+    { title: 'Tutorial', component: TutorialPageComponent }
   ];
 
   constructor(
