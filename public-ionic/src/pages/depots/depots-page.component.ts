@@ -16,9 +16,9 @@ export class DepotsPageComponent {
   currentItems: Item[];
 
   constructor(
-    public navCtrl: NavController,
-    public items: Items,
-    public modalCtrl: ModalController
+    private navCtrl: NavController,
+    private items: Items,
+    private modalCtrl: ModalController
   ) { }
 
   /**
