@@ -17,8 +17,8 @@ export class SearchPageComponent {
   currentItems: any = [];
 
   constructor(
-    public navCtrl: NavController,
-    public items: Items
+    private navCtrl: NavController,
+    private items: Items
   ) { }
 
   /**

@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ContentPageComponent }    from '../pages/content/content-page.component';
 import { DepotsPageComponent } from '../pages/depots/depots-page.component';
 import { SearchPageComponent }     from '../pages/search/search-page.component';
-import { SettingsPage }   from '../pages/settings/settings';
+import { SettingsPageComponent }   from '../pages/settings/settings-page.component';
 import { TutorialPage }   from '../pages/tutorial/tutorial';
 import { WelcomePage }    from '../pages/welcome/welcome';
 
@@ -26,7 +26,7 @@ export class AppComponent {
     { title: 'Buscar trastos', component: SearchPageComponent },
     { title: 'Actividades', component: ContentPageComponent },
     { title: 'Recomendaciones', component: ContentPageComponent },
-    { title: 'Settings', component: SettingsPage },
+    { title: 'Settings', component: SettingsPageComponent },
     { title: 'Tutorial', component: TutorialPage }
   ];
 

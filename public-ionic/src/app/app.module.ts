@@ -12,7 +12,7 @@ import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { DepotsPageComponent } from '../pages/depots/depots-page.component';
 import { LoginPageComponent }      from '../pages/login/login-page.component';
 import { SearchPageComponent }     from '../pages/search/search-page.component';
-import { SettingsPage }   from '../pages/settings/settings';
+import { SettingsPageComponent }   from '../pages/settings/settings-page.component';
 import { SignupPage }     from '../pages/signup/signup';
 import { TutorialPage }   from '../pages/tutorial/tutorial';
 import { WelcomePage }    from '../pages/welcome/welcome';
@@ -59,7 +59,7 @@ export function provideSettings(storage: Storage) {
     DepotsPageComponent,
     LoginPageComponent,
     SearchPageComponent,
-    SettingsPage,
+    SettingsPageComponent,
     SignupPage,
     TutorialPage,
     WelcomePage
@@ -86,7 +86,7 @@ export function provideSettings(storage: Storage) {
     DepotsPageComponent,
     LoginPageComponent,
     SearchPageComponent,
-    SettingsPage,
+    SettingsPageComponent,
     SignupPage,
     TutorialPage,
     WelcomePage

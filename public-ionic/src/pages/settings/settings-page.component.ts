@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component }                from '@angular/core';
+import { FormBuilder, FormGroup }   from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Settings } from '../../providers/settings';
@@ -12,10 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
  *
  */
 @Component({
-  selector: 'page-settings',
-  templateUrl: 'settings.html'
+  selector: 'settings-page',
+  templateUrl: 'settings-page.component.html'
 })
-export class SettingsPage {
+export class SettingsPageComponent {
   // Our local settings object
   options: any;
 
@@ -32,16 +32,17 @@ export class SettingsPage {
   pageTitleKey: string = 'SETTINGS_TITLE';
   pageTitle: string;
 
-  subSettings: any = SettingsPage;
+  subSettings: any = SettingsPageComponent;
 
-  constructor(public navCtrl: NavController,
-    public settings: Settings,
-    public formBuilder: FormBuilder,
-    public navParams: NavParams,
-    public translate: TranslateService) {
-  }
+  constructor(
+    private navCtrl: NavController,
+    private settings: Settings,
+    private formBuilder: FormBuilder,
+    private navParams: NavParams,
+    private translate: TranslateService
+  ) { }
 
-  _buildForm() {
+  _buildForm(): void {
     let group: any = {
       option1: [this.options.option1],
       option2: [this.options.option2],
@@ -65,12 +66,12 @@ export class SettingsPage {
     });
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(): void {
     // Build an empty form for the template to render
     this.form = this.formBuilder.group({});
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     // Build an empty form for the template to render
     this.form = this.formBuilder.group({});
 
@@ -89,7 +90,7 @@ export class SettingsPage {
     });
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     console.log('Ng All Changes');
   }
 }
