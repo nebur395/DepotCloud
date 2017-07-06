@@ -1,13 +1,19 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
+  <ion-navbar color="primary">
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Almacenes de la familia</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="addItem()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
@@ -27,7 +33,7 @@
 
       <ion-item-options>
         <button ion-button color="danger" (click)="deleteItem(item)">
-          {{ 'DELETE_BUTTON' | translate }}
+          Borrar
         </button>
       </ion-item-options>
     </ion-item-sliding>

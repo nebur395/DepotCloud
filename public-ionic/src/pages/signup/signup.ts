@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuController, NavController, ToastController } from 'ionic-angular';
 
-import { ListMasterPage } from '../list-master/list-master';
+import { DepotsPageComponent } from '../depots/depots-page.component';
 import { User } from '../../providers/user';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -49,10 +49,10 @@ export class SignupPage {
   doSignup() {
     // Attempt to login in through our User service
     this.user.signup(this.account).subscribe((resp) => {
-      this.navCtrl.push(ListMasterPage);
+      this.navCtrl.push(DepotsPageComponent);
     }, (err) => {
 
-      this.navCtrl.setRoot(ListMasterPage, {}, {
+      this.navCtrl.setRoot(DepotsPageComponent, {}, {
         animate: true,
         direction: 'forward'
       }); // TODO: Remove this when you add your signup endpoint

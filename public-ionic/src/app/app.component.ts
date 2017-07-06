@@ -5,7 +5,7 @@ import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { ContentPageComponent }    from '../pages/content/content-page.component';
-import { ListMasterPage } from '../pages/list-master/list-master';
+import { DepotsPageComponent } from '../pages/depots/depots-page.component';
 import { SearchPage }     from '../pages/search/search';
 import { SettingsPage }   from '../pages/settings/settings';
 import { TutorialPage }   from '../pages/tutorial/tutorial';
@@ -22,7 +22,7 @@ export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
-    { title: 'Almacenes', component: ListMasterPage },
+    { title: 'Almacenes', component: DepotsPageComponent },
     { title: 'Buscar trastos', component: SearchPage },
     { title: 'Actividades', component: ContentPageComponent },
     { title: 'Recomendaciones', component: ContentPageComponent },
@@ -40,7 +40,7 @@ export class AppComponent {
     this.initTranslate();
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(): void {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -49,7 +49,7 @@ export class AppComponent {
     });
   }
 
-  initTranslate() {
+  initTranslate(): void {
     // Set the default language for translation strings, and the current language.
     this.translate.setDefaultLang('en');
 
@@ -64,9 +64,15 @@ export class AppComponent {
     });
   }
 
-  openPage(page) {
+  openPage(page: any): void {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  logout(): void {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(WelcomePage);
   }
 }

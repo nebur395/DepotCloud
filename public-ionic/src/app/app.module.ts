@@ -9,7 +9,7 @@ import { AppComponent }       from './app.component';
 import { ContentPageComponent }    from '../pages/content/content-page.component';
 import { ItemCreatePage } from '../pages/item-create/item-create';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
-import { ListMasterPage } from '../pages/list-master/list-master';
+import { DepotsPageComponent } from '../pages/depots/depots-page.component';
 import { LoginPage }      from '../pages/login/login';
 import { SearchPage }     from '../pages/search/search';
 import { SettingsPage }   from '../pages/settings/settings';
@@ -56,7 +56,7 @@ export function provideSettings(storage: Storage) {
     ContentPageComponent,
     ItemCreatePage,
     ItemDetailPage,
-    ListMasterPage,
+    DepotsPageComponent,
     LoginPage,
     SearchPage,
     SettingsPage,
@@ -83,7 +83,7 @@ export function provideSettings(storage: Storage) {
     ContentPageComponent,
     ItemCreatePage,
     ItemDetailPage,
-    ListMasterPage,
+    DepotsPageComponent,
     LoginPage,
     SearchPage,
     SettingsPage,
