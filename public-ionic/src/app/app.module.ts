@@ -13,7 +13,7 @@ import { DepotsPageComponent } from '../pages/depots/depots-page.component';
 import { LoginPageComponent }      from '../pages/login/login-page.component';
 import { SearchPageComponent }     from '../pages/search/search-page.component';
 import { SettingsPageComponent }   from '../pages/settings/settings-page.component';
-import { SignupPage }     from '../pages/signup/signup';
+import { SignupPageComponent }     from '../pages/signup/signup-page.component';
 import { TutorialPage }   from '../pages/tutorial/tutorial';
 import { WelcomePage }    from '../pages/welcome/welcome';
 
@@ -60,7 +60,7 @@ export function provideSettings(storage: Storage) {
     LoginPageComponent,
     SearchPageComponent,
     SettingsPageComponent,
-    SignupPage,
+    SignupPageComponent,
     TutorialPage,
     WelcomePage
   ],
@@ -87,7 +87,7 @@ export function provideSettings(storage: Storage) {
     LoginPageComponent,
     SearchPageComponent,
     SettingsPageComponent,
-    SignupPage,
+    SignupPageComponent,
     TutorialPage,
     WelcomePage
   ],
