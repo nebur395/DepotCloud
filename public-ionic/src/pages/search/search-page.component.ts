@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component }     from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 import { ItemDetailPage } from '../item-detail/item-detail';
 
@@ -9,23 +9,22 @@ import { Items } from '../../providers/providers';
 
 
 @Component({
-  selector: 'page-search',
-  templateUrl: 'search.html'
+  selector: 'search-page',
+  templateUrl: 'search-page.component.html'
 })
-export class SearchPage {
+export class SearchPageComponent {
 
   currentItems: any = [];
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public items: Items
   ) { }
 
   /**
    * Perform a service for the proper items.
    */
-  getItems(ev) {
+  getItems(ev: any): void {
     let val = ev.target.value;
     if (!val || !val.trim()) {
       this.currentItems = [];
@@ -39,7 +38,7 @@ export class SearchPage {
   /**
    * Navigate to the detail page for this item.
    */
-  openItem(item: Item) {
+  openItem(item: Item): void {
     this.navCtrl.push(ItemDetailPage, {
       item: item
     });

@@ -29,25 +29,25 @@ export class LoginPageComponent {
     private menu: MenuController,
     private user: User,
     private toastCtrl: ToastController,
-    private translateService: TranslateService) {
-
+    private translateService: TranslateService
+  ) {
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.loginErrorString = value;
     })
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     // the root left menu should be disabled on the tutorial page
     this.menu.enable(false);
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave(): void {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
   }
 
   // Attempt to login in through our User service
-  doLogin() {
+  doLogin(): void {
     this.user.login(this.account).subscribe((resp) => {
       this.navCtrl.setRoot(DepotsPageComponent, {}, {
         animate: true,

@@ -11,7 +11,7 @@ import { ItemCreatePage } from '../pages/item-create/item-create';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { DepotsPageComponent } from '../pages/depots/depots-page.component';
 import { LoginPageComponent }      from '../pages/login/login-page.component';
-import { SearchPage }     from '../pages/search/search';
+import { SearchPageComponent }     from '../pages/search/search-page.component';
 import { SettingsPage }   from '../pages/settings/settings';
 import { SignupPage }     from '../pages/signup/signup';
 import { TutorialPage }   from '../pages/tutorial/tutorial';
@@ -58,7 +58,7 @@ export function provideSettings(storage: Storage) {
     ItemDetailPage,
     DepotsPageComponent,
     LoginPageComponent,
-    SearchPage,
+    SearchPageComponent,
     SettingsPage,
     SignupPage,
     TutorialPage,
@@ -85,7 +85,7 @@ export function provideSettings(storage: Storage) {
     ItemDetailPage,
     DepotsPageComponent,
     LoginPageComponent,
-    SearchPage,
+    SearchPageComponent,
     SettingsPage,
     SignupPage,
     TutorialPage,
