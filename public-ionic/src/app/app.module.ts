@@ -6,16 +6,16 @@ import { Storage, IonicStorageModule }              from '@ionic/storage';
 
 import { AppComponent }       from './app.component';
 
-import { ContentPageComponent }    from '../pages/content/content-page.component';
-import { ItemCreatePage } from '../pages/item-create/item-create';
-import { ItemDetailPage } from '../pages/item-detail/item-detail';
-import { DepotsPageComponent } from '../pages/depots/depots-page.component';
-import { LoginPageComponent }      from '../pages/login/login-page.component';
-import { SearchPageComponent }     from '../pages/search/search-page.component';
-import { SettingsPageComponent }   from '../pages/settings/settings-page.component';
-import { SignupPageComponent }     from '../pages/signup/signup-page.component';
-import { TutorialPageComponent }   from '../pages/tutorial/tutorial-page.component';
-import { WelcomePage }    from '../pages/welcome/welcome';
+import { ContentPageComponent }   from '../pages/content/content-page.component';
+import { ItemCreatePage }         from '../pages/item-create/item-create';
+import { ItemDetailPage }         from '../pages/item-detail/item-detail';
+import { DepotsPageComponent }    from '../pages/depots/depots-page.component';
+import { LoginPageComponent }     from '../pages/login/login-page.component';
+import { SearchPageComponent }    from '../pages/search/search-page.component';
+import { SettingsPageComponent }  from '../pages/settings/settings-page.component';
+import { SignupPageComponent }    from '../pages/signup/signup-page.component';
+import { TutorialPageComponent }  from '../pages/tutorial/tutorial-page.component';
+import { WelcomePageComponent }   from '../pages/welcome/welcome-page.component';
 
 import { Api }      from '../providers/api';
 import { Items }    from '../mocks/providers/items';
@@ -62,7 +62,7 @@ export function provideSettings(storage: Storage) {
     SettingsPageComponent,
     SignupPageComponent,
     TutorialPageComponent,
-    WelcomePage
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +89,7 @@ export function provideSettings(storage: Storage) {
     SettingsPageComponent,
     SignupPageComponent,
     TutorialPageComponent,
-    WelcomePage
+    WelcomePageComponent
   ],
   providers: [
     Api,

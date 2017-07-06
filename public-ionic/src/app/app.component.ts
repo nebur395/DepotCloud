@@ -4,12 +4,12 @@ import { Platform, Nav, Config }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { ContentPageComponent }    from '../pages/content/content-page.component';
-import { DepotsPageComponent } from '../pages/depots/depots-page.component';
-import { SearchPageComponent }     from '../pages/search/search-page.component';
-import { SettingsPageComponent }   from '../pages/settings/settings-page.component';
-import { TutorialPageComponent }   from '../pages/tutorial/tutorial-page.component';
-import { WelcomePage }    from '../pages/welcome/welcome';
+import { ContentPageComponent }  from '../pages/content/content-page.component';
+import { DepotsPageComponent }   from '../pages/depots/depots-page.component';
+import { SearchPageComponent }   from '../pages/search/search-page.component';
+import { SettingsPageComponent } from '../pages/settings/settings-page.component';
+import { TutorialPageComponent } from '../pages/tutorial/tutorial-page.component';
+import { WelcomePageComponent }  from '../pages/welcome/welcome-page.component';
 
 import { TranslateService } from '@ngx-translate/core'
 
@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core'
   templateUrl: `app.component.html`
 })
 export class AppComponent {
-  rootPage = WelcomePage;
+  rootPage = WelcomePageComponent;
 
   @ViewChild(Nav) nav: Nav;
 
@@ -73,6 +73,6 @@ export class AppComponent {
   logout(): void {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(WelcomePage);
+    this.nav.setRoot(WelcomePageComponent);
   }
 }
