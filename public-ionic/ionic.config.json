@@ -1,5 +1,11 @@
 {
   "name": "public-ionic",
   "app_id": "",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/users",
+      "proxyUrl": "http://192.168.1.11:8080/users/"
+    }
+  ]
 }

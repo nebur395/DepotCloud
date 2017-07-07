@@ -1,70 +1,73 @@
-import { Component }                                      from '@angular/core';
-import { MenuController, NavController, ToastController } from 'ionic-angular';
+import { Component }                       from '@angular/core';
+import { MenuController, ToastController } from 'ionic-angular';
 
-import { DepotsPageComponent } from '../depots/depots-page.component';
-
-import { User } from '../../providers/user';
-
-import { TranslateService } from '@ngx-translate/core';
-
+import { UserService } from '../../providers/user.service';
 
 @Component({
   selector: 'signup-page',
   templateUrl: 'signup-page.component.html'
 })
 export class SignupPageComponent {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
-  account: { name: string, email: string, password: string } = {
-    name: 'Test Human',
-    email: 'test@example.com',
-    password: 'test'
+
+  // The account fields for the login form
+  account: {
+    name: string,
+    email: string,
+    password: string,
+    rePassword: string
+  } = {
+    name: '',
+    email: '',
+    password: '',
+    rePassword: ''
   };
 
-  // Our translated text strings
-  private signupErrorString: string;
-
   constructor(
-    private navCtrl: NavController,
     private menu: MenuController,
-    private user: User,
-    private toastCtrl: ToastController,
-    private translateService: TranslateService
-  ) {
-    this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
-      this.signupErrorString = value;
-    })
-  }
+    private userService: UserService,
+    private toastCtrl: ToastController
+  ) { }
 
   ionViewDidEnter(): void {
-    // the root left menu should be disabled on the tutorial page
+    // the root left menu should be disabled on this page
     this.menu.enable(false);
   }
 
   ionViewWillLeave(): void {
-    // enable the root left menu when leaving the tutorial page
+    // enable the root left menu when leaving this page
     this.menu.enable(true);
   }
 
   doSignup(): void {
     // Attempt to login in through our User service
-    this.user.signup(this.account).subscribe((resp) => {
-      this.navCtrl.push(DepotsPageComponent);
+    this.userService.signup(this.account).subscribe(
+      (resp) => {
+
+        let jsonResp = resp.json();
+
+        // User created
+        let toast = this.toastCtrl.create({
+          message: jsonResp.message,
+          position: 'bottom',
+          duration: 4000,
+          cssClass: 'toast-success'
+        });
+        toast.present();
+
+
     }, (err) => {
 
-      this.navCtrl.setRoot(DepotsPageComponent, {}, {
-        animate: true,
-        direction: 'forward'
-      }); // TODO: Remove this when you add your signup endpoint
+        let jsonErr = err.json();
 
-      // Unable to sign up
-      let toast = this.toastCtrl.create({
-        message: this.signupErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+        // Unable to sign up
+        let toast = this.toastCtrl.create({
+          message: jsonErr.message,
+          position: 'bottom',
+          duration: 4000,
+          cssClass: 'toast-error'
+        });
+        toast.present();
+
     });
   }
 }

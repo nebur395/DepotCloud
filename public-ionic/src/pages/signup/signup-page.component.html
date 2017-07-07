@@ -15,26 +15,26 @@
 
       <ion-item>
         <ion-label fixed>Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="account.name" name="name"></ion-input>
+        <ion-input type="text" [(ngModel)]="account.name" name="name"
+                   placeholder="Introduzca el nombre de usuario"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label fixed>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="account.email" name="email"
+                   placeholder="Introduzca el Email"></ion-input>
       </ion-item>
-
-      <!--
-      Want to add a Username? Here you go:
-
-      <ion-item>
-        <ion-label floating>Username</ion-label>
-        <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
-      </ion-item>
-      -->
 
       <ion-item>
         <ion-label fixed>Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="account.password" name="password"
+                   placeholder="Introduzca la contraseña"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="account.rePassword"
+                   name="rePassword" placeholder="Repita la contraseña"></ion-input>
       </ion-item>
 
       <div padding>

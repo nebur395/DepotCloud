@@ -20,7 +20,7 @@ import { WelcomePageComponent }   from '../pages/welcome/welcome-page.component'
 import { Api }      from '../providers/api';
 import { Items }    from '../mocks/providers/items';
 import { Settings } from '../providers/settings';
-import { User }     from '../providers/user';
+import { UserService }     from '../providers/user.service';
 
 import { Camera }       from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -94,7 +94,7 @@ export function provideSettings(storage: Storage) {
   providers: [
     Api,
     Items,
-    User,
+    UserService,
     Camera,
     SplashScreen,
     StatusBar,

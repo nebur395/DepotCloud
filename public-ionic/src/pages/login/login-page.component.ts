@@ -3,7 +3,7 @@ import { MenuController, NavController, ToastController } from 'ionic-angular';
 
 import { DepotsPageComponent } from '../depots/depots-page.component';
 
-import { User } from '../../providers/user';
+import { UserService } from '../../providers/user.service';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,7 +27,7 @@ export class LoginPageComponent {
   constructor(
     private navCtrl: NavController,
     private menu: MenuController,
-    private user: User,
+    private user: UserService,
     private toastCtrl: ToastController,
     private translateService: TranslateService
   ) {
