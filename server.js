@@ -6,14 +6,24 @@ var express = require("express"),
     fs = require("fs"),
     config = require("./config"),
     jwt = require("express-jwt"),
+    cors = require('cors'),
     http = require("http");
 
 
 var app = express();
 var server = http.createServer(app);
 
-// Morgan used to log requests to the console in developer's mode
+/*
+ * Morgan used to log requests to the console in developer's mode
+ * Comment this line in production mode
+ */
 app.use(morgan('dev'));
+
+/*
+ * Enable All CORS requests
+ * Comment this line in production mode
+ */
+app.use(cors());
 
 // swagger definition
 var swaggerDefinition = {
