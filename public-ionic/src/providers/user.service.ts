@@ -23,16 +23,25 @@ export class UserService {
    * the user entered on the form.
    */
   login(accountInfo: any) {
-    let seq = this.api.post('login', accountInfo).share();
+
+    let baseEncoded = btoa(accountInfo.email + ":" + accountInfo.password);
+
+    let seq = this.http.get(
+      'http://192.168.1.11:8080/login/', // End-point
+      {headers: new Headers({
+        'Authorization': 'Basic ' + baseEncoded
+      })}
+    ).share();
 
     seq
       .map(res => res.json())
       .subscribe(res => {
         // If the API returned a successful response, mark the user as logged in
-        if (res.status == 'success') {
+        console.error('SUCCESS', res);
+        /*if (res.status == 'success') {
           this._loggedIn(res);
         } else {
-        }
+        }*/
       }, err => {
         console.error('ERROR', err);
       });
@@ -47,7 +56,7 @@ export class UserService {
   signup(accountInfo: any) {
 
     let seq = this.http.post(
-      '/users/', // End-point
+      'http://192.168.1.11:8080/users/', // End-point
       JSON.stringify(accountInfo), // Body
       {headers: new Headers({
         'Content-Type': 'application/json'
