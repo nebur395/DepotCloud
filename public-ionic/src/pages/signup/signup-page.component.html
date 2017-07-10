@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+
+    <ion-title>Registro de cuenta</ion-title>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <form (submit)="doSignup()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label fixed>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="account.name" name="name"
+                   placeholder="Introduzca el nombre de usuario"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Email</ion-label>
+        <ion-input type="email" [(ngModel)]="account.email" name="email"
+                   placeholder="Introduzca el Email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="account.password" name="password"
+                   placeholder="Introduzca la contraseña"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="account.rePassword"
+                   name="rePassword" placeholder="Repita la contraseña"></ion-input>
+      </ion-item>
+
+      <div padding>
+        <button ion-button color="secondary" block>Registrar cuenta</button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>

@@ -3,7 +3,7 @@
 <ion-menu [content]="nav">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Pages</ion-title>
+      <ion-title>Depot Cloud | Menú</ion-title> <!-- TODO: Cambiar a logo -->
     </ion-toolbar>
   </ion-header>
 
@@ -11,6 +11,9 @@
     <ion-list>
       <button menuClose ion-item *ngFor="let page of pages" (click)="openPage(page)">
         {{page.title}}
+      </button>
+      <button menuClose ion-item (click)="logout()">
+        Cerrar sesión
       </button>
     </ion-list>
   </ion-content>
