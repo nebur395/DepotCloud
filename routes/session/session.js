@@ -104,7 +104,7 @@ module.exports = function (app) {
                     "name": result.name,
                     "members": result.members,
                     "admin": result.admin,
-                    "active": result.isActive
+                    "isActive": result.isActive
                 };
 
                 // If user is found and password is right, create and sign a jwt for it
