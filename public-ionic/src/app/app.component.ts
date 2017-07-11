@@ -11,6 +11,8 @@ import { SettingsPageComponent } from '../pages/settings/settings-page.component
 import { TutorialPageComponent } from '../pages/tutorial/tutorial-page.component';
 import { WelcomePageComponent }  from '../pages/welcome/welcome-page.component';
 
+import { UserService } from '../providers/user.service';
+
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -35,9 +37,17 @@ export class AppComponent {
     private platform: Platform,
     private config: Config,
     private statusBar: StatusBar,
-    private splashScreen: SplashScreen
+    private splashScreen: SplashScreen,
+    private userService: UserService
   ) {
     this.initTranslate();
+    this.userService.checkLogged().then(
+      (logged) => {
+        if (logged) {
+          this.nav.setRoot(DepotsPageComponent);
+        }
+      }
+    );
   }
 
   ionViewDidLoad(): void {
@@ -73,6 +83,10 @@ export class AppComponent {
   logout(): void {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(WelcomePageComponent);
+    this.userService.logout().then(
+      () => {
+        this.nav.setRoot(WelcomePageComponent);
+      }
+    );
   }
 }

@@ -1,21 +1,21 @@
 import { Injectable }       from '@angular/core';
 import { Headers, Http }    from '@angular/http';
+import { Storage }          from '@ionic/storage';
+import { JwtHelper }        from 'angular2-jwt';
 
 import { User } from '../models/User';
-
-import { Api } from './api';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-
 @Injectable()
 export class UserService {
-  _user: any;
+  _user: User;
+  storage: Storage = new Storage(null);
+  jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(
-    private http: Http,
-    private api: Api
+    private http: Http
   ) { }
 
   /**
@@ -37,14 +37,12 @@ export class UserService {
       .map(res => res.json())
       .subscribe(res => {
         // If the API returned a successful response, mark the user as logged in
-        console.error('SUCCESS', res);
-        /*if (res.status == 'success') {
-          this._loggedIn(res);
-        } else {
-        }*/
-      }, err => {
-        console.error('ERROR', err);
-      });
+        this.storage.set('token', res.token).then(
+          () => {
+            this._user = this.jwtHelper.decodeToken(res.token) as User;
+          }
+        );
+      }, () => {});
 
     return seq;
   }
@@ -73,14 +71,24 @@ export class UserService {
   /**
    * Log the user out, which forgets the session
    */
-  logout() {
-    this._user = null;
+  logout(): Promise<any> {
+    return this.storage.remove('token').then(
+      () => {
+        this._user = null;
+      }
+    );
   }
 
   /**
    * Process a login/signup response to store user data
    */
-  _loggedIn(resp) {
-    this._user = resp.user;
+  checkLogged(): Promise<boolean> {
+    return this.storage.get('token').then((token) => {
+      if (token !== null && !this.jwtHelper.isTokenExpired(token)) {
+        return true;
+      } else {
+        return this.logout().then( () => {return false} );
+      }
+    });
   }
 }
