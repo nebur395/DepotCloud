@@ -88,7 +88,61 @@ export class MembersPageComponent {
   }
 
   /**
-   * Delete an item from the list of items.
+   * Prompt the user to add a new mmber. This shows our MemberCreatePageComponent in a
+   * modal and then adds the new member to our data source if the user created one.
+   */
+  modifyMember(oldMember: string): void {
+    let addModal = this.modalCtrl.create(MemberCreatePageComponent, { memberName: oldMember});
+
+    addModal.onDidDismiss((member: string) => {
+      if (member) {
+        this.memberService.modifyMember(oldMember, member).then(
+          (observable: Observable<any>) => {
+            observable.subscribe(
+              (resp) => {
+
+                let jsonResp = resp.json();
+
+                // User created
+                let toast = this.toastCtrl.create({
+                  message: jsonResp.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-success'
+                });
+                toast.present();
+
+                let index = this.currentMembers.indexOf(oldMember);
+                this.currentMembers.splice(index, 1);
+                this.currentMembers.push(member);
+
+              }, (err) => {
+
+                let jsonErr = err.json();
+
+                // Unable to sign up
+                let toast = this.toastCtrl.create({
+                  message: jsonErr.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-error'
+                });
+                toast.present();
+
+                if (err.status === 401) {
+                  this.tokenErrorHandler();
+                }
+
+              });
+          }
+        );
+      }
+    });
+    addModal.present();
+  }
+
+  /**
+   * Delete a member from the list of members.
    */
   deleteMember(member: string): void {
     this.memberService.deleteMember(member).then(

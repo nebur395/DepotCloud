@@ -1,6 +1,6 @@
 import { Component, ViewChild }                 from '@angular/core';
 import { Validators, FormBuilder, FormGroup }   from '@angular/forms';
-import { ViewController }                       from 'ionic-angular';
+import { NavParams, ViewController }            from 'ionic-angular';
 
 
 @Component({
@@ -16,7 +16,8 @@ export class MemberCreatePageComponent {
 
   constructor (
     private viewCtrl: ViewController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private nameParam: NavParams
   ) {
     this.form = formBuilder.group({
       name: ['', Validators.required]
@@ -26,6 +27,10 @@ export class MemberCreatePageComponent {
     this.form.valueChanges.subscribe((v) => {
       this.isReadyToSave = this.form.valid;
     });
+
+    if (nameParam.get('memberName')) {
+      this.form.setValue({name: nameParam.get('memberName')});
+    }
   }
 
   /**

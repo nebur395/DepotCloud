@@ -51,6 +51,43 @@ export class MemberService {
   }
 
   /**
+   * Modify member request
+   */
+  modifyMember(oldMember: string, newMember: string) {
+    return this.storage.get('user').then(
+      (user: User) => {
+
+        return this.storage.get('token').then((token) => {
+
+          let seq = this.http.put(
+            'http://192.168.1.11:8080/members/' + user.email + '/' +  oldMember, // End-point
+            JSON.stringify({newName: newMember}),
+            {headers: new Headers({
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            })}
+          ).share();
+
+          seq
+            .map(res => res.json())
+            .subscribe( () => {
+
+              let index = user.members.indexOf(oldMember);
+              user.members.splice(index, 1);
+              user.members.push(newMember);
+              this.storage.set('user', user);
+
+            }, () => { } );
+
+          return seq;
+
+        });
+
+      }
+    );
+  }
+
+  /**
    * Delete member request
    */
   deleteMember(member: string) {
