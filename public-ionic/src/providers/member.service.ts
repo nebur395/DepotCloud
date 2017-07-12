@@ -25,7 +25,8 @@ export class MemberService {
         return this.storage.get('token').then((token) => {
 
           let seq = this.http.post(
-            'http://192.168.1.11:8080/users/' + user.email + '/' +  member, // End-point
+            'http://192.168.1.11:8080/members/' + user.email + '/' +  member, // End-point
+            {},
             {headers: new Headers({
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
@@ -40,7 +41,7 @@ export class MemberService {
               this.storage.set('user', user);
 
             }, (err) => {
-              console.log(err);
+              console.log(err.status);
             });
 
           return seq;
