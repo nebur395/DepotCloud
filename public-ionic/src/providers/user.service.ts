@@ -10,7 +10,6 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserService {
-  _user: User;
   storage: Storage = new Storage(null);
   jwtHelper: JwtHelper = new JwtHelper();
 
@@ -37,11 +36,10 @@ export class UserService {
       .map(res => res.json())
       .subscribe(res => {
         // If the API returned a successful response, mark the user as logged in
-        this.storage.set('token', res.token).then(
-          () => {
-            this._user = this.jwtHelper.decodeToken(res.token) as User;
-          }
-        );
+        this.storage.set('token', res.token);
+        let user = this.jwtHelper.decodeToken(res.token) as User;
+        this.storage.set('user', user);
+
       }, () => {});
 
     return seq;
@@ -74,7 +72,7 @@ export class UserService {
   logout(): Promise<any> {
     return this.storage.remove('token').then(
       () => {
-        this._user = null;
+        return this.storage.remove('user');
       }
     );
   }
