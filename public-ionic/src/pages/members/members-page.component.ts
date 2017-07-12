@@ -44,7 +44,7 @@ export class MembersPageComponent {
 
     addModal.onDidDismiss((member: string) => {
       if (member) {
-        this.memberService.add(member).then(
+        this.memberService.addMember(member).then(
           (observable: Observable<any>) => {
             observable.subscribe(
               (resp) => {
@@ -76,14 +76,7 @@ export class MembersPageComponent {
                 toast.present();
 
                 if (err.status === 401) {
-                  this.userService.logout().then(
-                    () => {
-                      this.navCtrl.setRoot(WelcomePageComponent, {}, {
-                        animate: true,
-                        direction: 'forward'
-                      });
-                    }
-                  );
+                  this.tokenErrorHandler();
                 }
 
               });
@@ -98,7 +91,45 @@ export class MembersPageComponent {
    * Delete an item from the list of items.
    */
   deleteMember(member: string): void {
+    this.memberService.deleteMember(member).then(
+      (observable: Observable<any>) => {
+        observable.subscribe(
+          (resp) => {
 
+            let jsonResp = resp.json();
+
+            // User created
+            let toast = this.toastCtrl.create({
+              message: jsonResp.message,
+              position: 'bottom',
+              duration: 4000,
+              cssClass: 'toast-success'
+            });
+            toast.present();
+
+            let index = this.currentMembers.indexOf(member);
+            this.currentMembers.splice(index, 1);
+
+          }, (err) => {
+
+            let jsonErr = err.json();
+
+            // Unable to sign up
+            let toast = this.toastCtrl.create({
+              message: jsonErr.message,
+              position: 'bottom',
+              duration: 4000,
+              cssClass: 'toast-error'
+            });
+            toast.present();
+
+            if (err.status === 401) {
+              this.tokenErrorHandler();
+            }
+
+          });
+      }
+    );
   }
 
   /**
@@ -106,5 +137,16 @@ export class MembersPageComponent {
    */
   selectMember(member: string): void {
 
+  }
+
+  tokenErrorHandler(): void {
+    this.userService.logout().then(
+      () => {
+        this.navCtrl.setRoot(WelcomePageComponent, {}, {
+          animate: true,
+          direction: 'forward'
+        });
+      }
+    );
   }
 }

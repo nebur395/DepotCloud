@@ -16,9 +16,9 @@ export class MemberService {
   ) { }
 
   /**
-   * Log the user out, which forgets the session
+   * Add member request
    */
-  add(member: string) {
+  addMember(member: string) {
     return this.storage.get('user').then(
       (user: User) => {
 
@@ -51,7 +51,42 @@ export class MemberService {
   }
 
   /**
-   * Process a login/signup response to store user data
+   * Delete member request
+   */
+  deleteMember(member: string) {
+    return this.storage.get('user').then(
+      (user: User) => {
+
+        return this.storage.get('token').then((token) => {
+
+          let seq = this.http.delete(
+            'http://192.168.1.11:8080/members/' + user.email + '/' +  member, // End-point
+            {headers: new Headers({
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            })}
+          ).share();
+
+          seq
+            .map(res => res.json())
+            .subscribe( () => {
+
+              let index = user.members.indexOf(member);
+              user.members.splice(index, 1);
+              this.storage.set('user', user);
+
+            }, () => { } );
+
+          return seq;
+
+        });
+
+      }
+    );
+  }
+
+  /**
+   * Get member request
    */
   getMembers(): Promise<string[]> {
     return this.storage.get('user').then((user) => {
