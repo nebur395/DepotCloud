@@ -1,5 +1,6 @@
 import { Component }                                        from '@angular/core';
 import { ModalController, ToastController, NavController }  from 'ionic-angular';
+import { Storage }                                          from '@ionic/storage';
 
 import { MemberCreatePageComponent } from '../members-create/members-create-page.component';
 import { WelcomePageComponent }      from '../welcome/welcome-page.component';
@@ -14,7 +15,9 @@ import { Observable } from "rxjs/Observable";
   templateUrl: 'members-page.component.html'
 })
 export class MembersPageComponent {
+  storage: Storage = new Storage(null);
   currentMembers: string[];
+  currentMember: string;
 
   constructor(
     private navCtrl: NavController,
@@ -22,7 +25,12 @@ export class MembersPageComponent {
     private memberService: MemberService,
     private toastCtrl: ToastController,
     private userService: UserService
-  ) { }
+  ) {
+    this.storage.get('member').then((member) => {
+      console.log(member);
+      this.currentMember = member;
+    });
+  }
 
   /**
    * The view loaded, let's query our items for the list
@@ -33,6 +41,16 @@ export class MembersPageComponent {
         this.currentMembers = members
       }
     );
+  }
+
+  selectedMember(member: string): boolean {
+    return this.currentMember === member;
+  }
+
+  selectMember(member: string): void {
+    this.storage.set('member', member).then(() => {
+      this.currentMember = member;
+    });
   }
 
   /**
@@ -184,13 +202,6 @@ export class MembersPageComponent {
           });
       }
     );
-  }
-
-  /**
-   * Navigate to the detail page for this item.
-   */
-  selectMember(member: string): void {
-
   }
 
   tokenErrorHandler(): void {

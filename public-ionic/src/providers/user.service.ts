@@ -72,7 +72,11 @@ export class UserService {
   logout(): Promise<any> {
     return this.storage.remove('token').then(
       () => {
-        return this.storage.remove('user');
+        return this.storage.remove('user').then(
+          () => {
+            return this.storage.remove('member');
+          }
+        );
       }
     );
   }
