@@ -1,11 +1,13 @@
-import {Component}                            from '@angular/core';
-import {ModalController, ToastController}     from 'ionic-angular';
+import { Component }                                        from '@angular/core';
+import { ModalController, ToastController, NavController }  from 'ionic-angular';
 
 import { MemberCreatePageComponent } from '../members-create/members-create-page.component';
+import { WelcomePageComponent }      from '../welcome/welcome-page.component';
 
-import {MemberService}  from '../../providers/member.service';
+import { MemberService }  from '../../providers/member.service';
+import { UserService }    from '../../providers/user.service';
 
-import {Observable} from "rxjs/Observable";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'members-page',
@@ -15,9 +17,11 @@ export class MembersPageComponent {
   currentMembers: string[];
 
   constructor(
+    private navCtrl: NavController,
     private modalCtrl: ModalController,
     private memberService: MemberService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private userService: UserService
   ) { }
 
   /**
@@ -70,6 +74,17 @@ export class MembersPageComponent {
                   cssClass: 'toast-error'
                 });
                 toast.present();
+
+                if (err.status === 401) {
+                  this.userService.logout().then(
+                    () => {
+                      this.navCtrl.setRoot(WelcomePageComponent, {}, {
+                        animate: true,
+                        direction: 'forward'
+                      });
+                    }
+                  );
+                }
 
               });
           }

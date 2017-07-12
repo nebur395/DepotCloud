@@ -40,9 +40,7 @@ export class MemberService {
               user.members.push(member);
               this.storage.set('user', user);
 
-            }, (err) => {
-              console.log(err.status);
-            });
+            }, () => { } );
 
           return seq;
 
