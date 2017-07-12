@@ -5,6 +5,7 @@ import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { ContentPageComponent }  from '../pages/content/content-page.component';
+import { MembersPageComponent }  from '../pages/members/members-page.component';
 import { DepotsPageComponent }   from '../pages/depots/depots-page.component';
 import { SearchPageComponent }   from '../pages/search/search-page.component';
 import { SettingsPageComponent } from '../pages/settings/settings-page.component';
@@ -12,8 +13,6 @@ import { TutorialPageComponent } from '../pages/tutorial/tutorial-page.component
 import { WelcomePageComponent }  from '../pages/welcome/welcome-page.component';
 
 import { UserService } from '../providers/user.service';
-
-import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   templateUrl: `app.component.html`
@@ -24,6 +23,7 @@ export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
   pages: any[] = [
+    { title: 'Miembros', component: MembersPageComponent },
     { title: 'Almacenes', component: DepotsPageComponent },
     { title: 'Buscar trastos', component: SearchPageComponent },
     { title: 'Actividades', component: ContentPageComponent },
@@ -33,18 +33,18 @@ export class AppComponent {
   ];
 
   constructor(
-    private translate: TranslateService,
     private platform: Platform,
     private config: Config,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private userService: UserService
   ) {
-    this.initTranslate();
+    this.config.set('ios', 'backButtonText', "Back");
+
     this.userService.checkLogged().then(
       (logged) => {
         if (logged) {
-          this.nav.setRoot(DepotsPageComponent);
+          this.nav.setRoot(MembersPageComponent);
         }
       }
     );
@@ -56,21 +56,6 @@ export class AppComponent {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-    });
-  }
-
-  initTranslate(): void {
-    // Set the default language for translation strings, and the current language.
-    this.translate.setDefaultLang('en');
-
-    if (this.translate.getBrowserLang() !== undefined) {
-      this.translate.use(this.translate.getBrowserLang());
-    } else {
-      this.translate.use('en'); // Set your language here
-    }
-
-    this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
-      this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
     });
   }
 
