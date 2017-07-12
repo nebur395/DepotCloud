@@ -16,11 +16,14 @@ import { SettingsPageComponent }  from '../pages/settings/settings-page.componen
 import { SignupPageComponent }    from '../pages/signup/signup-page.component';
 import { TutorialPageComponent }  from '../pages/tutorial/tutorial-page.component';
 import { WelcomePageComponent }   from '../pages/welcome/welcome-page.component';
+import { MembersPageComponent }   from '../pages/members/members-page.component';
+import { MemberCreatePageComponent }   from '../pages/members-create/members-create-page.component';
 
 import { Api }      from '../providers/api';
 import { Items }    from '../mocks/providers/items';
 import { Settings } from '../providers/settings';
 import { UserService }     from '../providers/user.service';
+import { MemberService }     from '../providers/member.service';
 
 import { Camera }       from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -62,7 +65,9 @@ export function provideSettings(storage: Storage) {
     SettingsPageComponent,
     SignupPageComponent,
     TutorialPageComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    MembersPageComponent,
+    MemberCreatePageComponent
   ],
   imports: [
     BrowserModule,
@@ -89,12 +94,15 @@ export function provideSettings(storage: Storage) {
     SettingsPageComponent,
     SignupPageComponent,
     TutorialPageComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    MembersPageComponent,
+    MemberCreatePageComponent
   ],
   providers: [
     Api,
     Items,
     UserService,
+    MemberService,
     Camera,
     SplashScreen,
     StatusBar,
