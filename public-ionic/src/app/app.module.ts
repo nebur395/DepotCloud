@@ -18,6 +18,7 @@ import { TutorialPageComponent }       from '../pages/tutorial/tutorial-page.com
 import { WelcomePageComponent }        from '../pages/welcome/welcome-page.component';
 import { MembersPageComponent }        from '../pages/members/members-page.component';
 import { MemberCreatePageComponent }   from '../pages/members-create/members-create-page.component';
+import { DepotObjectsPageComponent }   from '../pages/depotObjects/depotObjects-page.component';
 
 import { Api }              from '../providers/api';
 import { Items }            from '../mocks/providers/items';
@@ -53,7 +54,8 @@ export function HttpLoaderFactory(http: Http) {
     TutorialPageComponent,
     WelcomePageComponent,
     MembersPageComponent,
-    MemberCreatePageComponent
+    MemberCreatePageComponent,
+    DepotObjectsPageComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ export function HttpLoaderFactory(http: Http) {
     TutorialPageComponent,
     WelcomePageComponent,
     MembersPageComponent,
-    MemberCreatePageComponent
+    MemberCreatePageComponent,
+    DepotObjectsPageComponent
   ],
   providers: [
     Api,
