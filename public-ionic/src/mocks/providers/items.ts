@@ -24,7 +24,8 @@ export class Items {
       {
         "name": "Charlie Cheetah",
         "profilePic": "assets/img/speakers/cheetah.jpg",
-        "about": "Charlie is a Cheetah."
+        "about": "Charlie is a Cheetah.",
+        "note": "nota"
       },
       {
         "name": "Donald Duck",

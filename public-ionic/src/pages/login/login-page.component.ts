@@ -1,7 +1,7 @@
 import { Component }                                      from '@angular/core';
 import { MenuController, NavController, ToastController } from 'ionic-angular';
 
-import { DepotsPageComponent } from '../depots/depots-page.component';
+import { MembersPageComponent }  from '../../pages/members/members-page.component';
 
 import { UserService } from '../../providers/user.service';
 
@@ -43,7 +43,7 @@ export class LoginPageComponent {
     this.userService.login(this.account).subscribe(
       (resp) => {
 
-        this.navCtrl.setRoot(DepotsPageComponent, {}, {
+        this.navCtrl.setRoot(MembersPageComponent, {}, {
           animate: true,
           direction: 'forward'
         });

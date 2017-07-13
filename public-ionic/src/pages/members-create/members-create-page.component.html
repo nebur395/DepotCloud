@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Nuevo miembro</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancel()">
+        <span showWhen="ios">
+          Cancelar
+        </span>
+        <ion-icon name="md-close" showWhen="core,android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong>
+        <span showWhen="ios">
+          Crear
+        </span>
+        <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="done()">
+
+    <ion-avatar>
+      <img src="../../assets/images/member.png" />
+    </ion-avatar>
+
+    <ion-list>
+      <ion-item>
+        <ion-input type="text" placeholder="Nombre" formControlName="name"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
