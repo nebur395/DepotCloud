@@ -28,7 +28,7 @@ export class AppComponent {
     { title: 'Buscar trastos', component: SearchPageComponent },
     { title: 'Actividades', component: ContentPageComponent },
     { title: 'Recomendaciones', component: ContentPageComponent },
-    { title: 'Settings', component: SettingsPageComponent },
+    { title: 'Opciones', component: SettingsPageComponent },
     { title: 'Tutorial', component: TutorialPageComponent }
   ];
 

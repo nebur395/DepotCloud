@@ -27,7 +27,6 @@ export class MembersPageComponent {
     private userService: UserService
   ) {
     this.storage.get('member').then((member) => {
-      console.log(member);
       this.currentMember = member;
     });
   }

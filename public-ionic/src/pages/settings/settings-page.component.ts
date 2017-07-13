@@ -1,10 +1,16 @@
-import { Component }                from '@angular/core';
-import { FormBuilder, FormGroup }   from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild }                 from '@angular/core';
+import { ToastController, NavController }       from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup }   from '@angular/forms';
+import { Storage }                              from '@ionic/storage';
 
-import { Settings } from '../../providers/settings';
+import { WelcomePageComponent }      from '../welcome/welcome-page.component';
 
-import { TranslateService } from '@ngx-translate/core';
+import { SettingsService } from '../../providers/settings.service';
+import { UserService }     from '../../providers/user.service';
+
+import { User } from '../../models/User';
+
+import { Observable } from "rxjs/Observable";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -16,81 +22,102 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'settings-page.component.html'
 })
 export class SettingsPageComponent {
-  // Our local settings object
-  options: any;
+  @ViewChild('fileInput') fileInput;
 
-  settingsReady = false;
-
+  email: string;
+  storage: Storage = new Storage(null);
+  isReadyToSave: boolean;
   form: FormGroup;
-
-  profileSettings = {
-    page: 'profile',
-    pageTitleKey: 'SETTINGS_PAGE_PROFILE'
-  };
-
-  page: string = 'main';
-  pageTitleKey: string = 'SETTINGS_TITLE';
-  pageTitle: string;
-
-  subSettings: any = SettingsPageComponent;
 
   constructor(
     private navCtrl: NavController,
-    private settings: Settings,
+    private settingsService: SettingsService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
-    private navParams: NavParams,
-    private translate: TranslateService
-  ) { }
-
-  _buildForm(): void {
-    let group: any = {
-      option1: [this.options.option1],
-      option2: [this.options.option2],
-      option3: [this.options.option3]
-    };
-
-    switch (this.page) {
-      case 'main':
-        break;
-      case 'profile':
-        group = {
-          option4: [this.options.option4]
-        };
-        break;
-    }
-    this.form = this.formBuilder.group(group);
+    private toastCtrl: ToastController
+  ) {
+    this.form = formBuilder.group({
+      name: ['', Validators.required],
+      currentPassword: ['', Validators.required],
+      newPassword: ['']
+    });
 
     // Watch the form for changes, and
     this.form.valueChanges.subscribe((v) => {
-      this.settings.merge(this.form.value);
+      this.isReadyToSave = this.form.valid;
     });
+
+    this.storage.get('user').then(
+      (user: User) => {
+        if (user) {
+          this.email = user.email;
+          this.form.patchValue({
+            name: user.name
+          });
+        }
+      }
+    );
   }
 
-  ionViewDidLoad(): void {
-    // Build an empty form for the template to render
-    this.form = this.formBuilder.group({});
+  saveUser(): void {
+    console.log("saved");
+    let settings = {
+      name: this.form.value.name,
+      current: this.form.value.currentPassword,
+      new : this.form.value.newPassword
+    };
+    this.settingsService.updateUser(settings).then(
+      (observable: Observable<any>) => {
+        observable.subscribe(
+          (resp) => {
+
+            let jsonResp = resp.json();
+
+            // User created
+            let toast = this.toastCtrl.create({
+              message: jsonResp.message,
+              position: 'bottom',
+              duration: 4000,
+              cssClass: 'toast-success'
+            });
+            toast.present();
+
+
+          }, (err) => {
+
+            let jsonErr = err.json();
+
+            // Unable to sign up
+            let toast = this.toastCtrl.create({
+              message: jsonErr.message,
+              position: 'bottom',
+              duration: 4000,
+              cssClass: 'toast-error'
+            });
+            toast.present();
+
+            if (err.status === 401) {
+              this.tokenErrorHandler();
+            }
+
+          });
+      }
+    );
   }
 
-  ionViewWillEnter(): void {
-    // Build an empty form for the template to render
-    this.form = this.formBuilder.group({});
-
-    this.page = this.navParams.get('page') || this.page;
-    this.pageTitleKey = this.navParams.get('pageTitleKey') || this.pageTitleKey;
-
-    this.translate.get(this.pageTitleKey).subscribe((res) => {
-      this.pageTitle = res;
-    })
-
-    this.settings.load().then(() => {
-      this.settingsReady = true;
-      this.options = this.settings.allSettings;
-
-      this._buildForm();
-    });
+  deleteUser(): void {
+    console.log("deleted");
   }
 
-  ngOnChanges(): void {
-    console.log('Ng All Changes');
+  tokenErrorHandler(): void {
+    this.userService.logout().then(
+      () => {
+        this.navCtrl.setRoot(WelcomePageComponent, {}, {
+          animate: true,
+          direction: 'forward'
+        });
+      }
+    );
   }
+
 }

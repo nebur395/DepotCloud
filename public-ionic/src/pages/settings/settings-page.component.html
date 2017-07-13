@@ -1,45 +1,53 @@
 <ion-header>
+  <ion-navbar color="primary">
 
-  <ion-navbar>
-    <ion-title>{{ pageTitle }}</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Opciones de la cuenta</ion-title>
+
   </ion-navbar>
-
 </ion-header>
+
 
 <ion-content>
 
-  <form [formGroup]="form" *ngIf="settingsReady">
-    <ion-list *ngIf="page == 'main'">
+  <h1>Hola <span ion-text color="secondary">{{email}}</span></h1>
+
+  <form [formGroup]="form" *ngIf="form" (ngSubmit)="saveUser()">
+    <ion-list>
+
       <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION1' | translate }}</ion-label>
-        <ion-toggle formControlName="option1"></ion-toggle>
+        <ion-label>Nombre</ion-label>
+        <ion-input type="text" placeholder="Nombre de la cuenta"
+                   formControlName="name"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION2' | translate }}</ion-label>
-        <ion-input formControlName="option2"></ion-input>
+        <ion-label>Contraseña actual</ion-label>
+        <ion-input type="password" placeholder="Contraseña actual"
+                   formControlName="currentPassword"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION3' | translate }}</ion-label>
-        <ion-select formControlName="option3">
-          <ion-option value="1" checked="true">1</ion-option>
-          <ion-option value="2">2</ion-option>
-          <ion-option value="3">3</ion-option>
-        </ion-select>
+        <ion-label>Contraseña nueva</ion-label>
+        <ion-input type="password" placeholder="Contraseña nueva"
+                   formControlName="newPassword"></ion-input>
       </ion-item>
 
-      <button ion-item [navPush]="subSettings" [navParams]="profileSettings">
-        {{ 'SETTINGS_PROFILE_BUTTON' | translate }}
-      </button>
+      <div padding>
+        <button ion-button type="submit" color="secondary"
+                [disabled]="!isReadyToSave" block>Guardar cambios</button>
+      </div>
+
+      <div padding>
+        <button ion-button type="button" color="danger" [disabled]="!isReadyToSave"
+                (click)="deleteUser()"block>Borrar cuenta</button>
+      </div>
+
     </ion-list>
 
-    <ion-list *ngIf="page == 'profile'">
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION4' | translate }}</ion-label>
-        <ion-input formControlName="option4"></ion-input>
-      </ion-item>
-    </ion-list>
   </form>
 
 </ion-content>

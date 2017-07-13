@@ -2,28 +2,28 @@ import { NgModule, ErrorHandler }                   from '@angular/core';
 import { BrowserModule }                            from '@angular/platform-browser';
 import { HttpModule, Http }                         from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { Storage, IonicStorageModule }              from '@ionic/storage';
+import { IonicStorageModule }              from '@ionic/storage';
 
 import { AppComponent }       from './app.component';
 
-import { ContentPageComponent }   from '../pages/content/content-page.component';
-import { ItemCreatePage }         from '../pages/item-create/item-create';
-import { ItemDetailPage }         from '../pages/item-detail/item-detail';
-import { DepotsPageComponent }    from '../pages/depots/depots-page.component';
-import { LoginPageComponent }     from '../pages/login/login-page.component';
-import { SearchPageComponent }    from '../pages/search/search-page.component';
-import { SettingsPageComponent }  from '../pages/settings/settings-page.component';
-import { SignupPageComponent }    from '../pages/signup/signup-page.component';
-import { TutorialPageComponent }  from '../pages/tutorial/tutorial-page.component';
-import { WelcomePageComponent }   from '../pages/welcome/welcome-page.component';
-import { MembersPageComponent }   from '../pages/members/members-page.component';
+import { ContentPageComponent }        from '../pages/content/content-page.component';
+import { ItemCreatePage }              from '../pages/item-create/item-create';
+import { ItemDetailPage }              from '../pages/item-detail/item-detail';
+import { DepotsPageComponent }         from '../pages/depots/depots-page.component';
+import { LoginPageComponent }          from '../pages/login/login-page.component';
+import { SearchPageComponent }         from '../pages/search/search-page.component';
+import { SettingsPageComponent }       from '../pages/settings/settings-page.component';
+import { SignupPageComponent }         from '../pages/signup/signup-page.component';
+import { TutorialPageComponent }       from '../pages/tutorial/tutorial-page.component';
+import { WelcomePageComponent }        from '../pages/welcome/welcome-page.component';
+import { MembersPageComponent }        from '../pages/members/members-page.component';
 import { MemberCreatePageComponent }   from '../pages/members-create/members-create-page.component';
 
-import { Api }      from '../providers/api';
-import { Items }    from '../mocks/providers/items';
-import { Settings } from '../providers/settings';
-import { UserService }     from '../providers/user.service';
-import { MemberService }     from '../providers/member.service';
+import { Api }              from '../providers/api';
+import { Items }            from '../mocks/providers/items';
+import { SettingsService }  from '../providers/settings.service';
+import { UserService }      from '../providers/user.service';
+import { MemberService }    from '../providers/member.service';
 
 import { Camera }       from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -38,20 +38,6 @@ export function HttpLoaderFactory(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function provideSettings(storage: Storage) {
-  /**
-   * The Settings provider takes a set of default settings for your app.
-   *
-   * You can add new settings options at any time. Once the settings are saved,
-   * these values will not overwrite the saved values (this can be done manually if desired).
-   */
-  return new Settings(storage, {
-    option1: true,
-    option2: 'Ionitron J. Framework',
-    option3: '3',
-    option4: 'Hello'
-  });
-}
 
 @NgModule({
   declarations: [
@@ -106,7 +92,7 @@ export function provideSettings(storage: Storage) {
     Camera,
     SplashScreen,
     StatusBar,
-    { provide: Settings, useFactory: provideSettings, deps: [Storage] },
+    SettingsService,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
