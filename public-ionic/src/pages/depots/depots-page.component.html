@@ -21,7 +21,7 @@
 <ion-content>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
+    <ion-item-sliding *ngFor="let depot of currentDepots">
       <button ion-item (click)="openItem(item)">
         <ion-avatar item-start>
           <img [src]="item.profilePic" />
