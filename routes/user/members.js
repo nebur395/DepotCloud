@@ -133,7 +133,7 @@ module.exports = function (app) {
      *         type: string
      *       - name: newName
      *         description: Nombre nuevo del miembro que se desea modificar en la unidad familiar.
-     *         in: path
+     *         in: body
      *         required: true
      *         type: string
      *     responses:
