@@ -10,6 +10,8 @@ import { ContentPageComponent }        from '../pages/content/content-page.compo
 import { ItemCreatePage }              from '../pages/item-create/item-create';
 import { ItemDetailPage }              from '../pages/item-detail/item-detail';
 import { DepotsPageComponent }         from '../pages/depots/depots-page.component';
+import { DepotObjectsPageComponent }   from '../pages/depotObjects/depotObjects-page.component';
+import { DepotsCreatePageComponent }   from '../pages/depots-create/depots-create-page.component';
 import { LoginPageComponent }          from '../pages/login/login-page.component';
 import { SearchPageComponent }         from '../pages/search/search-page.component';
 import { SettingsPageComponent }       from '../pages/settings/settings-page.component';
@@ -18,13 +20,13 @@ import { TutorialPageComponent }       from '../pages/tutorial/tutorial-page.com
 import { WelcomePageComponent }        from '../pages/welcome/welcome-page.component';
 import { MembersPageComponent }        from '../pages/members/members-page.component';
 import { MemberCreatePageComponent }   from '../pages/members-create/members-create-page.component';
-import { DepotObjectsPageComponent }   from '../pages/depotObjects/depotObjects-page.component';
 
 import { Api }              from '../providers/api';
 import { Items }            from '../mocks/providers/items';
 import { SettingsService }  from '../providers/settings.service';
 import { UserService }      from '../providers/user.service';
 import { MemberService }    from '../providers/member.service';
+import { DepotService }     from '../providers/depot.service';
 
 import { Camera }       from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -47,6 +49,8 @@ export function HttpLoaderFactory(http: Http) {
     ItemCreatePage,
     ItemDetailPage,
     DepotsPageComponent,
+    DepotObjectsPageComponent,
+    DepotsCreatePageComponent,
     LoginPageComponent,
     SearchPageComponent,
     SettingsPageComponent,
@@ -54,8 +58,7 @@ export function HttpLoaderFactory(http: Http) {
     TutorialPageComponent,
     WelcomePageComponent,
     MembersPageComponent,
-    MemberCreatePageComponent,
-    DepotObjectsPageComponent
+    MemberCreatePageComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,8 @@ export function HttpLoaderFactory(http: Http) {
     ItemCreatePage,
     ItemDetailPage,
     DepotsPageComponent,
+    DepotObjectsPageComponent,
+    DepotsCreatePageComponent,
     LoginPageComponent,
     SearchPageComponent,
     SettingsPageComponent,
@@ -84,8 +89,7 @@ export function HttpLoaderFactory(http: Http) {
     TutorialPageComponent,
     WelcomePageComponent,
     MembersPageComponent,
-    MemberCreatePageComponent,
-    DepotObjectsPageComponent
+    MemberCreatePageComponent
   ],
   providers: [
     Api,
@@ -96,6 +100,7 @@ export function HttpLoaderFactory(http: Http) {
     SplashScreen,
     StatusBar,
     SettingsService,
+    DepotService,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
