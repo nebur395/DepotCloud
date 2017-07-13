@@ -51,4 +51,37 @@ export class SettingsService {
     );
   }
 
+  /**
+   * Delete user request
+   */
+  deleteUser(deletedUser: any) {
+
+    return this.storage.get('user').then(
+      (user: User) => {
+
+        return this.storage.get('token').then((token) => {
+
+          let seq = this.http.delete(
+            'http://192.168.1.11:8080/users/' + user.email, // End-point
+            {
+              body: JSON.stringify(deletedUser),
+              headers: new Headers({   // Headers
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              })
+            }
+          ).share();
+
+          seq
+            .map(res => res.json())
+            .subscribe( () => { }, () => { } );
+
+          return seq;
+
+        });
+
+      }
+    );
+  }
+
 }

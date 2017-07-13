@@ -97,7 +97,7 @@ export class SettingsPageComponent {
             toast.present();
 
             if (err.status === 401) {
-              this.tokenErrorHandler();
+              this.logout();
             }
 
           });
@@ -107,9 +107,49 @@ export class SettingsPageComponent {
 
   deleteUser(): void {
     console.log("deleted");
+    let settings = {
+      current: this.form.value.currentPassword
+    };
+    this.settingsService.deleteUser(settings).then(
+      (observable: Observable<any>) => {
+        observable.subscribe(
+          (resp) => {
+
+            let jsonResp = resp.json();
+
+            // User created
+            let toast = this.toastCtrl.create({
+              message: jsonResp.message,
+              position: 'bottom',
+              duration: 4000,
+              cssClass: 'toast-success'
+            });
+            toast.present();
+            this.logout();
+
+          }, (err) => {
+
+            let jsonErr = err.json();
+
+            // Unable to sign up
+            let toast = this.toastCtrl.create({
+              message: jsonErr.message,
+              position: 'bottom',
+              duration: 4000,
+              cssClass: 'toast-error'
+            });
+            toast.present();
+
+            if (err.status === 401) {
+              this.logout();
+            }
+
+          });
+      }
+    );
   }
 
-  tokenErrorHandler(): void {
+  logout(): void {
     this.userService.logout().then(
       () => {
         this.navCtrl.setRoot(WelcomePageComponent, {}, {
