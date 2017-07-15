@@ -7,6 +7,7 @@ module.exports = function (app) {
     var router = express.Router();
     var User = app.models.User;
     var Depot = app.models.Depot;
+    var DepotObject = app.models.DepotObject;
 
     /**
      * @swagger
@@ -506,13 +507,15 @@ module.exports = function (app) {
                         });
                     } else {
 
-                        addActivity(req.params.owner, 'DEPOT', 'DELETE', depotResult.name,
-                            req.body.member, function () {
-                                return res.status(200).send({
-                                    "success": true,
-                                    "message": "Almacén eliminado correctamente."
+                        DepotObject.find({"depot": depotResult._id}).remove(function () {
+                            addActivity(req.params.owner, 'DEPOT', 'DELETE', depotResult.name,
+                                req.body.member, function () {
+                                    return res.status(200).send({
+                                        "success": true,
+                                        "message": "Almacén eliminado correctamente."
+                                    });
                                 });
-                            });
+                        });
                     }
                 })
             }
