@@ -77,20 +77,23 @@ export class DepotService {
   }
 
   /**
-   * Delete member request
+   * Delete depot request
    */
-  /*deleteMember(member: string) {
+  deleteDepot(id: any, member: string) {
     return this.storage.get('user').then(
       (user: User) => {
 
         return this.storage.get('token').then((token) => {
 
           let seq = this.http.delete(
-            'http://192.168.1.11:8080/members/' + user.email + '/' +  member, // End-point
-            {headers: new Headers({
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + token
-            })}
+            'http://192.168.1.11:8080/depots/' + user.email + '/' +  id, // End-point
+            {
+              body: JSON.stringify({member: member}),
+              headers: new Headers({   // Headers
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              })
+            }
           ).share();
 
           seq
@@ -109,7 +112,7 @@ export class DepotService {
 
       }
     );
-  }*/
+  }
 
   /**
    * Get depots request

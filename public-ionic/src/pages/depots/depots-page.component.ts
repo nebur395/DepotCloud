@@ -199,49 +199,56 @@ export class DepotsPageComponent {
   }
 
   /**
-   * Delete a member from the list of members.
+   * Delete a depot from the list of depots.
    */
-  /*deleteMember(member: string): void {
-    this.memberService.deleteMember(member).then(
-      (observable: Observable<any>) => {
-        observable.subscribe(
-          (resp) => {
+  deleteItem(depot: Depot): void {
+    this.storage.get('member').then((member) => {
+      if (member) {
 
-            let jsonResp = resp.json();
+        this.depotService.deleteDepot(depot._id, member).then(
+          (observable: Observable<any>) => {
+            observable.subscribe(
+              (resp) => {
 
-            // User created
-            let toast = this.toastCtrl.create({
-              message: jsonResp.message,
-              position: 'bottom',
-              duration: 4000,
-              cssClass: 'toast-success'
-            });
-            toast.present();
+                let jsonResp = resp.json();
 
-            let index = this.currentMembers.indexOf(member);
-            this.currentMembers.splice(index, 1);
+                // User created
+                let toast = this.toastCtrl.create({
+                  message: jsonResp.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-success'
+                });
+                toast.present();
 
-          }, (err) => {
+                let index = this.currentDepots.findIndex(index => index._id === depot._id);
+                this.currentDepots.splice(index, 1);
 
-            let jsonErr = err.json();
+              }, (err) => {
 
-            // Unable to sign up
-            let toast = this.toastCtrl.create({
-              message: jsonErr.message,
-              position: 'bottom',
-              duration: 4000,
-              cssClass: 'toast-error'
-            });
-            toast.present();
+                let jsonErr = err.json();
 
-            if (err.status === 401) {
-              this.tokenErrorHandler();
-            }
+                // Unable to sign up
+                let toast = this.toastCtrl.create({
+                  message: jsonErr.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-error'
+                });
+                toast.present();
 
-          });
+                if (err.status === 401) {
+                  this.tokenErrorHandler();
+                }
+
+              });
+          }
+        );
+      } else {
+        this.memberErrorHandler();
       }
-    );
-  }*/
+    });
+  }
 
   tokenErrorHandler(): void {
     this.userService.logout().then(
