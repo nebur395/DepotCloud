@@ -31,8 +31,14 @@ export class DepotsCreatePageComponent {
       this.isReadyToSave = this.form.valid;
     });
 
-    if (nameParam.get('memberName')) {
-      this.form.setValue({name: nameParam.get('memberName')});
+    if (nameParam.get('depotObject')) {
+      this.form.setValue({
+        name: nameParam.get('depotObject').name,
+        location: nameParam.get('depotObject').location,
+        type: nameParam.get('depotObject').type,
+        distance: nameParam.get('depotObject').distance,
+        description: nameParam.get('depotObject').description
+      });
     }
   }
 

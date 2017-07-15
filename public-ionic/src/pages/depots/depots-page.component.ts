@@ -72,13 +72,11 @@ export class DepotsPageComponent {
 
     addModal.onDidDismiss((depot) => {
       if (depot) {
-        console.log(depot);
 
         this.storage.get('member').then((member) => {
           if (member) {
 
             depot = this.addMember(member, depot);
-            console.log(depot);
 
             this.depotService.addDepot(depot).then(
               (observable: Observable<any>) => {
@@ -132,55 +130,73 @@ export class DepotsPageComponent {
    * Prompt the user to add a new mmber. This shows our MemberCreatePageComponent in a
    * modal and then adds the new member to our data source if the user created one.
    */
-  /*modifyMember(oldMember: string): void {
-    let addModal = this.modalCtrl.create(MemberCreatePageComponent, { memberName: oldMember});
+  modifyItem(depot: Depot): void {
+    let addModal = this.modalCtrl.create(DepotsCreatePageComponent, { depotObject: depot});
 
-    addModal.onDidDismiss((member: string) => {
-      if (member) {
-        this.memberService.modifyMember(oldMember, member).then(
-          (observable: Observable<any>) => {
-            observable.subscribe(
-              (resp) => {
+    addModal.onDidDismiss((newDepot) => {
+      if (newDepot) {
 
-                let jsonResp = resp.json();
+        this.storage.get('member').then((member) => {
+          if (member) {
+            newDepot = this.addMember(member, newDepot);
 
-                // User created
-                let toast = this.toastCtrl.create({
-                  message: jsonResp.message,
-                  position: 'bottom',
-                  duration: 4000,
-                  cssClass: 'toast-success'
-                });
-                toast.present();
+            this.depotService.modifyDepot(depot._id, newDepot).then(
+              (observable: Observable<any>) => {
+                observable.subscribe(
+                  (resp) => {
 
-                let index = this.currentMembers.indexOf(oldMember);
-                this.currentMembers.splice(index, 1);
-                this.currentMembers.push(member);
+                    let jsonResp = resp.json();
 
-              }, (err) => {
+                    // User created
+                    let toast = this.toastCtrl.create({
+                      message: jsonResp.message,
+                      position: 'bottom',
+                      duration: 4000,
+                      cssClass: 'toast-success'
+                    });
+                    toast.present();
 
-                let jsonErr = err.json();
+                    let index = this.currentDepots.findIndex(index => index._id === depot._id);
+                    depot = {
+                      owner: depot.owner,
+                      _id: depot._id,
+                      name: newDepot.name,
+                      location: newDepot.location,
+                      type: newDepot.type,
+                      distance: newDepot.distance,
+                      description: newDepot.description
+                    };
+                    this.currentDepots[index] = depot;
+                    console.log(this.currentDepots);
 
-                // Unable to sign up
-                let toast = this.toastCtrl.create({
-                  message: jsonErr.message,
-                  position: 'bottom',
-                  duration: 4000,
-                  cssClass: 'toast-error'
-                });
-                toast.present();
+                  }, (err) => {
 
-                if (err.status === 401) {
-                  this.tokenErrorHandler();
-                }
+                    let jsonErr = err.json();
 
-              });
+                    // Unable to sign up
+                    let toast = this.toastCtrl.create({
+                      message: jsonErr.message,
+                      position: 'bottom',
+                      duration: 4000,
+                      cssClass: 'toast-error'
+                    });
+                    toast.present();
+
+                    if (err.status === 401) {
+                      this.tokenErrorHandler();
+                    }
+
+                  });
+              }
+            );
+          } else {
+            this.memberErrorHandler();
           }
-        );
+        });
       }
     });
     addModal.present();
-  }/*
+  }
 
   /**
    * Delete a member from the list of members.

@@ -47,17 +47,17 @@ export class DepotService {
   }
 
   /**
-   * Modify member request
+   * Modify depot request
    */
-  /*modifyMember(oldMember: string, newMember: string) {
+  modifyDepot(id: any, depot: Depot) {
     return this.storage.get('user').then(
       (user: User) => {
 
         return this.storage.get('token').then((token) => {
 
           let seq = this.http.put(
-            'http://192.168.1.11:8080/members/' + user.email + '/' +  oldMember, // End-point
-            JSON.stringify({newName: newMember}),
+            'http://192.168.1.11:8080/depots/' + user.email + '/' +  id, // End-point
+            JSON.stringify(depot),
             {headers: new Headers({
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
@@ -66,14 +66,7 @@ export class DepotService {
 
           seq
             .map(res => res.json())
-            .subscribe( () => {
-
-              let index = user.members.indexOf(oldMember);
-              user.members.splice(index, 1);
-              user.members.push(newMember);
-              this.storage.set('user', user);
-
-            }, () => { } );
+            .subscribe( () => { }, () => { } );
 
           return seq;
 
@@ -81,7 +74,7 @@ export class DepotService {
 
       }
     );
-  }*/
+  }
 
   /**
    * Delete member request
