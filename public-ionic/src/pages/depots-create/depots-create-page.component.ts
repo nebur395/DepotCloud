@@ -2,8 +2,6 @@ import { Component, ViewChild }                 from '@angular/core';
 import { Validators, FormBuilder, FormGroup }   from '@angular/forms';
 import { NavParams, ViewController }            from 'ionic-angular';
 
-import { Depot } from '../../models/depot';
-
 @Component({
   selector: 'depots-create-page',
   templateUrl: 'depots-create-page.component.html'
