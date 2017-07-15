@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Nuevo miembro</ion-title>
+    <ion-title>Nuevo Almacen</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cancel()">
         <span showWhen="ios">
@@ -31,9 +31,41 @@
     </ion-avatar>
 
     <ion-list>
+
       <ion-item>
         <ion-input type="text" placeholder="Nombre" formControlName="name"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-input type="text" placeholder="Localización" formControlName="location"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Tipo de almacén</ion-label>
+        <ion-select formControlName="type">
+          <ion-option value="House">Casa</ion-option>
+          <ion-option value="Storage Room">Trastero</ion-option>
+          <ion-option value="Wardrobe">Armario</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Distancia desde tu vivienda principal</ion-label>
+        <ion-select formControlName="distance">
+          <ion-option value="[0-1km]">[0-1km]</ion-option>
+          <ion-option value="[1km-2km]">[1km-2km]</ion-option>
+          <ion-option value="[2km-10km]">[2km-10km]</ion-option>
+          <ion-option value="[10km-100km]">[10km-100km]</ion-option>
+          <ion-option value="[100km-300km]">[100km-300km]</ion-option>
+          <ion-option value="[300km, +]">[300km, +]</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea type="text" rows="5" placeholder="Descripción"
+                      formControlName="description"></ion-textarea>
+      </ion-item>
+
     </ion-list>
   </form>
 </ion-content>

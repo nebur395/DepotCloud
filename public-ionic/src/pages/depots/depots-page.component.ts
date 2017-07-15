@@ -5,6 +5,7 @@ import { Storage }                                          from '@ionic/storage
 import { DepotsCreatePageComponent } from '../depots-create/depots-create-page.component';
 import { WelcomePageComponent }      from '../welcome/welcome-page.component';
 import { ItemDetailPage }            from '../item-detail/item-detail';
+import { MembersPageComponent }      from '../members/members-page.component';
 
 import { Depot } from '../../models/depot';
 
@@ -66,53 +67,66 @@ export class DepotsPageComponent {
    * Prompt the user to add a new mmber. This shows our MemberCreatePageComponent in a
    * modal and then adds the new member to our data source if the user created one.
    */
-  /*addMember(): void {
-    let addModal = this.modalCtrl.create(MemberCreatePageComponent);
+  addItem(): void {
+    let addModal = this.modalCtrl.create(DepotsCreatePageComponent);
 
-    addModal.onDidDismiss((member: string) => {
-      if (member) {
-        this.memberService.addMember(member).then(
-          (observable: Observable<any>) => {
-            observable.subscribe(
-              (resp) => {
+    addModal.onDidDismiss((depot) => {
+      if (depot) {
+        console.log(depot);
 
-                let jsonResp = resp.json();
+        this.storage.get('member').then((member) => {
+          if (member) {
 
-                // User created
-                let toast = this.toastCtrl.create({
-                  message: jsonResp.message,
-                  position: 'bottom',
-                  duration: 4000,
-                  cssClass: 'toast-success'
-                });
-                toast.present();
-                this.currentMembers.push(member);
+            depot = this.addMember(member, depot);
+            console.log(depot);
+
+            this.depotService.addDepot(depot).then(
+              (observable: Observable<any>) => {
+                observable.subscribe(
+                  (resp) => {
+
+                    let jsonResp = resp.json().depot as Depot;
+
+                    // User created
+                    let toast = this.toastCtrl.create({
+                      message: "Almacén creado correctamente.",
+                      position: 'bottom',
+                      duration: 4000,
+                      cssClass: 'toast-success'
+                    });
+                    toast.present();
+                    this.currentDepots.push(jsonResp);
+                    console.log(this.currentDepots);
 
 
-              }, (err) => {
+                  }, (err) => {
 
-                let jsonErr = err.json();
+                    let jsonErr = err.json();
 
-                // Unable to sign up
-                let toast = this.toastCtrl.create({
-                  message: jsonErr.message,
-                  position: 'bottom',
-                  duration: 4000,
-                  cssClass: 'toast-error'
-                });
-                toast.present();
+                    // Unable to sign up
+                    let toast = this.toastCtrl.create({
+                      message: jsonErr.message,
+                      position: 'bottom',
+                      duration: 4000,
+                      cssClass: 'toast-error'
+                    });
+                    toast.present();
 
-                if (err.status === 401) {
-                  this.tokenErrorHandler();
-                }
+                    if (err.status === 401) {
+                      this.tokenErrorHandler();
+                    }
 
-              });
+                  });
+              }
+            );
+          } else {
+            this.memberErrorHandler();
           }
-        );
+        });
       }
     });
     addModal.present();
-  }*/
+  }
 
   /**
    * Prompt the user to add a new mmber. This shows our MemberCreatePageComponent in a
@@ -222,6 +236,30 @@ export class DepotsPageComponent {
         });
       }
     );
+  }
+
+  memberErrorHandler(): void {
+    // Unable to sign up
+    let toast = this.toastCtrl.create({
+      message: "Tienes que identificarte como un miembro de la familia antes de realizar dicha acción.",
+      position: 'bottom',
+      duration: 4000,
+      cssClass: 'toast-error'
+    });
+    toast.present();
+
+    this.navCtrl.setRoot(MembersPageComponent, {}, {});
+  }
+
+  addMember(member: string, depot: any): any {
+    return  {
+      name: depot.name,
+      location: depot.location,
+      type: depot.type,
+      distance: depot.distance,
+      description: depot.description,
+      member: member
+    };
   }
 
   /**

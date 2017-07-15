@@ -2,6 +2,7 @@ import { Component, ViewChild }                 from '@angular/core';
 import { Validators, FormBuilder, FormGroup }   from '@angular/forms';
 import { NavParams, ViewController }            from 'ionic-angular';
 
+import { Depot } from '../../models/depot';
 
 @Component({
   selector: 'depots-create-page',
@@ -20,7 +21,11 @@ export class DepotsCreatePageComponent {
     private nameParam: NavParams
   ) {
     this.form = formBuilder.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      location: [''],
+      type: ['', Validators.required],
+      distance: ['', Validators.required],
+      description: ['']
     });
 
     // Watch the form for changes, and
@@ -46,6 +51,6 @@ export class DepotsCreatePageComponent {
    */
   done() {
     if (!this.form.valid) { return; }
-    this.viewCtrl.dismiss(this.form.value.name);
+    this.viewCtrl.dismiss(this.form.value);
   }
 }

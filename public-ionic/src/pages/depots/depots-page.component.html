@@ -30,7 +30,9 @@
 
         <h2>{{depot.name}}</h2>
         <p>{{depot.location}}</p>
-        <ion-note item-end>{{depot.type}}</ion-note>
+        <ion-note *ngIf="depot.type === 'House'" item-end>Casa</ion-note>
+        <ion-note *ngIf="depot.type === 'Storage Room'" item-end>Trastero</ion-note>
+        <ion-note *ngIf="depot.type === 'Wardrobe'" item-end>Armario</ion-note>
       </button>
 
       <ion-item-options>

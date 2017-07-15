@@ -19,15 +19,15 @@ export class DepotService {
   /**
    * Add depot request
    */
-  /*addMember(member: string) {
+  addDepot(depot: Depot) {
     return this.storage.get('user').then(
       (user: User) => {
 
         return this.storage.get('token').then((token) => {
 
           let seq = this.http.post(
-            'http://192.168.1.11:8080/members/' + user.email + '/' +  member, // End-point
-            {},
+            'http://192.168.1.11:8080/depots/' + user.email, // End-point
+            JSON.stringify(depot),
             {headers: new Headers({
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
@@ -36,12 +36,7 @@ export class DepotService {
 
           seq
             .map(res => res.json())
-            .subscribe( () => {
-
-              user.members.push(member);
-              this.storage.set('user', user);
-
-            }, () => { } );
+            .subscribe( () => { }, () => { } );
 
           return seq;
 
@@ -49,7 +44,7 @@ export class DepotService {
 
       }
     );
-  }*/
+  }
 
   /**
    * Modify member request
