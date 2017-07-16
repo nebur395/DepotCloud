@@ -27,7 +27,7 @@
     <p><strong>Descripción:</strong> {{depot.description}}</p>
   </div>
 
-  <h2 padding>Lista de objetos pertenecientes al almacén</h2>
+  <h2 *ngIf="currentDepotObjects" padding>Lista de objetos pertenecientes al almacén</h2>
 
   <ion-list>
     <ion-item-sliding *ngFor="let item of currentItems">
