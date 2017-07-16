@@ -93,9 +93,8 @@ export class DepotsPageComponent {
                       cssClass: 'toast-success'
                     });
                     toast.present();
-                    this.currentDepots.push(jsonResp);
-                    console.log(this.currentDepots);
 
+                    this.currentDepots.push(jsonResp);
 
                   }, (err) => {
 
@@ -167,7 +166,6 @@ export class DepotsPageComponent {
                       description: newDepot.description
                     };
                     this.currentDepots[index] = depot;
-                    console.log(this.currentDepots);
 
                   }, (err) => {
 

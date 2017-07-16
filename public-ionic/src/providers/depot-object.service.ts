@@ -18,33 +18,27 @@ export class DepotObjectService {
   ) { }
 
   /**
-   * Add depot request
+   * Add depotObject request
    */
-  addDepot(depot: Depot) {
-    return this.storage.get('user').then(
-      (user: User) => {
+  addDepotObject(depotID: string, depotObject: DepotObject) {
+    return this.storage.get('token').then((token) => {
 
-        return this.storage.get('token').then((token) => {
+      let seq = this.http.post(
+        'http://192.168.1.11:8080/depots/' + depotID, // End-point
+        JSON.stringify(depotObject),
+        {headers: new Headers({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        })}
+      ).share();
 
-          let seq = this.http.post(
-            'http://192.168.1.11:8080/depots/' + user.email, // End-point
-            JSON.stringify(depot),
-            {headers: new Headers({
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + token
-            })}
-          ).share();
+      seq
+        .map(res => res.json())
+        .subscribe( () => { }, () => { } );
 
-          seq
-            .map(res => res.json())
-            .subscribe( () => { }, () => { } );
+      return seq;
 
-          return seq;
-
-        });
-
-      }
-    );
+    });
   }
 
   /**
