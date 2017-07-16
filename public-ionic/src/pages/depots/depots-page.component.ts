@@ -21,6 +21,7 @@ import { Observable } from "rxjs/Observable";
 export class DepotsPageComponent {
   storage: Storage = new Storage(null);
   currentDepots: Depot[] = [];
+  loadingDepots: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -34,14 +35,18 @@ export class DepotsPageComponent {
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
+    this.loadingDepots = true;
+
     this.depotService.getDepots().then(
       (observable: Observable<any>) => {
         observable.subscribe(
           (resp) => {
+            this.loadingDepots = false;
 
             this.currentDepots = resp.json().depots as Depot[];
 
           }, (err) => {
+            this.loadingDepots = false;
 
             let jsonErr = err.json();
 

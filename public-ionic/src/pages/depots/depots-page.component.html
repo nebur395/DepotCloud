@@ -20,6 +20,14 @@
 
 <ion-content>
 
+  <div *ngIf="loadingDepots">
+    <h2>Cargando la lista de almacenes. Espere por favor...</h2>
+    <div class="loader"></div>
+  </div>
+
+  <h2 *ngIf="!(currentDepots.length > 0) && !loadingDepots"
+      padding>Esta cuenta aún no contiene almacenes</h2>
+
   <ion-list>
     <ion-item-sliding *ngFor="let depot of currentDepots">
       <button ion-item (click)="openItem(depot)">
@@ -28,7 +36,7 @@
           <img src="../../assets/images/depot.png" />
         </ion-avatar>
 
-        <h2>{{depot.name}}</h2>
+        <h3>{{depot.name}}</h3>
         <p>{{depot.location}}</p>
         <ion-note *ngIf="depot.type === 'House'" item-end>Casa</ion-note>
         <ion-note *ngIf="depot.type === 'Storage Room'" item-end>Trastero</ion-note>
