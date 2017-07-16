@@ -176,7 +176,7 @@ export class DepotObjectsPageComponent {
                       });
                       toast.present();
 
-                      let index = this.currentDepotObjects.findIndex(index => index._id === newDepotObject._id);
+                      let index = this.currentDepotObjects.findIndex(index => index._id === depotObject._id);
                       depotObject = {
                         owner: depotObject.owner,
                         _id: depotObject._id,
