@@ -15,6 +15,7 @@ import { DepotsPageComponent }              from '../pages/depots/depots-page.co
 import { DepotsCreatePageComponent }        from '../pages/depots-create/depots-create-page.component';
 import { DepotObjectsPageComponent }        from '../pages/depot-objects/depot-objects-page.component';
 import { DepotObjectsCreatePageComponent }  from '../pages/depot-objects-create/depot-objects-create-page.component';
+import { DepotObjectsDetailPageComponent }  from '../pages/depot-objects-detail/depot-objects-detail-page.component';
 import { LoginPageComponent }               from '../pages/login/login-page.component';
 import { SearchPageComponent }              from '../pages/search/search-page.component';
 import { SettingsPageComponent }            from '../pages/settings/settings-page.component';
@@ -53,6 +54,7 @@ export function HttpLoaderFactory(http: Http) {
     DepotsPageComponent,
     DepotObjectsPageComponent,
     DepotObjectsCreatePageComponent,
+    DepotObjectsDetailPageComponent,
     DepotsCreatePageComponent,
     LoginPageComponent,
     SearchPageComponent,
@@ -85,6 +87,7 @@ export function HttpLoaderFactory(http: Http) {
     DepotsPageComponent,
     DepotObjectsPageComponent,
     DepotObjectsCreatePageComponent,
+    DepotObjectsDetailPageComponent,
     DepotsCreatePageComponent,
     LoginPageComponent,
     SearchPageComponent,

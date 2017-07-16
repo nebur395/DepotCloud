@@ -31,13 +31,13 @@ export class DepotsCreatePageComponent {
       this.isReadyToSave = this.form.valid;
     });
 
-    if (nameParam.get('depotObject')) {
+    if (nameParam.get('depot')) {
       this.form.setValue({
-        name: nameParam.get('depotObject').name,
-        location: nameParam.get('depotObject').location,
-        type: nameParam.get('depotObject').type,
-        distance: nameParam.get('depotObject').distance,
-        description: nameParam.get('depotObject').description
+        name: nameParam.get('depot').name,
+        location: nameParam.get('depot').location,
+        type: nameParam.get('depot').type,
+        distance: nameParam.get('depot').distance,
+        description: nameParam.get('depot').description
       });
     }
   }

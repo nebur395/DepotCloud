@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="primary">
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>{{depotObject.name}}</ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <!-- 'data:image/png;base64,' -->
+  <div class="item-profile" text-center #image *ngIf="depotObject.image"
+       [style.background-image]="'url(data:image/png;base64,' + depotObject.image + ')'">
+  </div>
+
+  <div class="item-detail" padding>
+    <h2>{{depotObject.name}}</h2>
+    <p *ngIf="depotObject.depot">
+      <strong>Almacén:</strong> {{depotObject.depot}}
+    </p>
+    <p *ngIf="depotObject.guarantee">
+      <strong>Fecha de garantía:</strong> {{depotObject.guarantee}}
+    </p>
+    <p *ngIf="depotObject.dateOfExpiry">
+      <strong>Fecha de caducidad:</strong> {{depotObject.dateOfExpiry}}
+    </p>
+    <p *ngIf="depotObject.description">
+      <strong>Descripción:</strong> {{depotObject.description}}
+    </p>
+  </div>
+</ion-content>

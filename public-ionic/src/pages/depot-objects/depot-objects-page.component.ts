@@ -5,6 +5,7 @@ import { Storage }                                                    from '@ion
 import { WelcomePageComponent }             from '../welcome/welcome-page.component';
 import { MembersPageComponent }             from '../members/members-page.component';
 import { DepotObjectsCreatePageComponent }  from '../depot-objects-create/depot-objects-create-page.component';
+import { DepotObjectsDetailPageComponent }  from '../depot-objects-detail/depot-objects-detail-page.component';
 
 import { Depot }        from '../../models/depot';
 import { DepotObject }  from '../../models/depot-object';
@@ -13,14 +14,7 @@ import { User }         from '../../models/user';
 import { DepotObjectService } from '../../providers/depot-object.service';
 import { UserService }        from '../../providers/user.service';
 
-import { ItemCreatePage } from '../item-create/item-create';
-import { ItemDetailPage } from '../item-detail/item-detail';
-
 import { Observable } from "rxjs/Observable";
-
-import { Items } from '../../providers/providers';
-
-import { Item } from '../../models/item';
 
 @Component({
   selector: 'depot-objects-page',
@@ -31,11 +25,9 @@ export class DepotObjectsPageComponent {
   depot: Depot;
   currentDepotObjects: DepotObject[] = [];
   loadingDepotObjects: boolean = false;
-  currentItems: Item[];
 
   constructor(
     private navCtrl: NavController,
-    private items: Items,
     private modalCtrl: ModalController,
     private navParams: NavParams,
     private depotObjectService: DepotObjectService,
@@ -311,9 +303,9 @@ export class DepotObjectsPageComponent {
   /**
    * Navigate to the detail page for this item.
    */
-  openItem(item: Item): void {
-    this.navCtrl.push(ItemDetailPage, {
-      item: item
+  openItem(depotObject: DepotObject): void {
+    this.navCtrl.push(DepotObjectsDetailPageComponent, {
+      depotObject: depotObject
     });
   }
 }

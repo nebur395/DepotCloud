@@ -135,7 +135,7 @@ export class DepotsPageComponent {
    * modal and then adds the new member to our data source if the user created one.
    */
   modifyItem(depot: Depot): void {
-    let addModal = this.modalCtrl.create(DepotsCreatePageComponent, { depotObject: depot});
+    let addModal = this.modalCtrl.create(DepotsCreatePageComponent, { depot: depot});
 
     addModal.onDidDismiss((newDepot) => {
       if (newDepot) {

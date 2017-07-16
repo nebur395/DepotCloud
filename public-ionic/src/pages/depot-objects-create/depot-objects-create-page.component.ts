@@ -81,8 +81,7 @@ export class DepotObjectsCreatePageComponent {
   }
 
   getProfileImageStyle() {
-    let image64 = 'data:image/png;base64,' + this.form.controls['image'].value;
-    return 'url(' + image64 + ')'
+    return 'url(data:image/png;base64,' + this.form.controls['image'].value + ')'
   }
 
   /**
