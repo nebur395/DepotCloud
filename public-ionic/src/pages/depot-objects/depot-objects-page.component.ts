@@ -110,7 +110,6 @@ export class DepotObjectsPageComponent {
                       toast.present();
 
                       this.currentDepotObjects.push(jsonResp);
-                      console.log(this.currentDepotObjects);
 
                     }, (err) => {
 

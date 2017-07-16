@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild }               from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavParams, ViewController }          from 'ionic-angular';
 
 import { Camera } from '@ionic-native/camera';
 
@@ -13,43 +13,52 @@ export class DepotObjectsCreatePageComponent {
   @ViewChild('fileInput') fileInput;
 
   isReadyToSave: boolean;
-
-  item: any;
-
   form: FormGroup;
 
   constructor (
-    private navCtrl: NavController,
     private viewCtrl: ViewController,
-    formBuilder: FormBuilder,
-    private camera: Camera
+    private formBuilder: FormBuilder,
+    private camera: Camera,
+    private nameParam: NavParams
   ) {
     this.form = formBuilder.group({
-      profilePic: [''],
       name: ['', Validators.required],
-      about: ['']
+      image: [''],
+      guarantee: [''],
+      dateOfExpiry: [''],
+      description: ['']
     });
 
     // Watch the form for changes, and
     this.form.valueChanges.subscribe((v) => {
       this.isReadyToSave = this.form.valid;
     });
+
+    if (nameParam.get('depotObject')) {
+      this.form.setValue({
+        name: nameParam.get('depotObject').name,
+        guarantee: nameParam.get('depotObject').guarantee,
+        dateOfExpiry: nameParam.get('depotObject').dateOfExpiry,
+        image: nameParam.get('depotObject').image,
+        description: nameParam.get('depotObject').description
+      });
+    }
   }
 
   ionViewDidLoad() {
 
   }
 
-  getPicture() {
+  getImage() {
     if (Camera['installed']()) {
       this.camera.getPicture({
         destinationType: this.camera.DestinationType.DATA_URL,
         targetWidth: 96,
         targetHeight: 96
-      }).then((data) => {
-        this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        alert('Unable to take photo');
+      }).then((imageBase64) => {
+        this.form.patchValue({
+          image: imageBase64
+        });
       })
     } else {
       this.fileInput.nativeElement.click();
@@ -60,15 +69,20 @@ export class DepotObjectsCreatePageComponent {
     let reader = new FileReader();
     reader.onload = (readerEvent) => {
 
-      let imageData = (readerEvent.target as any).result;
-      this.form.patchValue({ 'profilePic': imageData });
+      let data_url = (readerEvent.target as any).result;
+      let imageData = data_url.split(',')[1];
+
+      this.form.patchValue({
+        image: imageData
+      });
     };
 
     reader.readAsDataURL(event.target.files[0]);
   }
 
   getProfileImageStyle() {
-    return 'url(' + this.form.controls['profilePic'].value + ')'
+    let image64 = 'data:image/png;base64,' + this.form.controls['image'].value;
+    return 'url(' + image64 + ')'
   }
 
   /**

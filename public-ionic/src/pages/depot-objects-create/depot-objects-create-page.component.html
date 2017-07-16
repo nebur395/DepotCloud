@@ -26,28 +26,40 @@
 
 
 <ion-content>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="done()">
 
     <input type="file" #fileInput style="visibility: hidden; height: 0px"
            name="files[]" (change)="processWebImage($event)" />
 
-    <div class="profile-image-wrapper" (click)="getPicture()">
-      <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value" style="cursor: pointer">
+    <div class="profile-image-wrapper" (click)="getImage()">
+      <div class="profile-image-placeholder" *ngIf="!this.form.controls.image.value" style="cursor: pointer">
         <ion-icon name="add"></ion-icon>
         <div>
           Añadir imagen
         </div>
       </div>
-      <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.profilePic.value" style="cursor: pointer"></div>
+      <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.image.value" style="cursor: pointer"></div>
     </div>
 
     <ion-list>
+
       <ion-item>
-        <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-input type="text" placeholder="Nombre" formControlName="name"></ion-input>
       </ion-item>
+
       <ion-item>
-        <ion-input type="text" placeholder="{{ 'ITEM_ABOUT_PLACEHOLDER' | translate }}" formControlName="about"></ion-input>
+        <ion-input type="text" placeholder="Fecha de garantía (YYYY-MM-DD)" formControlName="guarantee"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-input type="text" placeholder="Fecha de caducidad (YYYY-MM-DD)" formControlName="dateOfExpiry"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea type="text" rows="5" placeholder="Descripción"
+                      formControlName="description"></ion-textarea>
+      </ion-item>
+
     </ion-list>
   </form>
 </ion-content>

@@ -24,7 +24,7 @@ export class DepotObjectService {
     return this.storage.get('token').then((token) => {
 
       let seq = this.http.post(
-        'http://192.168.1.11:8080/depots/' + depotID, // End-point
+        'http://192.168.1.11:8080/depotObjects/' + depotID, // End-point
         JSON.stringify(depotObject),
         {headers: new Headers({
           'Content-Type': 'application/json',
