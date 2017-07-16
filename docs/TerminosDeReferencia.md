@@ -59,12 +59,12 @@ El proyecto tiene como objetivo principal desarrollar una solución a los siguie
 
 La solución debe:
 - Usar mecanismos que aseguren que sólo las usuarios autorizados puedan acceder 
-al sistema (**desktop y servidor hechos**).
+al sistema (**completo**).
 - Permitir que los usuarios puedan crear una unidad familiar y administrar que 
-usuarios del sistema forman parte (**servidor hecho**).
+usuarios del sistema forman parte (**completo**).
 - Servir para que los miembros de una unidad familiar puedan crear un almacén 
 familiar y con posterioridad puedan modificar sus características e incluso 
-darle de baja (**servidor hecho**). 
+darle de baja (**completo**). 
 - Permitir que cualquier miembro de una unidad familiar pueda registrar que un 
 determinado objeto se situa en un determinado almacén junto con un título, una 
 foto y una breve descripción que permita que para que cualquier miembro de la 
@@ -91,7 +91,7 @@ La solución debería:
 - Cada almacén tiene un nombre, una dirección o localización y una caracterización
  de su accesibilidad. Es decir, se podrán caraterizar como almacenes donde hay 
  objetos frecuentemente utilizados y como almacendes donde hay objetos poco o 
- nada utilizados (**servidor hecho**).
+ nada utilizados (**completo**).
 - Tener un modelo de datos más rico del objeto almacenado (p. ej., datos de 
 garantía, fecha de caducidad, valor, etc.) (**servidor hecho**).
 - Listar al usuario algunas recomendaciones que pueden implicar la realización 

@@ -23,33 +23,33 @@ export class Items {
       },
       {
         "name": "Charlie Cheetah",
-        "profilePic": "assets/img/speakers/cheetah.jpg",
+        "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Charlie is a Cheetah.",
         "note": "nota"
       },
       {
         "name": "Donald Duck",
-        "profilePic": "assets/img/speakers/duck.jpg",
+        "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Donald is a Duck."
       },
       {
         "name": "Eva Eagle",
-        "profilePic": "assets/img/speakers/eagle.jpg",
+        "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Eva is an Eagle."
       },
       {
         "name": "Ellie Elephant",
-        "profilePic": "assets/img/speakers/elephant.jpg",
+        "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Ellie is an Elephant."
       },
       {
         "name": "Molly Mouse",
-        "profilePic": "assets/img/speakers/mouse.jpg",
+        "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Molly is a Mouse."
       },
       {
         "name": "Paul Puppy",
-        "profilePic": "assets/img/speakers/puppy.jpg",
+        "profilePic": "assets/img/speakers/bear.jpg",
         "about": "Paul is a Puppy."
       }
     ];

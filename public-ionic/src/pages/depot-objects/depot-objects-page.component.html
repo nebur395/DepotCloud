@@ -1,0 +1,68 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>{{depot.name}}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addItem()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div class="depot-detail" padding>
+    <p><strong>Localización:</strong> {{depot.location}}</p>
+    <p><strong>Tipo de almacén:</strong> {{depot.type}}</p>
+    <p><strong>Distancia hasta el almacén:</strong> {{depot.distance}}</p>
+    <p><strong>Descripción:</strong> {{depot.description}}</p>
+  </div>
+
+  <div *ngIf="loadingDepotObjects">
+    <h2>Cargando la lista de objetos. Espere por favor...</h2>
+    <div class="loader"></div>
+  </div>
+
+  <h2 *ngIf="!(currentDepotObjects.length > 0) && !loadingDepotObjects"
+      padding>Este almacén aún no contiene objetos</h2>
+
+  <h2 *ngIf="(currentDepotObjects.length > 0) && !loadingDepotObjects"
+      padding>Lista de objetos pertenecientes al almacén</h2>
+  <div *ngIf="(currentDepotObjects.length > 0) && !loadingDepotObjects"
+       class="divider"></div>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let depotObject of currentDepotObjects">
+      <button ion-item (click)="openItem(depotObject)">
+
+        <ion-avatar *ngIf="depotObject.image" item-start>
+          <img [src]="'data:image/png;base64,' + depotObject.image" />
+        </ion-avatar>
+
+        <ion-avatar *ngIf="!depotObject.image" item-start>
+          <img src="../../assets/images/add_image.png" />
+        </ion-avatar>
+
+        <h3>{{depotObject.name}}</h3>
+      </button>
+
+      <ion-item-options>
+        <button ion-button color="secondary" (click)="modifyItem(depotObject)">
+          Modificar
+        </button>
+        <button ion-button color="danger" (click)="deleteItem(depotObject)">
+          Borrar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

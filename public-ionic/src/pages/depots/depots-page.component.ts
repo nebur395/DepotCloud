@@ -2,10 +2,10 @@ import { Component }                                        from '@angular/core'
 import { ModalController, ToastController, NavController }  from 'ionic-angular';
 import { Storage }                                          from '@ionic/storage';
 
-import { DepotsCreatePageComponent } from '../depots-create/depots-create-page.component';
-import { WelcomePageComponent }      from '../welcome/welcome-page.component';
-import { ItemDetailPage }            from '../item-detail/item-detail';
-import { MembersPageComponent }      from '../members/members-page.component';
+import { DepotsCreatePageComponent }  from '../depots-create/depots-create-page.component';
+import { WelcomePageComponent }       from '../welcome/welcome-page.component';
+import { DepotObjectsPageComponent }  from '../depot-objects/depot-objects-page.component';
+import { MembersPageComponent }       from '../members/members-page.component';
 
 import { Depot } from '../../models/depot';
 
@@ -20,7 +20,8 @@ import { Observable } from "rxjs/Observable";
 })
 export class DepotsPageComponent {
   storage: Storage = new Storage(null);
-  currentDepots: Depot[];
+  currentDepots: Depot[] = [];
+  loadingDepots: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -34,14 +35,18 @@ export class DepotsPageComponent {
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
+    this.loadingDepots = true;
+
     this.depotService.getDepots().then(
       (observable: Observable<any>) => {
         observable.subscribe(
           (resp) => {
+            this.loadingDepots = false;
 
             this.currentDepots = resp.json().depots as Depot[];
 
           }, (err) => {
+            this.loadingDepots = false;
 
             let jsonErr = err.json();
 
@@ -93,9 +98,8 @@ export class DepotsPageComponent {
                       cssClass: 'toast-success'
                     });
                     toast.present();
-                    this.currentDepots.push(jsonResp);
-                    console.log(this.currentDepots);
 
+                    this.currentDepots.push(jsonResp);
 
                   }, (err) => {
 
@@ -131,7 +135,7 @@ export class DepotsPageComponent {
    * modal and then adds the new member to our data source if the user created one.
    */
   modifyItem(depot: Depot): void {
-    let addModal = this.modalCtrl.create(DepotsCreatePageComponent, { depotObject: depot});
+    let addModal = this.modalCtrl.create(DepotsCreatePageComponent, { depot: depot});
 
     addModal.onDidDismiss((newDepot) => {
       if (newDepot) {
@@ -167,7 +171,6 @@ export class DepotsPageComponent {
                       description: newDepot.description
                     };
                     this.currentDepots[index] = depot;
-                    console.log(this.currentDepots);
 
                   }, (err) => {
 
@@ -199,49 +202,56 @@ export class DepotsPageComponent {
   }
 
   /**
-   * Delete a member from the list of members.
+   * Delete a depot from the list of depots.
    */
-  /*deleteMember(member: string): void {
-    this.memberService.deleteMember(member).then(
-      (observable: Observable<any>) => {
-        observable.subscribe(
-          (resp) => {
+  deleteItem(depot: Depot): void {
+    this.storage.get('member').then((member) => {
+      if (member) {
 
-            let jsonResp = resp.json();
+        this.depotService.deleteDepot(depot._id, member).then(
+          (observable: Observable<any>) => {
+            observable.subscribe(
+              (resp) => {
 
-            // User created
-            let toast = this.toastCtrl.create({
-              message: jsonResp.message,
-              position: 'bottom',
-              duration: 4000,
-              cssClass: 'toast-success'
-            });
-            toast.present();
+                let jsonResp = resp.json();
 
-            let index = this.currentMembers.indexOf(member);
-            this.currentMembers.splice(index, 1);
+                // User created
+                let toast = this.toastCtrl.create({
+                  message: jsonResp.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-success'
+                });
+                toast.present();
 
-          }, (err) => {
+                let index = this.currentDepots.findIndex(index => index._id === depot._id);
+                this.currentDepots.splice(index, 1);
 
-            let jsonErr = err.json();
+              }, (err) => {
 
-            // Unable to sign up
-            let toast = this.toastCtrl.create({
-              message: jsonErr.message,
-              position: 'bottom',
-              duration: 4000,
-              cssClass: 'toast-error'
-            });
-            toast.present();
+                let jsonErr = err.json();
 
-            if (err.status === 401) {
-              this.tokenErrorHandler();
-            }
+                // Unable to sign up
+                let toast = this.toastCtrl.create({
+                  message: jsonErr.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-error'
+                });
+                toast.present();
 
-          });
+                if (err.status === 401) {
+                  this.tokenErrorHandler();
+                }
+
+              });
+          }
+        );
+      } else {
+        this.memberErrorHandler();
       }
-    );
-  }*/
+    });
+  }
 
   tokenErrorHandler(): void {
     this.userService.logout().then(
@@ -279,16 +289,11 @@ export class DepotsPageComponent {
   }
 
   /**
-   * Navigate to the detail page for this item.
+   * Navigate to the detail page for this depot.
    */
   openItem(depot: Depot): void {
-    let item = {
-      "name": "Burt Bear",
-      "profilePic": "assets/img/speakers/bear.jpg",
-      "about": "Burt is a Bear."
-    };
-    this.navCtrl.push(ItemDetailPage, {
-      item: item
+    this.navCtrl.push(DepotObjectsPageComponent, {
+      depot: depot
     });
   }
 }
