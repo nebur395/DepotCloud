@@ -42,48 +42,42 @@ export class DepotObjectService {
   }
 
   /**
-   * Modify depot request
+   * Modify depotObject request
    */
-  modifyDepot(id: any, depot: Depot) {
-    return this.storage.get('user').then(
-      (user: User) => {
+  modifyDepotObject(depotID: any, depotObject: DepotObject) {
+    return this.storage.get('token').then((token) => {
 
-        return this.storage.get('token').then((token) => {
+      let seq = this.http.put(
+        'http://192.168.1.11:8080/depotObjects/' + depotID + '/' + depotObject._id, // End-point
+        JSON.stringify(depotObject),
+        {headers: new Headers({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        })}
+      ).share();
 
-          let seq = this.http.put(
-            'http://192.168.1.11:8080/depots/' + user.email + '/' +  id, // End-point
-            JSON.stringify(depot),
-            {headers: new Headers({
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + token
-            })}
-          ).share();
+      seq
+        .map(res => res.json())
+        .subscribe( () => { }, () => { } );
 
-          seq
-            .map(res => res.json())
-            .subscribe( () => { }, () => { } );
+      return seq;
 
-          return seq;
-
-        });
-
-      }
-    );
+    });
   }
 
   /**
-   * Delete depot request
+   * Delete depotObject request
    */
-  deleteDepot(id: any, member: string) {
-    return this.storage.get('user').then(
-      (user: User) => {
-
+  deleteDepotObject(depotID: any, member: string, depotObject: DepotObject) {
         return this.storage.get('token').then((token) => {
 
           let seq = this.http.delete(
-            'http://192.168.1.11:8080/depots/' + user.email + '/' +  id, // End-point
+            'http://192.168.1.11:8080/depotObjects/' + depotID + '/' + depotObject._id, // End-point
             {
-              body: JSON.stringify({member: member}),
+              body: JSON.stringify({
+                owner: depotObject.owner,
+                member: member
+              }),
               headers: new Headers({   // Headers
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
@@ -93,20 +87,11 @@ export class DepotObjectService {
 
           seq
             .map(res => res.json())
-            .subscribe( () => {
-
-              let index = user.members.indexOf(member);
-              user.members.splice(index, 1);
-              this.storage.set('user', user);
-
-            }, () => { } );
+            .subscribe( () => { }, () => { } );
 
           return seq;
 
         });
-
-      }
-    );
   }
 
   /**

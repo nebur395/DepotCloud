@@ -98,13 +98,7 @@ export class DepotService {
 
           seq
             .map(res => res.json())
-            .subscribe( () => {
-
-              let index = user.members.indexOf(member);
-              user.members.splice(index, 1);
-              this.storage.set('user', user);
-
-            }, () => { } );
+            .subscribe( () => { }, () => { } );
 
           return seq;
 
