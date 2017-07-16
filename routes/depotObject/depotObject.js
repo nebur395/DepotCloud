@@ -45,7 +45,7 @@ module.exports = function (app) {
      *         schema:
      *           type: object
      *           properties:
-     *              depots:
+     *              depotObjects:
      *               type: array
      *               items:
      *                $ref: '#/definitions/DepotObject'
