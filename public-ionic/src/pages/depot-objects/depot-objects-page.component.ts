@@ -30,6 +30,7 @@ export class DepotObjectsPageComponent {
   storage: Storage = new Storage(null);
   depot: Depot;
   currentDepotObjects: DepotObject[] = [];
+  loadingDepotObjects: boolean = false;
   currentItems: Item[];
 
   constructor(
@@ -48,14 +49,17 @@ export class DepotObjectsPageComponent {
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
+    this.loadingDepotObjects = true;
     this.depotObjectService.getDepotObjects(this.depot._id).then(
       (observable: Observable<any>) => {
         observable.subscribe(
           (resp) => {
+            this.loadingDepotObjects = false;
 
             this.currentDepotObjects = resp.json().depotObjects as DepotObject[];
 
           }, (err) => {
+            this.loadingDepotObjects = false;
 
             let jsonErr = err.json();
 

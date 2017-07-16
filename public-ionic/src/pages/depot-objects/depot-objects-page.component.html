@@ -27,8 +27,18 @@
     <p><strong>Descripción:</strong> {{depot.description}}</p>
   </div>
 
-  <h2 *ngIf="currentDepotObjects.length > 0" padding>Lista de objetos pertenecientes al almacén</h2>
-  <div *ngIf="currentDepotObjects.length > 0" class="divider"></div>
+  <div *ngIf="loadingDepotObjects">
+    <h2>Cargando la lista de objetos. Espere por favor...</h2>
+    <div class="loader"></div>
+  </div>
+
+  <h2 *ngIf="!(currentDepotObjects.length > 0) && !loadingDepotObjects"
+      padding>Este almacén aún no contiene objetos</h2>
+
+  <h2 *ngIf="(currentDepotObjects.length > 0) && !loadingDepotObjects"
+      padding>Lista de objetos pertenecientes al almacén</h2>
+  <div *ngIf="(currentDepotObjects.length > 0) && !loadingDepotObjects"
+       class="divider"></div>
 
   <ion-list>
     <ion-item-sliding *ngFor="let depotObject of currentDepotObjects">
