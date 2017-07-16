@@ -28,7 +28,7 @@
   </div>
 
   <h2 *ngIf="currentDepotObjects.length > 0" padding>Lista de objetos pertenecientes al almacén</h2>
-  <div class="divider"></div>
+  <div *ngIf="currentDepotObjects.length > 0" class="divider"></div>
 
   <ion-list>
     <ion-item-sliding *ngFor="let depotObject of currentDepotObjects">
