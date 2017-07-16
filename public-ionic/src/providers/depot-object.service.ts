@@ -44,11 +44,11 @@ export class DepotObjectService {
   /**
    * Modify depotObject request
    */
-  modifyDepotObject(depotID: any, depotObject: DepotObject) {
+  modifyDepotObject(depotID: any, depotObjectID: any, depotObject: DepotObject) {
     return this.storage.get('token').then((token) => {
 
       let seq = this.http.put(
-        'http://192.168.1.11:8080/depotObjects/' + depotID + '/' + depotObject._id, // End-point
+        'http://192.168.1.11:8080/depotObjects/' + depotID + '/' + depotObjectID, // End-point
         JSON.stringify(depotObject),
         {headers: new Headers({
           'Content-Type': 'application/json',

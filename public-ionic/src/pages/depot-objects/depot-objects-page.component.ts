@@ -145,6 +145,82 @@ export class DepotObjectsPageComponent {
   }
 
   /**
+   * Prompt the user to add a new mmber. This shows our MemberCreatePageComponent in a
+   * modal and then adds the new member to our data source if the user created one.
+   */
+  modifyItem(depotObject: DepotObject): void {
+    let addModal = this.modalCtrl.create(DepotObjectsCreatePageComponent, { depotObject: depotObject});
+
+    addModal.onDidDismiss((newDepotObject) => {
+      if (newDepotObject) {
+
+        this.storage.get('member').then((member) => {
+          if (member) {
+            this.storage.get('user').then((user) => {
+
+              newDepotObject = this.addUserAndMember(user, member, newDepotObject);
+
+              this.depotObjectService.modifyDepotObject(this.depot._id, depotObject._id, newDepotObject).then(
+                (observable: Observable<any>) => {
+                  observable.subscribe(
+                    (resp) => {
+
+                      let jsonResp = resp.json();
+
+                      // User created
+                      let toast = this.toastCtrl.create({
+                        message: jsonResp.message,
+                        position: 'bottom',
+                        duration: 4000,
+                        cssClass: 'toast-success'
+                      });
+                      toast.present();
+
+                      let index = this.currentDepotObjects.findIndex(index => index._id === newDepotObject._id);
+                      depotObject = {
+                        owner: depotObject.owner,
+                        _id: depotObject._id,
+                        depot: depotObject.depot,
+                        name: newDepotObject.name,
+                        image: newDepotObject.image,
+                        guarantee: newDepotObject.guarantee,
+                        dateOfExpiry: newDepotObject.dateOfExpiry,
+                        description: newDepotObject.description
+                      };
+                      this.currentDepotObjects[index] = depotObject;
+
+                    }, (err) => {
+
+                      let jsonErr = err.json();
+
+                      // Unable to sign up
+                      let toast = this.toastCtrl.create({
+                        message: jsonErr.message,
+                        position: 'bottom',
+                        duration: 4000,
+                        cssClass: 'toast-error'
+                      });
+                      toast.present();
+
+                      if (err.status === 401) {
+                        this.tokenErrorHandler();
+                      }
+
+                    });
+                }
+              );
+
+            });
+          } else {
+            this.memberErrorHandler();
+          }
+        });
+      }
+    });
+    addModal.present();
+  }
+
+  /**
    * Delete an item from the list of items.
    */
   /*deleteItem(item: Item): void {
