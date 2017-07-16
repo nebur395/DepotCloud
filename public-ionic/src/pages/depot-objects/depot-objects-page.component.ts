@@ -221,11 +221,56 @@ export class DepotObjectsPageComponent {
   }
 
   /**
-   * Delete an item from the list of items.
+   * Delete a depotObject from the list of depots.
    */
-  /*deleteItem(item: Item): void {
-    this.items.delete(item);
-  }*/
+  deleteItem(depotObject: DepotObject): void {
+    this.storage.get('member').then((member) => {
+      if (member) {
+
+        this.depotObjectService.deleteDepotObject(this.depot._id, member, depotObject).then(
+          (observable: Observable<any>) => {
+            observable.subscribe(
+              (resp) => {
+
+                let jsonResp = resp.json();
+
+                // User created
+                let toast = this.toastCtrl.create({
+                  message: jsonResp.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-success'
+                });
+                toast.present();
+
+                let index = this.currentDepotObjects.findIndex(index => index._id === depotObject._id);
+                this.currentDepotObjects.splice(index, 1);
+
+              }, (err) => {
+
+                let jsonErr = err.json();
+
+                // Unable to sign up
+                let toast = this.toastCtrl.create({
+                  message: jsonErr.message,
+                  position: 'bottom',
+                  duration: 4000,
+                  cssClass: 'toast-error'
+                });
+                toast.present();
+
+                if (err.status === 401) {
+                  this.tokenErrorHandler();
+                }
+
+              });
+          }
+        );
+      } else {
+        this.memberErrorHandler();
+      }
+    });
+  }
 
   tokenErrorHandler(): void {
     this.userService.logout().then(
