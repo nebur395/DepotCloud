@@ -4,6 +4,7 @@ import { Storage }          from '@ionic/storage';
 
 import { User }  from '../models/User';
 import { Depot } from '../models/Depot';
+import { DepotObject } from '../models/depot-object';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -115,32 +116,27 @@ export class DepotObjectService {
   }
 
   /**
-   * Get depots request
+   * Get depotObjects request
    */
-  getDepots() {
-    return this.storage.get('user').then(
-      (user: User) => {
+  getDepotObjects(depotID: string) {
+    return this.storage.get('token').then(
+      (token: any) => {
 
-        return this.storage.get('token').then(
-          (token: any) => {
+        let seq = this.http.get(
+          'http://192.168.1.11:8080/depotObjects/' + depotID, // End-point
+          {headers: new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          })}
+        ).share();
 
-            let seq = this.http.get(
-              'http://192.168.1.11:8080/depots/' + user.email, // End-point
-              {headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-              })}
-            ).share();
+        seq
+          .map(res => res.json())
+          .subscribe( () => { }, () => { } );
 
-            seq
-              .map(res => res.json())
-              .subscribe( () => { }, () => { } );
+        return seq;
 
-            return seq;
+      });
 
-          });
-
-      }
-    );
   }
 }

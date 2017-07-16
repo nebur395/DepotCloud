@@ -27,24 +27,29 @@
     <p><strong>Descripción:</strong> {{depot.description}}</p>
   </div>
 
-  <h2 *ngIf="currentDepotObjects" padding>Lista de objetos pertenecientes al almacén</h2>
+  <h2 *ngIf="currentDepotObjects.length > 0" padding>Lista de objetos pertenecientes al almacén</h2>
+  <div class="divider"></div>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
-      <button ion-item (click)="openItem(item)">
+    <ion-item-sliding *ngFor="let depotObject of currentDepotObjects">
+      <button ion-item (click)="openItem(depotObject)">
 
-        <ion-avatar item-start>
-          <img [src]="item.profilePic" />
+        <ion-avatar *ngIf="depotObject.image" item-start>
+          <img [src]="'data:image/png;base64,' + depotObject.image" />
         </ion-avatar>
 
-        <h2>{{item.name}}</h2>
+        <ion-avatar *ngIf="!depotObject.image" item-start>
+          <img src="../../assets/images/add_image.png" />
+        </ion-avatar>
+
+        <h3>{{depotObject.name}}</h3>
       </button>
 
       <ion-item-options>
-        <button ion-button color="secondary" (click)="modifyItem(depot)">
+        <button ion-button color="secondary" (click)="modifyItem(depotObject)">
           Modificar
         </button>
-        <button ion-button color="danger" (click)="deleteItem(depot)">
+        <button ion-button color="danger" (click)="deleteItem(depotObject)">
           Borrar
         </button>
       </ion-item-options>

@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler }                   from '@angular/core';
 import { BrowserModule }                            from '@angular/platform-browser';
 import { HttpModule, Http }                         from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { IonicStorageModule }              from '@ionic/storage';
+import { IonicStorageModule }                       from '@ionic/storage';
 
 import { AppComponent }       from './app.component';
 
@@ -27,6 +27,7 @@ import { SettingsService }  from '../providers/settings.service';
 import { UserService }      from '../providers/user.service';
 import { MemberService }    from '../providers/member.service';
 import { DepotService }     from '../providers/depot.service';
+import { DepotObjectService }     from '../providers/depot-object.service';
 
 import { Camera }       from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -101,6 +102,7 @@ export function HttpLoaderFactory(http: Http) {
     StatusBar,
     SettingsService,
     DepotService,
+    DepotObjectService,
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
