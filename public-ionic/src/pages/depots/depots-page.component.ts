@@ -2,10 +2,10 @@ import { Component }                                        from '@angular/core'
 import { ModalController, ToastController, NavController }  from 'ionic-angular';
 import { Storage }                                          from '@ionic/storage';
 
-import { DepotsCreatePageComponent } from '../depots-create/depots-create-page.component';
-import { WelcomePageComponent }      from '../welcome/welcome-page.component';
-import { ItemDetailPage }            from '../item-detail/item-detail';
-import { MembersPageComponent }      from '../members/members-page.component';
+import { DepotsCreatePageComponent }  from '../depots-create/depots-create-page.component';
+import { WelcomePageComponent }       from '../welcome/welcome-page.component';
+import { DepotObjectsPageComponent }  from '../depot-objects/depot-objects-page.component';
+import { MembersPageComponent }       from '../members/members-page.component';
 
 import { Depot } from '../../models/depot';
 
@@ -20,7 +20,7 @@ import { Observable } from "rxjs/Observable";
 })
 export class DepotsPageComponent {
   storage: Storage = new Storage(null);
-  currentDepots: Depot[];
+  currentDepots: Depot[] = [];
 
   constructor(
     private navCtrl: NavController,
@@ -286,16 +286,11 @@ export class DepotsPageComponent {
   }
 
   /**
-   * Navigate to the detail page for this item.
+   * Navigate to the detail page for this depot.
    */
   openItem(depot: Depot): void {
-    let item = {
-      "name": "Burt Bear",
-      "profilePic": "assets/img/speakers/bear.jpg",
-      "about": "Burt is a Bear."
-    };
-    this.navCtrl.push(ItemDetailPage, {
-      item: item
+    this.navCtrl.push(DepotObjectsPageComponent, {
+      depot: depot
     });
   }
 }

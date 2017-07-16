@@ -6,7 +6,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>Almacenes de la familia</ion-title>
+    <ion-title>{{depot.name}}</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="addItem()">
@@ -20,19 +20,31 @@
 
 <ion-content>
 
+  <div class="depot-detail" padding>
+    <p><strong>Localización:</strong> {{depot.location}}</p>
+    <p><strong>Tipo de almacén:</strong> {{depot.type}}</p>
+    <p><strong>Distancia hasta el almacén:</strong> {{depot.distance}}</p>
+    <p><strong>Descripción:</strong> {{depot.description}}</p>
+  </div>
+
+  <h2 padding>Lista de objetos pertenecientes al almacén</h2>
+
   <ion-list>
     <ion-item-sliding *ngFor="let item of currentItems">
       <button ion-item (click)="openItem(item)">
+
         <ion-avatar item-start>
           <img [src]="item.profilePic" />
         </ion-avatar>
+
         <h2>{{item.name}}</h2>
-        <p>{{item.about}}</p>
-        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
       </button>
 
       <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(item)">
+        <button ion-button color="secondary" (click)="modifyItem(depot)">
+          Modificar
+        </button>
+        <button ion-button color="danger" (click)="deleteItem(depot)">
           Borrar
         </button>
       </ion-item-options>

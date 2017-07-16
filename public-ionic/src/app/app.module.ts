@@ -10,7 +10,7 @@ import { ContentPageComponent }        from '../pages/content/content-page.compo
 import { ItemCreatePage }              from '../pages/item-create/item-create';
 import { ItemDetailPage }              from '../pages/item-detail/item-detail';
 import { DepotsPageComponent }         from '../pages/depots/depots-page.component';
-import { DepotObjectsPageComponent }   from '../pages/depotObjects/depotObjects-page.component';
+import { DepotObjectsPageComponent }   from '../pages/depot-objects/depot-objects-page.component';
 import { DepotsCreatePageComponent }   from '../pages/depots-create/depots-create-page.component';
 import { LoginPageComponent }          from '../pages/login/login-page.component';
 import { SearchPageComponent }         from '../pages/search/search-page.component';
