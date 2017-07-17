@@ -33,10 +33,8 @@ export class ReportPageComponent {
           (resp) => {
 
             this.currentReports = resp.json().reports as any[];
-            console.log(this.currentReports);
             this.sortDates(this.currentReports);
             this.formateDates(this.currentReports);
-            console.log(this.currentReports);
 
           }, (err) => {
 
