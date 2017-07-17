@@ -11,6 +11,7 @@ import { SearchPageComponent }   from '../pages/search/search-page.component';
 import { SettingsPageComponent } from '../pages/settings/settings-page.component';
 import { TutorialPageComponent } from '../pages/tutorial/tutorial-page.component';
 import { WelcomePageComponent }  from '../pages/welcome/welcome-page.component';
+import { ActivityPageComponent } from '../pages/activity/activity-page.component';
 
 import { UserService } from '../providers/user.service';
 
@@ -26,7 +27,7 @@ export class AppComponent {
     { title: 'Miembros', component: MembersPageComponent },
     { title: 'Almacenes', component: DepotsPageComponent },
     { title: 'Buscar trastos', component: SearchPageComponent },
-    { title: 'Actividades', component: ContentPageComponent },
+    { title: 'Actividades', component: ActivityPageComponent },
     { title: 'Recomendaciones', component: ContentPageComponent },
     { title: 'Opciones', component: SettingsPageComponent },
     { title: 'Tutorial', component: TutorialPageComponent }

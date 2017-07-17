@@ -20,6 +20,7 @@ import { SettingsPageComponent }            from '../pages/settings/settings-pag
 import { SignupPageComponent }              from '../pages/signup/signup-page.component';
 import { TutorialPageComponent }            from '../pages/tutorial/tutorial-page.component';
 import { WelcomePageComponent }             from '../pages/welcome/welcome-page.component';
+import { ActivityPageComponent }            from '../pages/activity/activity-page.component';
 
 import { Api }                  from '../providers/api';
 import { Items }                from '../mocks/providers/items';
@@ -59,7 +60,8 @@ export function HttpLoaderFactory(http: Http) {
     TutorialPageComponent,
     WelcomePageComponent,
     MembersPageComponent,
-    MemberCreatePageComponent
+    MemberCreatePageComponent,
+    ActivityPageComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ export function HttpLoaderFactory(http: Http) {
     TutorialPageComponent,
     WelcomePageComponent,
     MembersPageComponent,
-    MemberCreatePageComponent
+    MemberCreatePageComponent,
+    ActivityPageComponent
   ],
   providers: [
     Api,

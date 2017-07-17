@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Actividades de la familia</ion-title>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let activity of currentActivities">
+      <button ion-item>
+
+        <p *ngIf="activity.type==='MEMBER'">
+          El miembro de la unidad familiar <span>{{activity.name}}</span> ha sido
+          <span *ngIf="activity.action==='ADD'"> creado.</span>
+          <span *ngIf="activity.action==='MODIFY'"> modificado.</span>
+          <span *ngIf="activity.action==='DELETE'"> eliminado.</span>
+        </p>
+
+        <p *ngIf="activity.type==='DEPOT'">
+          El miembro <span>{{activity.author}}</span> de la unidad familiar ha
+          <span *ngIf="activity.action==='ADD'"> creado</span>
+          <span *ngIf="activity.action==='MODIFY'"> modificado</span>
+          <span *ngIf="activity.action==='DELETE'"> eliminado</span>
+          el almacén <span>{{activity.name}}</span>.
+        </p>
+
+        <p *ngIf="activity.type==='OBJECT'">
+          El miembro <span>{{activity.author}}</span> de la unidad familiar ha
+          <span *ngIf="activity.action==='ADD'"> creado</span>
+          <span *ngIf="activity.action==='MODIFY'"> modificado</span>
+          <span *ngIf="activity.action==='DELETE'"> eliminado</span>
+          el almacén <span>{{activity.name}}</span>.
+        </p>
+
+        <ion-note item-end>{{activity.activityDate}}</ion-note>
+      </button>
+
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
