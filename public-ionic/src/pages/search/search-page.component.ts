@@ -44,10 +44,10 @@ export class SearchPageComponent {
       .switchMap(
 
         (term) => term   // switch to new observable each time the term changes
-        // return the http search observable
-        ? this.searchService.search(term)
-        // or the observable of empty heroes if there was no search term
-        : Observable.of<DepotObject[]>([]))
+          // return the http search observable
+          ? this.searchService.search(term)
+          // or the observable of empty heroes if there was no search term
+          : Observable.of<DepotObject[]>([]))
 
       .catch(error => {
         let jsonErr = error.json();
