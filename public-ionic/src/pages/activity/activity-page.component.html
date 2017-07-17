@@ -17,7 +17,7 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let activity of currentActivities">
-      <button ion-item>
+      <button ion-item text-wrap>
 
         <p *ngIf="activity.type==='MEMBER'">
           El miembro de la unidad familiar <span>{{activity.name}}</span> ha sido
