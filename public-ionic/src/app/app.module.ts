@@ -21,6 +21,7 @@ import { SignupPageComponent }              from '../pages/signup/signup-page.co
 import { TutorialPageComponent }            from '../pages/tutorial/tutorial-page.component';
 import { WelcomePageComponent }             from '../pages/welcome/welcome-page.component';
 import { ActivityPageComponent }            from '../pages/activity/activity-page.component';
+import { ReportPageComponent }              from '../pages/reports/report-page.component';
 
 import { Api }                  from '../providers/api';
 import { Items }                from '../mocks/providers/items';
@@ -61,7 +62,8 @@ export function HttpLoaderFactory(http: Http) {
     WelcomePageComponent,
     MembersPageComponent,
     MemberCreatePageComponent,
-    ActivityPageComponent
+    ActivityPageComponent,
+    ReportPageComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +95,8 @@ export function HttpLoaderFactory(http: Http) {
     WelcomePageComponent,
     MembersPageComponent,
     MemberCreatePageComponent,
-    ActivityPageComponent
+    ActivityPageComponent,
+    ReportPageComponent
   ],
   providers: [
     Api,

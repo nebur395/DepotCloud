@@ -3,22 +3,22 @@ import { NavController, ToastController } from 'ionic-angular';
 
 import { WelcomePageComponent }             from '../welcome/welcome-page.component';
 
-import { ActivityService }  from '../../providers/activity.service';
-import { UserService }      from '../../providers/user.service';
+import { ReportService }  from '../../providers/report.service';
+import { UserService }    from '../../providers/user.service';
 
 import { Observable } from "rxjs/Observable";
 
 @Component({
-  selector: 'activity-page',
-  templateUrl: 'activity-page.component.html',
-  providers: [ActivityService]
+  selector: 'report-page',
+  templateUrl: 'report-page.component.html',
+  providers: [ReportService]
 })
-export class ActivityPageComponent {
-  currentActivities: any[];
+export class ReportPageComponent {
+  currentReports: any[];
 
   constructor(
     private navCtrl: NavController,
-    private activityService: ActivityService,
+    private reportService: ReportService,
     private toastCtrl: ToastController,
     private userService: UserService
   ) { }
@@ -27,14 +27,16 @@ export class ActivityPageComponent {
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
-    this.activityService.getActivities().then(
+    this.reportService.getReports().then(
       (observable: Observable<any>) => {
         observable.subscribe(
           (resp) => {
 
-            this.currentActivities = resp.json().activities as any[];
-            this.sortDates(this.currentActivities);
-            this.formateDates(this.currentActivities);
+            this.currentReports = resp.json().reports as any[];
+            console.log(this.currentReports);
+            this.sortDates(this.currentReports);
+            this.formateDates(this.currentReports);
+            console.log(this.currentReports);
 
           }, (err) => {
 
@@ -69,16 +71,16 @@ export class ActivityPageComponent {
     );
   }
 
-  private formateDates(activities: any []): void {
-    for (let activity of activities) {
-      activity.activityDate = activity.activityDate.substr(0, 10);
+  private formateDates(reports: any []): void {
+    for (let report of reports) {
+      report.reportDate = report.reportDate.substr(0, 10);
     }
   }
 
-  private sortDates(activities: any[]):void {
-    activities.sort(function(a, b){
-      let x = a.activityDate.toLowerCase();
-      let y = b.activityDate.toLowerCase();
+  private sortDates(reports: any[]):void {
+    reports.sort(function(a, b){
+      let x = a.reportDate.toLowerCase();
+      let y = b.reportDate.toLowerCase();
       if (x < y) {return 1;}
       if (x > y) {return -1;}
       return 0;

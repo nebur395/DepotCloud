@@ -4,7 +4,7 @@ import { Platform, Nav, Config }  from 'ionic-angular';
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { ContentPageComponent }  from '../pages/content/content-page.component';
+import { ReportPageComponent }              from '../pages/reports/report-page.component';
 import { MembersPageComponent }  from '../pages/members/members-page.component';
 import { DepotsPageComponent }   from '../pages/depots/depots-page.component';
 import { SearchPageComponent }   from '../pages/search/search-page.component';
@@ -28,7 +28,7 @@ export class AppComponent {
     { title: 'Almacenes', component: DepotsPageComponent },
     { title: 'Buscar trastos', component: SearchPageComponent },
     { title: 'Actividades', component: ActivityPageComponent },
-    { title: 'Recomendaciones', component: ContentPageComponent },
+    { title: 'Recomendaciones', component: ReportPageComponent },
     { title: 'Opciones', component: SettingsPageComponent },
     { title: 'Tutorial', component: TutorialPageComponent }
   ];

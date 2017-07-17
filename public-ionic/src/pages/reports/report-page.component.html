@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Actividades de la familia</ion-title>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let report of currentReports">
+      <button ion-item text-wrap>
+
+        <p>
+          La fecha de
+          <span *ngIf="report.type==='guarantee'">garantía</span>
+          <span *ngIf="report.type==='dateOfExpiry'">caducidad</span>
+          del objeto <span>{{report.depotObject}}</span> ha expirado.
+        </p>
+
+        <ion-note item-end>{{report.reportDate}}</ion-note>
+      </button>
+
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
