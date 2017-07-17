@@ -113,6 +113,41 @@ describe('DepotObject', function () {
                 });
         });
 
+        it('should successfully get a list of depots', function (done) {
+
+            chai.request(server)
+                .post('/depotObjects/' + depotsId[0])
+                .send({
+                    owner: email,
+                    name: "test depot object",
+                    image: image,
+                    guarantee: "2017-06-17",
+                    dateOfExpiry: "2017-06-17",
+                    description: "Depot Description",
+                    member: "Pepe"
+                })
+                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .end(function (err, result) {
+
+                    depotObjectsId.push(new ObjectId(result.body.depotObject._id));
+
+                    chai.request(server)
+                        .get('/depotObjects/search/' + email + '/test')
+                        .set('Authorization','Bearer ' + createUserToken(name, false))
+                        .end(function (err, result) {
+
+                            result.should.have.status(200);
+                            result.body.should.be.a('object');
+                            result.body.should.have.property('depotObjects');
+                            result.body.depotObjects.should.be.a('array');
+
+                            done();
+
+                        });
+
+                });
+        });
+
         it('should return an error since the depot doesn\'t exists', function (done) {
 
             Depot.collection.remove({"_id":depotsId[0]}, function(){
