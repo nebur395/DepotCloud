@@ -34,7 +34,7 @@ export class DepotObjectsPageComponent {
     private toastCtrl: ToastController,
     private userService: UserService
   ) {
-    this.depot = navParams.get('depot');
+    this.depot = this.navParams.get('depot');
   }
 
   /**

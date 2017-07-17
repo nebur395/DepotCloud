@@ -18,7 +18,7 @@ export class DepotsCreatePageComponent {
     private formBuilder: FormBuilder,
     private nameParam: NavParams
   ) {
-    this.form = formBuilder.group({
+    this.form = this.formBuilder.group({
       name: ['', Validators.required],
       location: [''],
       type: ['', Validators.required],
@@ -31,13 +31,13 @@ export class DepotsCreatePageComponent {
       this.isReadyToSave = this.form.valid;
     });
 
-    if (nameParam.get('depot')) {
+    if (this.nameParam.get('depot')) {
       this.form.setValue({
-        name: nameParam.get('depot').name,
-        location: nameParam.get('depot').location,
-        type: nameParam.get('depot').type,
-        distance: nameParam.get('depot').distance,
-        description: nameParam.get('depot').description
+        name: this.nameParam.get('depot').name,
+        location: this.nameParam.get('depot').location,
+        type: this.nameParam.get('depot').type,
+        distance: this.nameParam.get('depot').distance,
+        description: this.nameParam.get('depot').description
       });
     }
   }

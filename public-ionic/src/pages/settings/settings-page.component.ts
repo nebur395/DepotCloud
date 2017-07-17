@@ -36,7 +36,7 @@ export class SettingsPageComponent {
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController
   ) {
-    this.form = formBuilder.group({
+    this.form = this.formBuilder.group({
       name: ['', Validators.required],
       currentPassword: ['', Validators.required],
       newPassword: ['']

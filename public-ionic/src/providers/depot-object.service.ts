@@ -2,8 +2,6 @@ import { Injectable }       from '@angular/core';
 import { Headers, Http }    from '@angular/http';
 import { Storage }          from '@ionic/storage';
 
-import { User }  from '../models/User';
-import { Depot } from '../models/Depot';
 import { DepotObject } from '../models/depot-object';
 
 import 'rxjs/add/operator/map';

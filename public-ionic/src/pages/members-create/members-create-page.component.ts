@@ -19,7 +19,7 @@ export class MemberCreatePageComponent {
     private formBuilder: FormBuilder,
     private nameParam: NavParams
   ) {
-    this.form = formBuilder.group({
+    this.form = this.formBuilder.group({
       name: ['', Validators.required]
     });
 
@@ -28,8 +28,8 @@ export class MemberCreatePageComponent {
       this.isReadyToSave = this.form.valid;
     });
 
-    if (nameParam.get('memberName')) {
-      this.form.setValue({name: nameParam.get('memberName')});
+    if (this.nameParam.get('memberName')) {
+      this.form.setValue({name: this.nameParam.get('memberName')});
     }
   }
 

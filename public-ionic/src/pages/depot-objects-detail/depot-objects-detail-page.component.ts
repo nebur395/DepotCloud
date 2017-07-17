@@ -26,7 +26,7 @@ export class DepotObjectsDetailPageComponent {
     private toastCtrl: ToastController,
     private userService: UserService
   ) {
-    this.depotObject = navParams.get('depotObject');
+    this.depotObject = this.navParams.get('depotObject');
   }
 
   ionViewDidLoad() {

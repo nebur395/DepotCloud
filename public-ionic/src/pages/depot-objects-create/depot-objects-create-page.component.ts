@@ -21,7 +21,7 @@ export class DepotObjectsCreatePageComponent {
     private camera: Camera,
     private nameParam: NavParams
   ) {
-    this.form = formBuilder.group({
+    this.form = this.formBuilder.group({
       name: ['', Validators.required],
       image: [''],
       guarantee: [''],
@@ -34,13 +34,13 @@ export class DepotObjectsCreatePageComponent {
       this.isReadyToSave = this.form.valid;
     });
 
-    if (nameParam.get('depotObject')) {
+    if (this.nameParam.get('depotObject')) {
       this.form.setValue({
-        name: nameParam.get('depotObject').name,
-        guarantee: nameParam.get('depotObject').guarantee,
-        dateOfExpiry: nameParam.get('depotObject').dateOfExpiry,
-        image: nameParam.get('depotObject').image,
-        description: nameParam.get('depotObject').description
+        name: this.nameParam.get('depotObject').name,
+        guarantee: this.nameParam.get('depotObject').guarantee,
+        dateOfExpiry: this.nameParam.get('depotObject').dateOfExpiry,
+        image: this.nameParam.get('depotObject').image,
+        description: this.nameParam.get('depotObject').description
       });
     }
   }
