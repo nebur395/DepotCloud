@@ -30,7 +30,7 @@ export class UserService {
       {headers: new Headers({
         'Authorization': 'Basic ' + baseEncoded
       })}
-    ).share();
+    );
 
     seq
       .map(res => res.json())
@@ -57,7 +57,7 @@ export class UserService {
       {headers: new Headers({
         'Content-Type': 'application/json'
       })}
-      ).share();
+    );
 
     seq
       .map(res => res.json())

@@ -29,7 +29,7 @@ export class ActivityService {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
               })}
-            ).share();
+            );
 
             seq
               .map(res => res.json())

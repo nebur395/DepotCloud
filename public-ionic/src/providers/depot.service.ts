@@ -32,7 +32,7 @@ export class DepotService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          ).share();
+          );
 
           seq
             .map(res => res.json())
@@ -62,7 +62,7 @@ export class DepotService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          ).share();
+          );
 
           seq
             .map(res => res.json())
@@ -94,7 +94,7 @@ export class DepotService {
                 'Authorization': 'Bearer ' + token
               })
             }
-          ).share();
+          );
 
           seq
             .map(res => res.json())
@@ -124,7 +124,7 @@ export class DepotService {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
               })}
-            ).share();
+            );
 
             seq
               .map(res => res.json())
@@ -154,7 +154,7 @@ export class DepotService {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
               })}
-            ).share();
+            );
 
             seq
               .map(res => res.json())

@@ -30,7 +30,7 @@ export class DepotObjectService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
         })}
-      ).share();
+      );
 
       seq
         .map(res => res.json())
@@ -54,7 +54,7 @@ export class DepotObjectService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
         })}
-      ).share();
+      );
 
       seq
         .map(res => res.json())
@@ -83,7 +83,7 @@ export class DepotObjectService {
                 'Authorization': 'Bearer ' + token
               })
             }
-          ).share();
+          );
 
           seq
             .map(res => res.json())
@@ -107,7 +107,7 @@ export class DepotObjectService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
           })}
-        ).share();
+        );
 
         seq
           .map(res => res.json())

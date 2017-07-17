@@ -31,7 +31,7 @@ export class MemberService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          ).share();
+          );
 
           seq
             .map(res => res.json())
@@ -66,7 +66,7 @@ export class MemberService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          ).share();
+          );
 
           seq
             .map(res => res.json())
@@ -102,7 +102,7 @@ export class MemberService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          ).share();
+          );
 
           seq
             .map(res => res.json())
