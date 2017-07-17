@@ -137,4 +137,34 @@ export class DepotService {
       }
     );
   }
+
+  /**
+   * Get depot request
+   */
+  getDepot(depotID: string) {
+    return this.storage.get('user').then(
+      (user: User) => {
+
+        return this.storage.get('token').then(
+          (token: any) => {
+
+            let seq = this.http.get(
+              'http://192.168.1.11:8080/depots/' + user.email + '/' + depotID, // End-point
+              {headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              })}
+            ).share();
+
+            seq
+              .map(res => res.json())
+              .subscribe( () => { }, () => { } );
+
+            return seq;
+
+          });
+
+      }
+    );
+  }
 }

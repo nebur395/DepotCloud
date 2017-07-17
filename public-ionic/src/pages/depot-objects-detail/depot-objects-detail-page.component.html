@@ -19,8 +19,11 @@
 
   <div class="item-detail" padding>
     <h2>{{depotObject.name}}</h2>
-    <p *ngIf="depotObject.depot">
-      <strong>Almacén:</strong> {{depotObject.depot}}
+    <p *ngIf="depot && depot.name">
+      <strong>Almacén:</strong> {{depot.name}}
+    </p>
+    <p *ngIf="depot && depot.location">
+      <strong>Localización:</strong> {{depot.location}}
     </p>
     <p *ngIf="depotObject.guarantee">
       <strong>Fecha de garantía:</strong> {{depotObject.guarantee}}

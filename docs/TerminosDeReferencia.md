@@ -68,12 +68,12 @@ darle de baja (**completo**).
 - Permitir que cualquier miembro de una unidad familiar pueda registrar que un 
 determinado objeto se situa en un determinado almacén junto con un título, una 
 foto y una breve descripción que permita que para que cualquier miembro de la 
-unidad familiar pueda identificarlo (**servidor hecho**).
+unidad familiar pueda identificarlo (**completo**).
 - Permitir que cualquier miembro de una unidad familiar pueda actualizar el estado
  del objeto, ya sea tras moverlo de un almacén a otro, o cuando hay interés en 
- registrar cualquier evento mediante una nota o una foto (**servidor hecho**). 
+ registrar cualquier evento mediante una nota o una foto (**completo**). 
 - Permitir que cualquier miembro de una unidad familiar retire un objeto del 
-control del sistema de almacenes (**servidor hecho**).
+control del sistema de almacenes (**completo**).
 - Permitir que todos los miembros de la unidad familiar obtengan un listado con 
 cualquier acción realizada sobre los almacenes y los objetos almacenados (**servidor hecho**).
 - Ofrecer diversos informes sobre el estado de cada uno de los objetos contenidos  (**servidor hecho**).
@@ -82,7 +82,7 @@ de texto y mostrando la descripción, las fotos y la localización de los que
 coincidan con el texto buscado  (**falta**).
 - Cumplir todos los aspectos legales necesarios para una solución de este tipo,
  en particular los referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750) (**falta**).
-- Tener una interfaz de usuario cómoda tanto en escritorio como en móvil (**escritorio hecho**).
+- Tener una interfaz de usuario cómoda tanto en escritorio como en móvil (**completo**).
 - Capturar la información de gestión en un almacén con la ayuda del móvil (**falta**).
 - Ofrecer un tutorial o manual de usuario sobre el funcionamiento de la aplicación (**falta**).
 - Analizar la posiblidad de ser un producto comercial utilizando una aproximación ágil (**falta**). 

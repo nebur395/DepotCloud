@@ -7,8 +7,6 @@ import { IonicStorageModule }                       from '@ionic/storage';
 import { AppComponent }       from './app.component';
 
 import { ContentPageComponent }             from '../pages/content/content-page.component';
-import { ItemCreatePage }                   from '../pages/item-create/item-create';
-import { ItemDetailPage }                   from '../pages/item-detail/item-detail';
 import { MembersPageComponent }             from '../pages/members/members-page.component';
 import { MemberCreatePageComponent }        from '../pages/members-create/members-create-page.component';
 import { DepotsPageComponent }              from '../pages/depots/depots-page.component';
@@ -49,8 +47,6 @@ export function HttpLoaderFactory(http: Http) {
   declarations: [
     AppComponent,
     ContentPageComponent,
-    ItemCreatePage,
-    ItemDetailPage,
     DepotsPageComponent,
     DepotObjectsPageComponent,
     DepotObjectsCreatePageComponent,
@@ -82,8 +78,6 @@ export function HttpLoaderFactory(http: Http) {
   entryComponents: [
     AppComponent,
     ContentPageComponent,
-    ItemCreatePage,
-    ItemDetailPage,
     DepotsPageComponent,
     DepotObjectsPageComponent,
     DepotObjectsCreatePageComponent,
