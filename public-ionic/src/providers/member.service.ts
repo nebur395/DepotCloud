@@ -4,8 +4,8 @@ import { Storage }          from '@ionic/storage';
 
 import { User } from '../models/User';
 
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/share';
 
 @Injectable()
 export class MemberService {
@@ -31,7 +31,7 @@ export class MemberService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          );
+          ).share();
 
           seq
             .map(res => res.json())
@@ -66,7 +66,7 @@ export class MemberService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          );
+          ).share();
 
           seq
             .map(res => res.json())
@@ -102,7 +102,7 @@ export class MemberService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          );
+          ).share();
 
           seq
             .map(res => res.json())

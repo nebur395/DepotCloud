@@ -3,7 +3,6 @@ import { Headers, Http }  from '@angular/http';
 import { Storage }          from '@ionic/storage';
 
 import { Observable }     from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
 import { DepotObject } from '../models/Depot-object';
 import { User } from '../models/User';

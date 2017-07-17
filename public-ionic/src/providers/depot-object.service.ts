@@ -4,7 +4,7 @@ import { Storage }          from '@ionic/storage';
 
 import { DepotObject } from '../models/depot-object';
 
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class DepotObjectService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
         })}
-      );
+      ).share();
 
       seq
         .map(res => res.json())
@@ -52,7 +52,7 @@ export class DepotObjectService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
         })}
-      );
+      ).share();
 
       seq
         .map(res => res.json())
@@ -81,7 +81,7 @@ export class DepotObjectService {
                 'Authorization': 'Bearer ' + token
               })
             }
-          );
+          ).share();
 
           seq
             .map(res => res.json())
@@ -105,7 +105,7 @@ export class DepotObjectService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
           })}
-        );
+        ).share();
 
         seq
           .map(res => res.json())

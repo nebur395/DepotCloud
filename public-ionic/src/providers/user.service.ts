@@ -6,6 +6,7 @@ import { JwtHelper }        from 'angular2-jwt';
 import { User } from '../models/User';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -30,7 +31,7 @@ export class UserService {
       {headers: new Headers({
         'Authorization': 'Basic ' + baseEncoded
       })}
-    );
+    ).share();
 
     seq
       .map(res => res.json())
@@ -57,7 +58,7 @@ export class UserService {
       {headers: new Headers({
         'Content-Type': 'application/json'
       })}
-    );
+    ).share();
 
     seq
       .map(res => res.json())

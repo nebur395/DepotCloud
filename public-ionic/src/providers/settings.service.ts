@@ -3,6 +3,7 @@ import { Headers, Http }    from '@angular/http';
 import { Storage }          from '@ionic/storage';
 
 import { User } from '../models/User';
+import 'rxjs/add/operator/share';
 
 /**
  * A simple settings/config class for storing key/value pairs with persistence.
@@ -32,7 +33,7 @@ export class SettingsService {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + token
             })}
-          );
+          ).share();
 
           seq
             .map(res => res.json())
@@ -70,7 +71,7 @@ export class SettingsService {
                 'Authorization': 'Bearer ' + token
               })
             }
-          );
+          ).share();
 
           seq
             .map(res => res.json())

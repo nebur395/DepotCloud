@@ -2,7 +2,7 @@ import { Injectable }       from '@angular/core';
 import { Headers, Http }    from '@angular/http';
 import { Storage }          from '@ionic/storage';
 
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class ReportService {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
               })}
-            );
+            ).share();
 
             seq
               .map(res => res.json())
