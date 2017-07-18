@@ -75,16 +75,16 @@ unidad familiar pueda identificarlo (**completo**).
 - Permitir que cualquier miembro de una unidad familiar retire un objeto del 
 control del sistema de almacenes (**completo**).
 - Permitir que todos los miembros de la unidad familiar obtengan un listado con 
-cualquier acción realizada sobre los almacenes y los objetos almacenados (**servidor hecho**).
-- Ofrecer diversos informes sobre el estado de cada uno de los objetos contenidos  (**servidor hecho**).
+cualquier acción realizada sobre los almacenes y los objetos almacenados (**completo**).
+- Ofrecer diversos informes sobre el estado de cada uno de los objetos contenidos  (**completo**).
 - Ayudar a localizar un objeto entre todos los almacenes mediante un búsqueda 
 de texto y mostrando la descripción, las fotos y la localización de los que 
-coincidan con el texto buscado  (**falta**).
+coincidan con el texto buscado  (**completo**).
 - Cumplir todos los aspectos legales necesarios para una solución de este tipo,
  en particular los referentes a la [LOPD](https://www.boe.es/buscar/act.php?id=BOE-A-1999-23750) (**falta**).
 - Tener una interfaz de usuario cómoda tanto en escritorio como en móvil (**completo**).
-- Capturar la información de gestión en un almacén con la ayuda del móvil (**falta**).
-- Ofrecer un tutorial o manual de usuario sobre el funcionamiento de la aplicación (**falta**).
+- Capturar la información de gestión en un almacén con la ayuda del móvil (**completo**).
+- Ofrecer un tutorial o manual de usuario sobre el funcionamiento de la aplicación (**completo**).
 - Analizar la posiblidad de ser un producto comercial utilizando una aproximación ágil (**falta**). 
 
 La solución debería:
@@ -93,10 +93,10 @@ La solución debería:
  objetos frecuentemente utilizados y como almacendes donde hay objetos poco o 
  nada utilizados (**completo**).
 - Tener un modelo de datos más rico del objeto almacenado (p. ej., datos de 
-garantía, fecha de caducidad, valor, etc.) (**servidor hecho**).
+garantía, fecha de caducidad, valor, etc.) (**completo**).
 - Listar al usuario algunas recomendaciones que pueden implicar la realización 
 de acciones en relación con algunos objetos (p.ej., *"El objeto X ya no está en 
-garantía, puedes dejar de guardar su caja"*) (**servidor hecho**).
+garantía, puedes dejar de guardar su caja"*) (**completo**).
 - Notificar al usuario que un objeto debería estar en una almacén más accesible 
 dependiendo de su actividad (p.ej., *"El objeto X almacenado en tu vivienda 
 secundaria tiene mucha actividad, prueba a moverlo a tu vivienda principal para 
