@@ -29,7 +29,7 @@ mongoose.Promise = global.Promise;
  *         type: string
  *         required: true
  *         description: Nombre de la entidad sobre la que se realiza la actividad.
- *       member:
+ *       author:
  *         type: string
  *         description: Miembro de la unidad familiar que realiza la actividad.
  *       activityDate:

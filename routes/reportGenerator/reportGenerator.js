@@ -11,7 +11,7 @@ function guaranteeChecker() {
     DepotObject.find(function (err, depotObjectResult) {
         async.each(depotObjectResult, function (depotObject, callback) {
 
-            if (checkDates(depotObject.guarantee)) {
+            if (depotObject.guarantee && checkDates(depotObject.guarantee)) {
 
                 Report.findOne({depotObject: depotObject._id, type: "guarantee"}, function (err, reportResult) {
                     // The report is created if it doesn't exist
@@ -42,7 +42,7 @@ function dateOfExpiryChecker() {
     DepotObject.find(function (err, depotObjectResult) {
         async.each(depotObjectResult, function (depotObject, callback) {
 
-            if (checkDates(depotObject.dateOfExpiry)) {
+            if (depotObject.dateOfExpiry && checkDates(depotObject.dateOfExpiry)) {
 
                 Report.findOne({depotObject: depotObject._id, type: "dateOfExpiry"}, function (err, reportResult) {
                     // The report is created if it doesn't exist
