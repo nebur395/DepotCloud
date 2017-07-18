@@ -110,4 +110,11 @@ var dateOfExpiryChecker = require('./routes/reportGenerator/reportGenerator').da
  */
 setInterval(dateOfExpiryChecker, 100);
 
+var depotObjectsUsageControl = require('./routes/reportGenerator/reportGenerator').depotObjectsUsageControl;
+/*
+ * Check once per day (86400000)
+ * Debug Mode: Check once per 5 minutes (300000) or 2 minutes (120000)
+ */
+setInterval(depotObjectsUsageControl, 100);
+
 module.exports = app;
