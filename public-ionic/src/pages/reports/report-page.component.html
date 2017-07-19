@@ -19,11 +19,17 @@
     <ion-item-sliding *ngFor="let report of currentReports">
       <button ion-item text-wrap>
 
-        <p>
+        <p *ngIf="report.type!=='usageControl'">
           La fecha de
           <span *ngIf="report.type==='guarantee'">garantía</span>
           <span *ngIf="report.type==='dateOfExpiry'">caducidad</span>
           del objeto <span>{{report.depotObject}}</span> ha expirado.
+        </p>
+
+        <p *ngIf="report.type==='usageControl'">
+          El objeto <span>{{report.depotObject}}</span> está siendo utilizado
+          con mucha frecuencia. Existen otros almacenes más cercanos a ti al que
+          podrías llevarlo.
         </p>
 
         <ion-note item-end>{{report.reportDate}}</ion-note>
