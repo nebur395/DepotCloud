@@ -7,7 +7,8 @@ var express = require("express"),
     config = require("./config"),
     jwt = require("express-jwt"),
     cors = require('cors'),
-    http = require("http");
+    http = require("http"),
+    https = require("https");
 
 
 var app = express();
@@ -71,6 +72,12 @@ app.models = require('./models');
 
 require('./routes')(app);
 
+// Creation of https connection
+var privateKey = fs.readFileSync('localhost.key','utf8');
+var certificate = fs.readFileSync('localhost.crt','utf8');
+var credentials = {key: privateKey, cert: certificate};
+var httpsServer = https.createServer(credentials,app);
+
 // Database connection and server launching
 var dbUri = 'mongodb://localhost:27017/depotCloudDb';
 mongoose.connect(dbUri);
@@ -80,6 +87,11 @@ mongoose.connection.once('open', function () {
 
     server.listen(8080, function () {
         console.log("Server listening to PORT 8080");
+    });
+
+    //HTTPS server launch (compatible with http at the same time)
+    httpsServer.listen(8443,function () {
+        console.log("Secure server listening to PORT 8443");
     });
 
 });
@@ -97,5 +109,12 @@ var dateOfExpiryChecker = require('./routes/reportGenerator/reportGenerator').da
  * Debug Mode: Check once per 5 minutes (300000) or 2 minutes (120000)
  */
 setInterval(dateOfExpiryChecker, 100);
+
+var depotObjectsUsageControl = require('./routes/reportGenerator/reportGenerator').depotObjectsUsageControl;
+/*
+ * Check once per day (86400000)
+ * Debug Mode: Check once per 5 minutes (300000) or 2 minutes (120000)
+ */
+setInterval(depotObjectsUsageControl, 100);
 
 module.exports = app;

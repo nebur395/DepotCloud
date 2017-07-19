@@ -1,6 +1,7 @@
 var models = require('../../models');
 var async = require("async");
 
+var Depot = models.Depot;
 var DepotObject = models.DepotObject;
 var Report = models.Report;
 /*
@@ -29,6 +30,8 @@ function guaranteeChecker() {
                         callback();
                     }
                 });
+            } else {
+                callback();
             }
         });
     });
@@ -60,6 +63,51 @@ function dateOfExpiryChecker() {
                         callback();
                     }
                 });
+            } else {
+                callback();
+            }
+        });
+    });
+}
+
+/*
+ * Check if any depotObject have been used many times and there are another nearest depot.
+ */
+function depotObjectsUsageControl() {
+
+    DepotObject.find(function (err, depotObjectResult) {
+        async.each(depotObjectResult, function (depotObject, callback) {
+
+            if (depotObject.uses > 20) {
+
+                Report.findOne({depotObject: depotObject._id, type: "usageControl"}, function (err, reportResult) {
+                    // The report is created if it doesn't exist
+                    if (!reportResult) {
+
+                        Depot.findOne({owner: depotObject.owner, distance: "[0-1km]"}, function (err, depotResult) {
+                            if (depotResult && depotObject.depot !== depotResult._id) {
+
+                                Report.create({
+
+                                    owner : depotObject.owner,
+                                    depotObject : depotObject._id,
+                                    type : "usageControl"
+
+                                }, function () {
+                                    callback();
+                                });
+
+                            } else {
+                                callback();
+                            }
+                        });
+
+                    } else {
+                        callback();
+                    }
+                });
+            } else {
+                callback();
             }
         });
     });
@@ -96,3 +144,4 @@ function checkDates(dateToCheck) {
 
 exports.guaranteeChecker = guaranteeChecker;
 exports.dateOfExpiryChecker = dateOfExpiryChecker;
+exports.depotObjectsUsageControl = depotObjectsUsageControl;

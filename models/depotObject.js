@@ -51,6 +51,7 @@ var depotObjectSchema = mongoose.Schema({
     depot: {type: mongoose.Schema.Types.ObjectId, required: true},
     guarantee: {type: String},
     dateOfExpiry: {type: String},
+    uses: {type: Number, default: 0},
     description: {type: String},
     creationDate: {type: Date, default: Date.now}
 });

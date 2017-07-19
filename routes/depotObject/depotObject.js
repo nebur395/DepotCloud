@@ -591,7 +591,7 @@ module.exports = function (app) {
                             "message": "El almacén al que se intenta acceder no existe."
                         });
                     } else {
-                        DepotObject.findOne({_id: req.params.name}, function (err, depotObjectResult) {
+                        DepotObject.findOneAndUpdate({_id: req.params.name}, {$inc: {"uses":1}},  function (err, depotObjectResult) {
                             if (err) {
                                 return res.status(500).send({
                                     "success": false,
