@@ -100,7 +100,7 @@ garantía, puedes dejar de guardar su caja"*) (**completo**).
 - Notificar al usuario que un objeto debería estar en una almacén más accesible 
 dependiendo de su actividad (p.ej., *"El objeto X almacenado en tu vivienda 
 secundaria tiene mucha actividad, prueba a moverlo a tu vivienda principal para 
-facilitar su uso"*) (**falta, me está costando encontrar una forma óptima**).
+facilitar su uso"*) (**completo**).
 - Tener un tipo de usuario que sea administrador. No podrán registrarse nuevos 
 usuarios administradores, por tanto tiene que haber mínimo una cuenta ya introducida
  de serie en el sistema (**completo**).
