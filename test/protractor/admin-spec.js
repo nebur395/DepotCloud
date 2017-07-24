@@ -1,8 +1,5 @@
 'use strict';
 
-var server = require('../../server.js');
-var User = server.models.User;
-var POI = server.models.POI;
 var createUser = require('../common/userCreator').createUser;
 var createInactiveUser = require('../common/userCreator').createInactiveUser;
 var deleteUser = require('../common/userCreator').deleteUser;
@@ -11,7 +8,7 @@ var LoginPageObject = require('./pageObjects/login');
 var AdminPageObject = require('./pageObjects/admin');
 var NavbarPageOject = require('./pageObjects/components/navbar');
 
-// starter-spec.js
+// admin-spec.js
 describe('Admin Page', function() {
     var loginPage,
         navbar,

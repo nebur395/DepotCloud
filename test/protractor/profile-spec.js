@@ -1,7 +1,7 @@
 'use strict';
 
-var server = require('../../server.js');
-var User = server.models.User;
+var createUser = require('../common/userCreator').createUser;
+var deleteUser = require('../common/userCreator').deleteUser;
 
 var LoginPageObject = require('./pageObjects/login');
 var ProfilePageOject = require('./pageObjects/profile');
@@ -13,22 +13,13 @@ describe('Profile Page', function() {
         profilePage,
         navbar;
 
+    var name = "e2etest";
+    var email = "e2etest@email.com";
+    var password = "testPass";
+
     beforeAll(function(){
-        var hashPass = require('crypto')
-            .createHash('sha1')
-            .update("pass")
-            .digest('base64');
 
-        User.create({
-
-            email: "e2etest@email.com",
-            name: "e2etest",
-            lastname: "teste2e",
-            password: hashPass,
-            firstLogin: false,
-            admin: false
-
-        });
+        createUser(name, true, email, password, [], function () {});
     });
 
     beforeEach(function() {
@@ -40,8 +31,8 @@ describe('Profile Page', function() {
     it('should show an error with incorrect credentials', function() {
         loginPage.get();
 
-        loginPage.setEmail('e2etest@email.com');
-        loginPage.setPassword('pass');
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
         loginPage.loginClick();
 
         navbar.goProfile();
@@ -50,53 +41,70 @@ describe('Profile Page', function() {
         profilePage.setNewPassword("newPass");
         profilePage.changePasswordClick();
 
-        expect(profilePage.getError()).toContain("Email o contraseña actual incorrectos");
+        expect(profilePage.getMessage()).toContain("Email o contraseña actual incorrectos.");
         navbar.goLogout();
     });
 
-    it('should change the current password', function() {
+    it('should show an error with incorrect password', function() {
         loginPage.get();
 
-        loginPage.setEmail('e2etest@email.com');
-        loginPage.setPassword('pass');
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
         loginPage.loginClick();
 
         navbar.goProfile();
 
-        profilePage.setCurrentPassword("pass");
-        profilePage.setNewPassword("newPass");
+        profilePage.setCurrentPassword(password);
+        profilePage.setNewPassword("pass");
         profilePage.changePasswordClick();
 
-        expect(profilePage.getSuccess()).toContain("Usuario actualizado correctamente");
+        expect(profilePage.getMessage()).toContain("La contraseña nueva no tiene el tamaño adecuado.");
+        navbar.goLogout();
+    });
+
+    it('should change the password', function() {
+        loginPage.get();
+
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
+        loginPage.loginClick();
+
+        navbar.goProfile();
+
+        profilePage.setCurrentPassword(password);
+        profilePage.setNewPassword("passwordChanged");
+        profilePage.changePasswordClick();
+
+        expect(profilePage.getMessage()).toContain("Usuario actualizado correctamente.");
 
         navbar.goLogout();
 
-        loginPage.setEmail('e2etest@email.com');
-        loginPage.setPassword('pass');
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
         loginPage.loginClick();
 
-        expect(loginPage.getError()).toContain("Email o contraseña incorrectos");
+        expect(loginPage.getMessage()).toContain("Email o contraseña incorrectos.");
     });
 
     it('should delete the account', function() {
         loginPage.get();
 
-        loginPage.setEmail('e2etest@email.com');
-        loginPage.setPassword('newPass');
+        loginPage.setEmail(email);
+        loginPage.setPassword("passwordChanged");
         loginPage.loginClick();
 
         navbar.goProfile();
 
-        profilePage.setCurrentPassword("newPass");
+        profilePage.setCurrentPassword("passwordChanged");
         profilePage.deleteAccountClick();
 
         expect(browser.getCurrentUrl()).toBe(loginPage.getUrl());
 
-        loginPage.setEmail('e2etest@email.com');
-        loginPage.setPassword('newPass');
+        loginPage.setEmail(email);
+        loginPage.setPassword("passwordChanged");
         loginPage.loginClick();
 
-        expect(loginPage.getError()).toContain("La cuenta no está activa. Contacte con el administrador.");
+        expect(loginPage.getMessage()).toContain("La cuenta no está activa. Contacte con el administrador.");
     });
 
     /*
@@ -104,6 +112,6 @@ describe('Profile Page', function() {
      * after every test is finished.
      */
     afterAll(function(){
-        User.collection.remove({"email":'e2etest@email.com'});
+        deleteUser(email, function () {});
     });
 });
