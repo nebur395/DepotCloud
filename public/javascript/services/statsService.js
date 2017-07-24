@@ -125,6 +125,21 @@ angular.module('depotCloudApp')
                 });
             },
 
+            // GET request that get the lastDeactivations stats
+            getLastDeactivations: function (callbackSuccess, callbackError) {
+                $http({
+                    method: 'GET',
+                    url: 'adminStats/lastDeactivations',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+                }).then(function (successData) {
+                    callbackSuccess(successData.data.lastDeactivations);
+                }, function (errorData) {
+                    callbackError('&#10008', errorData.data.message);
+                });
+            },
+
             // GET request that get the creationDateDepots stats
             getCreationDateDepots: function (callbackSuccess, callbackError) {
                 $http({

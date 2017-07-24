@@ -94,45 +94,56 @@ angular.module('depotCloudApp')
                 $scope.data5Stat[0] = lastRegistrations;
             }, notificationService.showError);
 
-            // SECTION: creationDateDepots
+            // SECTION: lastDeactivations
             $scope.labels6Stat = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
                 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             $scope.data6Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.series6Stat = ["Número de creaciones de almacenes durante el último año"];
+            $scope.series6Stat = ["Número de cuentas de usuarios dadas de baja durante el último" +
+            " año"];
 
-            statsService.getCreationDateDepots(function (creationDateDepots) {
-                $scope.data6Stat[0] = creationDateDepots;
+            statsService.getLastDeactivations(function (lastDeactivations) {
+                $scope.data6Stat[0] = lastDeactivations;
             }, notificationService.showError);
 
-            // SECTION: creationDateDepotObjects
+            // SECTION: creationDateDepots
             $scope.labels7Stat = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
                 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             $scope.data7Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.series7Stat = ["Número de creaciones de objetos durante el último año"];
+            $scope.series7Stat = ["Número de creaciones de almacenes durante el último año"];
+
+            statsService.getCreationDateDepots(function (creationDateDepots) {
+                $scope.data7Stat[0] = creationDateDepots;
+            }, notificationService.showError);
+
+            // SECTION: creationDateDepotObjects
+            $scope.labels8Stat = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            $scope.data8Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.series8Stat = ["Número de creaciones de objetos durante el último año"];
 
             statsService.getCreationDateDepotObjects(function (creationDateDepotObjects) {
-                $scope.data7Stat[0] = creationDateDepotObjects;
+                $scope.data8Stat[0] = creationDateDepotObjects;
             }, notificationService.showError);
 
             // SECTION: depotTypes
-            $scope.labels8Stat = ['Trasteros', 'Casas', 'Armarios'];
-            $scope.data8Stat = [[0, 0, 0]];
-            $scope.series8Stat = ["Tipo de almacenes existentes en el sistema"];
+            $scope.labels9Stat = ['Trasteros', 'Casas', 'Armarios'];
+            $scope.data9Stat = [[0, 0, 0]];
+            $scope.series9Stat = ["Tipo de almacenes existentes en el sistema"];
 
             statsService.getDepotTypes(function (storageRooms, houses, wardrobes) {
-                $scope.data8Stat[0][0] = storageRooms;
-                $scope.data8Stat[0][1] = houses;
-                $scope.data8Stat[0][2] = wardrobes;
+                $scope.data9Stat[0][0] = storageRooms;
+                $scope.data9Stat[0][1] = houses;
+                $scope.data9Stat[0][2] = wardrobes;
             }, notificationService.showError);
 
             // SECTION: depotDistances
-            $scope.labels9Stat = ["[0-1km]", "[1km-2km]", "[2km-10km]", "[10km-100km]",
+            $scope.labels10Stat = ["[0-1km]", "[1km-2km]", "[2km-10km]", "[10km-100km]",
                 "[100km-300km]", "[300km, +]"];
-            $scope.data9Stat = [[0, 0, 0, 0, 0, 0]];
-            $scope.series9Stat = ["Distancia de los almacenes existentes en el sistema"];
+            $scope.data10Stat = [[0, 0, 0, 0, 0, 0]];
+            $scope.series10Stat = ["Distancia de los almacenes existentes en el sistema"];
 
             statsService.getDepotDistances(function (distances) {
-                $scope.data9Stat[0] = distances;
+                $scope.data10Stat[0] = distances;
             }, notificationService.showError);
 
         }]);
