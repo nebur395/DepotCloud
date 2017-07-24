@@ -6,7 +6,8 @@ var ProfilePageOject = function() {
     var changePasswordButton = element(by.buttonText('Guardar cambios'));
     var deleteAccountButton = element(by.buttonText('Borrar cuenta'));
 
-    var feedbackMessage = element(by.className('message'));
+    var feedbackAlert = element(by.className('ui-notification clickable'));
+    var feedbackMessage = feedbackAlert.element(by.className('message'));
 
     this.get = function() {
         browser.get('http://localhost:8080/#!/profile');
@@ -33,7 +34,9 @@ var ProfilePageOject = function() {
     };
 
     this.getMessage = function() {
-        return feedbackMessage.getText();
+        var text = feedbackMessage.getText();
+        feedbackAlert.click();
+        return text;
     };
 };
 

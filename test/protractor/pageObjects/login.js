@@ -5,7 +5,8 @@ var LoginPageObject = function() {
     var passwordInput = element(by.model('password'));
     var loginButton = element(by.buttonText('Iniciar sesión'));
 
-    var feedbackMessage = element(by.className('message'));
+    var feedbackAlert = element(by.className('ui-notification clickable'));
+    var feedbackMessage = feedbackAlert.element(by.className('message'));
 
     this.get = function() {
         browser.get('http://localhost:8080/#!/starter');
@@ -28,7 +29,9 @@ var LoginPageObject = function() {
     };
 
     this.getMessage = function() {
-        return feedbackMessage.getText();
+        var text = feedbackMessage.getText();
+        feedbackAlert.click();
+        return text;
     };
 };
 

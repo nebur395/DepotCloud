@@ -1,17 +1,19 @@
 'use strict';
 
-var createUser = require('../common/userCreator').createUser;
-var deleteUser = require('../common/userCreator').deleteUser;
+var server = require('../../server.js');
+var User = server.models.User;
 
 var LoginPageObject = require('./pageObjects/login');
-var ProfilePageOject = require('./pageObjects/profile');
+var AdminPageObject = require('./pageObjects/admin');
 var NavbarPageOject = require('./pageObjects/components/navbar');
+var ProfilePageOject = require('./pageObjects/profile');
 
 // login-spec.js
 describe('Profile Page', function() {
     var loginPage,
-        profilePage,
-        navbar;
+        navbar,
+        adminPage,
+        profilePage;
 
     var name = "e2etest";
     var email = "e2etest@email.com";
@@ -19,13 +21,25 @@ describe('Profile Page', function() {
 
     beforeAll(function(){
 
-        createUser(name, true, email, password, [], function () {});
+        var hashPass = require('crypto')
+            .createHash('sha1')
+            .update(password)
+            .digest('base64');
+
+        User.create({
+
+            email: email,
+            name: name,
+            password: hashPass,
+            admin: true
+        });
     });
 
     beforeEach(function() {
         loginPage = new LoginPageObject();
-        profilePage = new ProfilePageOject();
         navbar = new NavbarPageOject();
+        adminPage = new AdminPageObject();
+        profilePage = new ProfilePageOject();
     });
 
     it('should show an error with incorrect credentials', function() {
@@ -112,6 +126,6 @@ describe('Profile Page', function() {
      * after every test is finished.
      */
     afterAll(function(){
-        deleteUser(email, function () {});
+        User.collection.remove({"email": email});
     });
 });

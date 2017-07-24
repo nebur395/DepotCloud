@@ -4,57 +4,82 @@ var server = require('../../server.js');
 var User = server.models.User;
 
 var LoginPageObject = require('./pageObjects/login');
-var StarterPageOject = require('./pageObjects/starter');
+var AdminPageObject = require('./pageObjects/admin');
 var NavbarPageOject = require('./pageObjects/components/navbar');
 
 // login-spec.js
 describe('Login Page', function() {
     var loginPage,
-        starterPage,
-        navbar;
+        navbar,
+        adminPage;
+
+    var name = "e2etest";
+    var email = "e2etest@email.com";
+    var email2 = "e2etestInactive@email.com";
+    var password = "testPass";
 
     beforeAll(function(){
+
         var hashPass = require('crypto')
             .createHash('sha1')
-            .update("pass")
+            .update(password)
             .digest('base64');
 
         User.create({
 
-            email: "e2etest@email.com",
-            name: "e2etest",
-            lastname: "teste2e",
+            email: email,
+            name: name,
             password: hashPass,
-            firstLogin: false,
-            admin: false
+            admin: true
 
+        }, function () {
+
+            User.create({
+
+                email: email2,
+                name: name,
+                password: hashPass,
+                admin: false,
+                isActive: false
+
+            });
         });
     });
 
     beforeEach(function() {
-       loginPage = new LoginPageObject();
-       starterPage = new StarterPageOject();
-       navbar = new NavbarPageOject();
+        loginPage = new LoginPageObject();
+        navbar = new NavbarPageOject();
+        adminPage = new AdminPageObject();
     });
 
     it('should show an error with incorrect credentials', function() {
         loginPage.get();
 
-        loginPage.setEmail('e2etest@email.com');
-        loginPage.setPassword('pass23');
+        loginPage.setEmail(email);
+        loginPage.setPassword('wrongPass');
         loginPage.loginClick();
 
-        expect(loginPage.getError()).toContain("Email o contraseña incorrectos");
+        expect(loginPage.getMessage()).toContain("Email o contraseña incorrectos.");
+    });
+
+    it('should show an error since user is not active', function() {
+        loginPage.get();
+
+        loginPage.setEmail(email2);
+        loginPage.setPassword(password);
+        loginPage.loginClick();
+
+        expect(loginPage.getMessage()).toContain("La cuenta no está activa. Contacte con el administrador.");
     });
 
     it('should login', function() {
         loginPage.get();
 
-        loginPage.setEmail('e2etest@email.com');
-        loginPage.setPassword('pass');
+        loginPage.setEmail(email);
+        loginPage.setPassword(password);
         loginPage.loginClick();
 
-        expect(browser.getCurrentUrl()).toBe(starterPage.getUrl());
+        expect(browser.getCurrentUrl()).toBe(adminPage.getUrl());
     });
 
     it('should logout', function() {
@@ -70,6 +95,8 @@ describe('Login Page', function() {
      * after every test is finished.
      */
     afterAll(function(){
-        User.collection.remove({"email":'e2etest@email.com'});
+        User.collection.remove({"email": email}, function () {
+            User.collection.remove({"email": email2});
+        });
     });
 });

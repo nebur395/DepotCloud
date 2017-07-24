@@ -2,7 +2,8 @@
 
 var AdminPageOject = function() {
 
-    var feedbackMessage = element(by.className('message'));
+    var feedbackAlert = element(by.className('ui-notification clickable'));
+    var feedbackMessage = feedbackAlert.element(by.className('message'));
 
     this.get = function() {
         browser.get('http://localhost:8080/#!/adminManagement');
@@ -57,7 +58,9 @@ var AdminPageOject = function() {
     };
 
     this.getMessage = function() {
-        return feedbackMessage.getText();
+        var text = feedbackMessage.getText();
+        feedbackAlert.click();
+        return text;
     };
 };
 
