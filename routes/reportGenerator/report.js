@@ -59,10 +59,10 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.get("/:user", function(req, res) {
+    router.get("/:user", function (req, res) {
 
         // Looks for the user
-        User.findOne({email: req.params.user}, function(err, userResult) {
+        User.findOne({email: req.params.user}, function (err, userResult) {
 
             if (err) {
                 return res.status(500).send({
@@ -76,7 +76,7 @@ module.exports = function (app) {
                 });
             } else {
 
-                Report.find({owner: req.params.user}, function(err, reportResult) {
+                Report.find({owner: req.params.user}, function (err, reportResult) {
 
                     if (err) {
                         return res.status(500).send({

@@ -4,6 +4,7 @@ var async = require("async");
 var Depot = models.Depot;
 var DepotObject = models.DepotObject;
 var Report = models.Report;
+
 /*
  * Check if the guarantee of any DepotObject is expired.
  */
@@ -14,14 +15,17 @@ function guaranteeChecker() {
 
             if (depotObject.guarantee && checkDates(depotObject.guarantee)) {
 
-                Report.findOne({depotObject: depotObject._id, type: "guarantee"}, function (err, reportResult) {
+                Report.findOne({
+                    depotObject: depotObject._id,
+                    type: "guarantee"
+                }, function (err, reportResult) {
                     // The report is created if it doesn't exist
                     if (!reportResult) {
                         Report.create({
 
-                            owner : depotObject.owner,
-                            depotObject : depotObject._id,
-                            type : "guarantee"
+                            owner: depotObject.owner,
+                            depotObject: depotObject._id,
+                            type: "guarantee"
 
                         }, function () {
                             callback();
@@ -47,14 +51,17 @@ function dateOfExpiryChecker() {
 
             if (depotObject.dateOfExpiry && checkDates(depotObject.dateOfExpiry)) {
 
-                Report.findOne({depotObject: depotObject._id, type: "dateOfExpiry"}, function (err, reportResult) {
+                Report.findOne({
+                    depotObject: depotObject._id,
+                    type: "dateOfExpiry"
+                }, function (err, reportResult) {
                     // The report is created if it doesn't exist
                     if (!reportResult) {
                         Report.create({
 
-                            owner : depotObject.owner,
-                            depotObject : depotObject._id,
-                            type : "dateOfExpiry"
+                            owner: depotObject.owner,
+                            depotObject: depotObject._id,
+                            type: "dateOfExpiry"
 
                         }, function () {
                             callback();
@@ -80,18 +87,24 @@ function depotObjectsUsageControl() {
 
             if (depotObject.uses > 20) {
 
-                Report.findOne({depotObject: depotObject._id, type: "usageControl"}, function (err, reportResult) {
+                Report.findOne({
+                    depotObject: depotObject._id,
+                    type: "usageControl"
+                }, function (err, reportResult) {
                     // The report is created if it doesn't exist
                     if (!reportResult) {
 
-                        Depot.findOne({owner: depotObject.owner, distance: "[0-1km]"}, function (err, depotResult) {
+                        Depot.findOne({
+                            owner: depotObject.owner,
+                            distance: "[0-1km]"
+                        }, function (err, depotResult) {
                             if (depotResult && depotObject.depot !== depotResult._id) {
 
                                 Report.create({
 
-                                    owner : depotObject.owner,
-                                    depotObject : depotObject._id,
-                                    type : "usageControl"
+                                    owner: depotObject.owner,
+                                    depotObject: depotObject._id,
+                                    type: "usageControl"
 
                                 }, function () {
                                     callback();
