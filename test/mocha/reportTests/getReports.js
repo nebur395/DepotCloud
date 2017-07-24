@@ -8,6 +8,7 @@ var deleteUser = require('../userCreator').deleteUser;
 var createDepot = require('../depotCreator').createDepot;
 var deleteDepots = require('../depotCreator').deleteDepots;
 var createDepotObject = require('../depotObjectCreator').createDepotObject;
+var populateDepotObjectsReport = require('../depotObjectCreator').populateDepotObjectsReport;
 var deleteDepotObjects = require('../depotObjectCreator').deleteDepotObjects;
 var createReport = require('../reportCreator').createReport;
 var deleteReport = require('../reportCreator').deleteReport;
@@ -36,14 +37,16 @@ describe('Report', function () {
             createDepot("Depot name", email, "Depot Location", "Storage Room", "[0-1km]",
                 "Depot Description", depotsId, function () {
 
-                    createDepotObject(depotsId[0], email, "test depot object", null, "2017-06-17",
-                        "2017-06-17", "Depot Description", depotObjectsId, function () {
+                    createDepotObject(depotsId[0], email, "test depot object", null, "2300-06-17",
+                        "2300-06-17", "Depot Description", depotObjectsId, function () {
 
-                            createReport(email, depotObjectsId[0], "guarantee", reportsId, done);
+                            populateDepotObjectsReport(depotsId[0], email, depotsId, depotObjectsId, function () {
+
+                                createReport(email, depotObjectsId[0], "guarantee", reportsId, done);
+                            });
                         });
                 });
         });
-
     });
 
     /**
@@ -55,7 +58,7 @@ describe('Report', function () {
 
             chai.request(server)
                 .get('/reports/' + email)
-                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .set('Authorization', 'Bearer ' + createUserToken(name, false))
                 .end(function (err, result) {
 
                     result.should.have.status(200);
@@ -72,7 +75,7 @@ describe('Report', function () {
 
             chai.request(server)
                 .get('/reports/wrong@email.com')
-                .set('Authorization','Bearer ' + createUserToken(name, false))
+                .set('Authorization', 'Bearer ' + createUserToken(name, false))
                 .end(function (err, result) {
 
                     result.should.have.status(404);
