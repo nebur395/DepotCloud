@@ -60,7 +60,7 @@ app.use(express.static('./public'));
 require('./security/jwt-handler')(app);
 
 app.use(bodyParser.json({limit: '20mb'}));
-app.use(bodyParser.urlencoded({limit: '20mb', extended : true}));
+app.use(bodyParser.urlencoded({limit: '20mb', extended: true}));
 
 // serve swagger
 app.get('/swagger.json', function (req, res) {
@@ -73,10 +73,10 @@ app.models = require('./models');
 require('./routes')(app);
 
 // Creation of https connection
-var privateKey = fs.readFileSync('localhost.key','utf8');
-var certificate = fs.readFileSync('localhost.crt','utf8');
+var privateKey = fs.readFileSync('localhost.key', 'utf8');
+var certificate = fs.readFileSync('localhost.crt', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
-var httpsServer = https.createServer(credentials,app);
+var httpsServer = https.createServer(credentials, app);
 
 // Database connection and server launching
 var dbUri = 'mongodb://localhost:27017/depotCloudDb';
@@ -90,7 +90,7 @@ mongoose.connection.once('open', function () {
     });
 
     //HTTPS server launch (compatible with http at the same time)
-    httpsServer.listen(8443,function () {
+    httpsServer.listen(8443, function () {
         console.log("Secure server listening to PORT 8443");
     });
 
