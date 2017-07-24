@@ -2,7 +2,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var deleteUser = require('../userCreator').deleteUser;
+var deleteUser = require('../../common/userCreator').deleteUser;
 
 chai.use(chaiHttp);
 

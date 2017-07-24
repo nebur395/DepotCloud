@@ -4,8 +4,8 @@ var should = chai.should();
 var server = require('../../../server');
 var config = require("../../../config");
 var jwt = require('jsonwebtoken');
-var createUser = require('../userCreator').createUser;
-var deleteUser = require('../userCreator').deleteUser;
+var createUser = require('../../common/userCreator').createUser;
+var deleteUser = require('../../common/userCreator').deleteUser;
 
 chai.use(chaiHttp);
 

@@ -2,10 +2,10 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
-var createUserToken = require('../jwtCreator').createUserToken;
-var createUser = require('../userCreator').createUser;
-var createInactiveUser = require('../userCreator').createInactiveUser;
-var deleteUser = require('../userCreator').deleteUser;
+var createUserToken = require('../../common/jwtCreator').createUserToken;
+var createUser = require('../../common/userCreator').createUser;
+var createInactiveUser = require('../../common/userCreator').createInactiveUser;
+var deleteUser = require('../../common/userCreator').deleteUser;
 
 chai.use(chaiHttp);
 

@@ -3,12 +3,12 @@ var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../../../server');
 var ObjectId = require('mongoose').Types.ObjectId;
-var createUserToken = require('../jwtCreator').createUserToken;
-var createUser = require('../userCreator').createUser;
-var deleteUser = require('../userCreator').deleteUser;
-var createDepot = require('../depotCreator').createDepot;
-var deleteDepots = require('../depotCreator').deleteDepots;
-var deleteDepotObjects = require('../depotObjectCreator').deleteDepotObjects;
+var createUserToken = require('../../common/jwtCreator').createUserToken;
+var createUser = require('../../common/userCreator').createUser;
+var deleteUser = require('../../common/userCreator').deleteUser;
+var createDepot = require('../../common/depotCreator').createDepot;
+var deleteDepots = require('../../common/depotCreator').deleteDepots;
+var deleteDepotObjects = require('../../common/depotObjectCreator').deleteDepotObjects;
 
 chai.use(chaiHttp);
 

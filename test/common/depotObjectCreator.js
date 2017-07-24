@@ -31,8 +31,6 @@ function createDepotObject(depot, owner, name, image, guarantee, dateOfExpiry, d
  * Populates a set of depot objects in order to check the report generator
  */
 function populateDepotObjectsReport(depot, owner, depotsId, depotObjectsId, callback){
-    console.log("2 -------------------------------------------------------");
-
     DepotObject.create({
 
         depot: depot,
@@ -44,7 +42,6 @@ function populateDepotObjectsReport(depot, owner, depotsId, depotObjectsId, call
         description:  "Depot Description"
 
     }, function (err, result) {
-        console.log("3 -------------------------------------------------------");
 
         depotObjectsId.push(new ObjectId(result._id));
 
@@ -60,7 +57,6 @@ function populateDepotObjectsReport(depot, owner, depotsId, depotObjectsId, call
             description:  "Depot Description"
 
         }, function (err, result) {
-            console.log("4 -------------------------------------------------------");
 
             depotObjectsId.push(new ObjectId(result._id));
 
@@ -76,7 +72,6 @@ function populateDepotObjectsReport(depot, owner, depotsId, depotObjectsId, call
                 description:  "Depot Description"
 
             }, function (err, result) {
-                console.log("5 -------------------------------------------------------");
 
                 depotObjectsId.push(new ObjectId(result._id));
 
@@ -92,7 +87,6 @@ function populateDepotObjectsReport(depot, owner, depotsId, depotObjectsId, call
                     description:  "Depot Description"
 
                 }, function (err, result) {
-                    console.log("6 -------------------------------------------------------");
 
                     depotObjectsId.push(new ObjectId(result._id));
 
@@ -108,7 +102,6 @@ function populateDepotObjectsReport(depot, owner, depotsId, depotObjectsId, call
                     }, function (err, result) {
 
                         console.log(err);
-                        console.log("7 -------------------------------------------------------");
 
                         depotsId.push(new ObjectId(result._id));
 
