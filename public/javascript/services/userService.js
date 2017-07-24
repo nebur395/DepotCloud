@@ -15,9 +15,9 @@ angular.module('depotCloudApp')
                     },
                     data: JSON.stringify(userData)
                 }).then(function (successData) {
-                    callbackSuccess('&#10004',successData.data.message);
+                    callbackSuccess('&#10004', successData.data.message);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -36,7 +36,7 @@ angular.module('depotCloudApp')
                 }).then(function () {
                     authService.logout();
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             }
         };

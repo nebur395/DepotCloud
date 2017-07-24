@@ -10,7 +10,7 @@
         <label for="userName" class="control-label col-xs-2"><strong>Nombre:</strong></label>
         <div class="col-xs-10">
           <input id="userName" type="text" ng-model="user.name" required ng-disabled="!editing"
-                 class="form-control" placeholder="Introduce el nombre del usuario" />
+                 class="form-control" placeholder="Introduce el nombre del usuario"/>
         </div>
       </div>
 
@@ -19,15 +19,18 @@
         <label for="userEmail" class="control-label col-xs-2"><strong>Email:</strong></label>
         <div class="col-xs-10">
           <input id="userEmail" type="email" ng-model="user.email" required ng-disabled="!editing"
-                 class="form-control" placeholder="Introduce el email del usuario" />
+                 class="form-control" placeholder="Introduce el email del usuario"/>
         </div>
       </div>
 
       <div class="col-xs-12 text-right" id="managementButtons">
         <button ng-click="modalButton=0" class="btn-danger" ng-disabled="isActive"
-                ng-class="{customDisabled: isActive}">Activar</button>
-        <button ng-click="$parent.modalButton=1" ng-if="!editing" class="w3-theme-action">Editar</button>
-        <button ng-click="$parent.modalButton=2" ng-if="editing" class="btn-success">Guardar</button>
+                ng-class="{customDisabled: isActive}">Activar
+        </button>
+        <button ng-click="$parent.modalButton=1" ng-if="!editing" class="w3-theme-action">Editar
+        </button>
+        <button ng-click="$parent.modalButton=2" ng-if="editing" class="btn-success">Guardar
+        </button>
       </div>
     </form>
   </div>

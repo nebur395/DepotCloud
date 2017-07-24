@@ -16,7 +16,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.totalUsers);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -31,7 +31,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.totalDepots);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -46,7 +46,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.totalDepotObjects);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -61,7 +61,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.activeUsers, successData.data.inactiveUsers);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -76,7 +76,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.depotsPerUser);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -91,7 +91,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.depotObjectsPerUser);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -106,7 +106,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.lastLogins);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -121,7 +121,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.lastRegistrations);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -136,7 +136,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.creationDateDepots);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -151,7 +151,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.creationDateDepotObjects);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -167,7 +167,7 @@ angular.module('depotCloudApp')
                     callbackSuccess(successData.data.storageRooms, successData.data.houses,
                         successData.data.wardrobes);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -182,7 +182,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.depotDistances);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             }
         };

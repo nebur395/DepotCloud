@@ -16,7 +16,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.users);
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -32,7 +32,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.message)
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             },
 
@@ -47,7 +47,7 @@ angular.module('depotCloudApp')
                 }).then(function (successData) {
                     callbackSuccess(successData.data.message)
                 }, function (errorData) {
-                    callbackError('&#10008',errorData.data.message);
+                    callbackError('&#10008', errorData.data.message);
                 });
             }
         };

@@ -27,10 +27,11 @@ h1 {
 .customButton {
   font-weight: 600 !important;
   padding: 10px 20px !important;
-  transition: background-color .25s,color .15s, box-shadow .15s, opacity .25s, filter .25s, border .15s;
+  transition: background-color .25s, color .15s, box-shadow .15s, opacity .25s, filter .25s, border .15s;
 }
+
 .customButton:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .customDisabled {
@@ -52,7 +53,7 @@ h1 {
   margin-right: auto;
 }
 
-.ui-notification, .ui-notification>h3 {
+.ui-notification, .ui-notification > h3 {
   text-align: center !important;
 }
 

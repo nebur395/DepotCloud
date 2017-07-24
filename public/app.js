@@ -1,7 +1,7 @@
 angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'chart.js', 'angular-jwt'])
 
-    // Config UI-Notification angularjs module
-    .config(function(NotificationProvider) {
+// Config UI-Notification angularjs module
+    .config(function (NotificationProvider) {
         NotificationProvider.setOptions({
             positionX: 'center',
             maxCount: 4
@@ -11,12 +11,12 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
 
-            // starter screen
+        // starter screen
             .state('starter', {
                 url: "/starter",
                 templateUrl: "templates/starter.html",
                 controller: "starterCtrl",
-                onEnter: function($state, authService){
+                onEnter: function ($state, authService) {
                     if (authService.isAuthenticated() && authService.getAdmin()) {
                         $state.go('adminManagement');
                     }
@@ -28,7 +28,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/profile",
                 templateUrl: "templates/profile.html",
                 controller: "profileCtrl",
-                onEnter: function($state, authService, notificationService){
+                onEnter: function ($state, authService, notificationService) {
                     if (!authService.isAuthenticated()) {
                         notificationService.showError("Error de autenticación", "Token inválido" +
                             " o no existente. Por favor, envíe un token correcto.");
@@ -46,7 +46,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/adminManagement",
                 templateUrl: "templates/adminManagement.html",
                 controller: "adminManagementCtrl",
-                onEnter: function($state, authService, notificationService){
+                onEnter: function ($state, authService, notificationService) {
                     if (!authService.isAuthenticated()) {
                         notificationService.showError("Error de autenticación", "Token inválido" +
                             " o no existente. Por favor, envíe un token correcto.");
@@ -64,7 +64,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                 url: "/adminStats",
                 templateUrl: "templates/adminStats.html",
                 controller: "adminStatsCtrl",
-                onEnter: function($state, authService, notificationService){
+                onEnter: function ($state, authService, notificationService) {
                     if (!authService.isAuthenticated()) {
                         notificationService.showError("Error de autenticación", "Token inválido" +
                             " o no existente. Por favor, envíe un token correcto.");
@@ -80,13 +80,13 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
         $urlRouterProvider.otherwise('starter');
     })
 
-    .config(['$httpProvider',function ($httpProvider) {
+    .config(['$httpProvider', function ($httpProvider) {
         /**
          *  HTTP Interceptor.
          *  Authorization JWT is sent in every request if exist.
          *  LogOut function is execute in every response if http 401.
          */
-        $httpProvider.interceptors.push(['$q','$injector', function ($q, $injector) {
+        $httpProvider.interceptors.push(['$q', '$injector', function ($q, $injector) {
             return {
                 'request': function (config) {
                     var authService = $injector.get('authService');
@@ -101,7 +101,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
                     if (response.status === 401 || response.status === 403) {
                         var authService = $injector.get('authService');
 
-                        if(authService.getToken() && authService.isTokenExpired()){
+                        if (authService.getToken() && authService.isTokenExpired()) {
                             authService.logout();
                         }
                     }

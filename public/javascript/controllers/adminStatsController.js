@@ -74,8 +74,8 @@ angular.module('depotCloudApp')
             }, notificationService.showError);
 
             // SECTION: lastLogins
-            $scope.labels4Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
-                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.labels4Stat = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             $scope.data4Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.series4Stat = ["Número de los últimos inicios de sesión registrados durante el" +
             " último año"];
@@ -85,8 +85,8 @@ angular.module('depotCloudApp')
             }, notificationService.showError);
 
             // SECTION: lastRegistrations
-            $scope.labels5Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
-                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.labels5Stat = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             $scope.data5Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.series5Stat = ["Número de creaciones de usuarios durante el último año"];
 
@@ -95,8 +95,8 @@ angular.module('depotCloudApp')
             }, notificationService.showError);
 
             // SECTION: creationDateDepots
-            $scope.labels6Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
-                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.labels6Stat = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             $scope.data6Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.series6Stat = ["Número de creaciones de almacenes durante el último año"];
 
@@ -105,8 +105,8 @@ angular.module('depotCloudApp')
             }, notificationService.showError);
 
             // SECTION: creationDateDepotObjects
-            $scope.labels7Stat = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
-                'Septiembre','Octubre','Noviembre','Diciembre'];
+            $scope.labels7Stat = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             $scope.data7Stat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.series7Stat = ["Número de creaciones de objetos durante el último año"];
 

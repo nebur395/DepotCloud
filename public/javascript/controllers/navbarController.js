@@ -6,7 +6,7 @@ angular.module('depotCloudApp')
         $scope.logged = false;
 
         // Watches to control if the user is authenticated
-        $scope.$watch(function() {
+        $scope.$watch(function () {
             return authService.isAuthenticated();
         }, function () {
             $scope.logged = authService.isAuthenticated();
