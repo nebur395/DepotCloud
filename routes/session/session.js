@@ -1,7 +1,7 @@
 var express = require('express');
 var base64 = require('base-64');
 var utf8 = require('utf8');
-var jwt = require ('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 
 
 module.exports = function (app) {
@@ -53,7 +53,7 @@ module.exports = function (app) {
      *         schema:
      *           $ref: '#/definitions/FeedbackMessage'
      */
-    router.get("/", function(req, res) {
+    router.get("/", function (req, res) {
 
         // Gets the Authorization header and retrieves and decodes the credentials.
         var auth = req.headers["authorization"];
@@ -61,10 +61,10 @@ module.exports = function (app) {
         var credentials = utf8.decode(bytes);
         var index = credentials.indexOf(":");
         var email = credentials.substring(0, index);
-        var pass = credentials.substring(index+1);
+        var pass = credentials.substring(index + 1);
 
         // Looks for the user
-        User.findOneAndUpdate({email: email}, {lastLoginDate: Date.now()}, function(err, result) {
+        User.findOneAndUpdate({email: email}, {lastLoginDate: Date.now()}, function (err, result) {
 
             if (err) {
                 return res.status(500).send({
