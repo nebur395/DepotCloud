@@ -95,7 +95,7 @@ module.exports = function (app) {
                     });
                 } else if (duplicatedUser) {
                     return res.status(404).send({
-                        "success": true,
+                        "success": false,
                         "message": "El email al que se desea cambiar ya le pertenece a otra cuenta."
                     });
                 } else {
