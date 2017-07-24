@@ -43,8 +43,8 @@ var activitySchema = mongoose.Schema({
      * Type values: MEMBER;DEPOT;OBJECT
      * ACTION: ADD;MODIFY;DELETE;
      */
-    owner : {type: String, required: true},
-    type : {type: String, required: true},
+    owner: {type: String, required: true},
+    type: {type: String, required: true},
     action: {type: String, required: true},
     name: {type: String, required: true},
     author: {type: String},

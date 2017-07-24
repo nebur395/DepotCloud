@@ -35,7 +35,7 @@ mongoose.Promise = global.Promise;
 
 // Create the Schema
 var userSchema = mongoose.Schema({
-    email : {type: String, required: true, unique: true},
+    email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     name: {type: String, required: true},
     admin: {type: Boolean, required: true},
@@ -43,7 +43,7 @@ var userSchema = mongoose.Schema({
     registerDate: {type: Date, default: Date.now},
     lastLoginDate: {type: Date, default: Date.now},
     deactivationDate: {type: Date, default: null},
-    members: {type:[String], default: []}
+    members: {type: [String], default: []}
 });
 
 // Create the model if it does not exists

@@ -33,9 +33,9 @@ mongoose.Promise = global.Promise;
 // Create the Schema
 var reportSchema = mongoose.Schema({
 
-    owner : {type: String, required: true},
-    depotObject : {type: mongoose.Schema.Types.ObjectId, required: true},
-    type : {type: String, required: true},
+    owner: {type: String, required: true},
+    depotObject: {type: mongoose.Schema.Types.ObjectId, required: true},
+    type: {type: String, required: true},
     reportDate: {type: Date, default: Date.now}
 
 });
