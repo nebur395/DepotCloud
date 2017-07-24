@@ -86,31 +86,68 @@ module.exports = function (app) {
             });
         }
 
-        User.findOneAndUpdate({email: req.params.email}, {
-            name: req.body.name,
-            email: req.body.newEmail
-        }, function (err, result) {
+        if (req.params.email !== req.body.newEmail) {
+            User.findOne({email: req.body.newEmail}, function (err, duplicatedUser) {
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                } else if (duplicatedUser) {
+                    return res.status(404).send({
+                        "success": true,
+                        "message": "El email al que se desea cambiar ya le pertenece a otra cuenta."
+                    });
+                } else {
+                    User.findOneAndUpdate({email: req.params.email}, {
+                        name: req.body.name,
+                        email: req.body.newEmail
+                    }, function (err, result) {
 
-            if (err) {
-                return res.status(500).send({
-                    "success": false,
-                    "message": "Error interno del servidor."
-                });
-            }
+                        if (err) {
+                            return res.status(500).send({
+                                "success": false,
+                                "message": "Error interno del servidor."
+                            });
+                        } else if (result) {
+                            return res.status(200).send({
+                                "success": true,
+                                "message": "Usuario actualizado correctamente."
+                            });
+                        } else {
+                            return res.status(404).send({
+                                "success": false,
+                                "message": "El usuario no existe."
+                            });
+                        }
 
-            if (result) {
-                return res.status(200).send({
-                    "success": true,
-                    "message": "Usuario actualizado correctamente."
-                });
-            } else {
-                return res.status(404).send({
-                    "success": false,
-                    "message": "El usuario no existe."
-                });
-            }
+                    });
+                }
+            });
+        } else {
+            User.findOneAndUpdate({email: req.params.email}, {
+                name: req.body.name,
+                email: req.body.newEmail
+            }, function (err, result) {
 
-        });
+                if (err) {
+                    return res.status(500).send({
+                        "success": false,
+                        "message": "Error interno del servidor."
+                    });
+                } else if (result) {
+                    return res.status(200).send({
+                        "success": true,
+                        "message": "Usuario actualizado correctamente."
+                    });
+                } else {
+                    return res.status(404).send({
+                        "success": false,
+                        "message": "El usuario no existe."
+                    });
+                }
+            });
+        }
     });
 
     /**
