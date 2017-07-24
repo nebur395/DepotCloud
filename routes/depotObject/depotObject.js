@@ -197,7 +197,10 @@ module.exports = function (app) {
         // Sets the mongo database connection to gridfs in order to store and retrieve files in the DB.
         gfs = grid(mongoose.connection.db);
 
-        DepotObject.find({owner: req.params.owner, name: {$regex: req.params.name, $options: "i"}}, function (err, depotObjectResult) {
+        DepotObject.find({
+            owner: req.params.owner,
+            name: {$regex: req.params.name, $options: "i"}
+        }, function (err, depotObjectResult) {
 
             if (err) {
                 return res.status(500).send({
@@ -341,7 +344,7 @@ module.exports = function (app) {
                 "success": false,
                 "message": "Los datos que se han introducido en el almacén son incorrectos."
             });
-        } else if((req.body.guarantee && !isValidDate(req.body.guarantee))
+        } else if ((req.body.guarantee && !isValidDate(req.body.guarantee))
             || (req.body.dateOfExpiry && !isValidDate(req.body.dateOfExpiry))) {
             return res.status(404).send({
                 "success": false,
@@ -551,7 +554,7 @@ module.exports = function (app) {
                 "success": false,
                 "message": "Los datos que se han introducido en el objeto son incorrectos."
             });
-        } else if((req.body.guarantee && !isValidDate(req.body.guarantee))
+        } else if ((req.body.guarantee && !isValidDate(req.body.guarantee))
             || (req.body.dateOfExpiry && !isValidDate(req.body.dateOfExpiry))) {
             return res.status(404).send({
                 "success": false,
@@ -591,7 +594,7 @@ module.exports = function (app) {
                             "message": "El almacén al que se intenta acceder no existe."
                         });
                     } else {
-                        DepotObject.findOneAndUpdate({_id: req.params.name}, {$inc: {"uses":1}},  function (err, depotObjectResult) {
+                        DepotObject.findOneAndUpdate({_id: req.params.name}, {$inc: {"uses": 1}}, function (err, depotObjectResult) {
                             if (err) {
                                 return res.status(500).send({
                                     "success": false,
@@ -647,7 +650,7 @@ module.exports = function (app) {
                                             }
                                         });
                                     });
-                                } else if(req.body.image && !depotObjectResult.image) {
+                                } else if (req.body.image && !depotObjectResult.image) {
                                     var imageName = req.body.name + "_image";
                                     // Creates a readable stream with the image string that is in base64
                                     var imageStream = new Readable();
@@ -799,7 +802,10 @@ module.exports = function (app) {
                     " acción no existe o no pertenece a la misma."
                 });
             } else {
-                DepotObject.findOneAndRemove({"_id": req.params.name, "owner": req.body.owner}, function (err, depotObjectResult) {
+                DepotObject.findOneAndRemove({
+                    "_id": req.params.name,
+                    "owner": req.body.owner
+                }, function (err, depotObjectResult) {
                     if (err) {
                         return res.status(500).send({
                             "success": false,
@@ -811,7 +817,7 @@ module.exports = function (app) {
                             "message": "El objeto no existe o no eres su propietario."
                         });
                     } else {
-                        if(depotObjectResult.image) {
+                        if (depotObjectResult.image) {
                             removeImage(depotObjectResult.image, function () {
                                 addActivity(req.body.owner, 'OBJECT', 'DELETE', depotObjectResult.name,
                                     req.body.member, function () {
@@ -855,12 +861,12 @@ module.exports = function (app) {
     /**
      *  Stores a new image in the system.
      */
-    function storeImage(name, readStream, callback){
+    function storeImage(name, readStream, callback) {
         var writestream = gfs.createWriteStream({
             filename: name
         });
         readStream.pipe(writestream);
-        writestream.on('close', function(file){
+        writestream.on('close', function (file) {
             return callback(file._id)
         });
     }
@@ -868,7 +874,7 @@ module.exports = function (app) {
     function removeImage(imageId, callback) {
         gfs.remove({
             _id: imageId
-        }, function(){
+        }, function () {
             return callback();
         })
     }
