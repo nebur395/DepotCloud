@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "postinstall": "cd public ; npm install;",
+    "postinstall": "cd public; npm install; cd ../public-ionic; npm install;",
     "install": "node_modules/protractor/bin/webdriver-manager update",
     "test": "mocha test/mocha/**/*.js"
   },
