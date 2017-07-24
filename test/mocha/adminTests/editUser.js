@@ -163,6 +163,26 @@ describe('Admin', function () {
                 });
         });
 
+        it('should return an error since the user doesn\'t exist and try to change email', function (done) {
+
+            chai.request(server)
+                .put('/admin/users/' + "false@email.com")
+                .send({name: name, newEmail: "false2@email.com"})
+                .set('Authorization','Bearer ' + createUserToken(name, true))
+                .end(function (err, result) {
+
+                    result.should.have.status(404);
+                    result.body.should.be.a('object');
+                    result.body.should.have.property('success');
+                    result.body.success.should.equal(false);
+                    result.body.should.have.property('message');
+                    result.body.message.should.equal('El usuario no existe.');
+
+                    done();
+
+                });
+        });
+
         it('should return an error since newEmail already exist', function (done) {
 
             chai.request(server)
