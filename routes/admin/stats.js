@@ -564,7 +564,7 @@ module.exports = function (app) {
                 });
             }
 
-            var lastLogins = [0,0,0,0,0,0,0,0,0,0,0,0];
+            var lastLogins = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             async.each(logins, function (login, callback) {
 
                 lastLogins[login.lastLoginDate.getMonth()] += 1;
@@ -661,7 +661,7 @@ module.exports = function (app) {
                 });
             }
 
-            var lastRegistrations = [0,0,0,0,0,0,0,0,0,0,0,0];
+            var lastRegistrations = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             async.each(registers, function (register, callback) {
 
                 lastRegistrations[register.registerDate.getMonth()] += 1;
@@ -758,7 +758,7 @@ module.exports = function (app) {
                 });
             }
 
-            var creationDateDepots = [0,0,0,0,0,0,0,0,0,0,0,0];
+            var creationDateDepots = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             async.each(depotCreations, function (depotCreation, callback) {
 
                 creationDateDepots[depotCreation.creationDate.getMonth()] += 1;
@@ -855,7 +855,7 @@ module.exports = function (app) {
                 });
             }
 
-            var creationDateDepotObjects = [0,0,0,0,0,0,0,0,0,0,0,0];
+            var creationDateDepotObjects = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             async.each(depotObjectCreations, function (depotObjectCreation, callback) {
 
                 creationDateDepotObjects[depotObjectCreation.creationDate.getMonth()] += 1;
@@ -961,7 +961,7 @@ module.exports = function (app) {
 
             async.each(depotResults, function (depot, callback) {
 
-                switch (depot.type){
+                switch (depot.type) {
                     case 'Storage Room':
                         response.storageRooms += 1;
                         break;
@@ -1074,7 +1074,7 @@ module.exports = function (app) {
 
             async.each(depotResults, function (depot, callback) {
 
-                switch (depot.distance){
+                switch (depot.distance) {
                     case '[0-1km]':
                         response[0] += 1;
                         break;
