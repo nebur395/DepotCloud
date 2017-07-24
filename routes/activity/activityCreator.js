@@ -1,6 +1,7 @@
 var models = require('../../models');
 
 var Activity = models.Activity;
+
 /*
  * Create an activity with [type], [action], [name], and [author] params belonging to the
  * account [owner].
@@ -11,7 +12,7 @@ function addActivity(owner, type, action, name, author, callback) {
     Activity.create({
 
         owner: owner,
-        type : type,
+        type: type,
         action: action,
         name: name,
         author: author
