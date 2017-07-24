@@ -584,7 +584,10 @@ module.exports = function (app) {
                     "message": "La unidad familiar a la que se intenta acceder no existe."
                 });
             } else {
-                Depot.findOneAndRemove({"_id": req.params.id, "owner": req.params.owner}, function (err, depotResult) {
+                Depot.findOneAndRemove({
+                    "_id": req.params.id,
+                    "owner": req.params.owner
+                }, function (err, depotResult) {
                     if (err) {
                         return res.status(500).send({
                             "success": false,
