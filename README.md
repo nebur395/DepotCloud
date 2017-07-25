@@ -22,6 +22,14 @@ puerto 8080. Alternativamente, se puede ejecutar `node server.js`.
 Espera a que el servidor de ionic este lanzado, abre un navegador web, y accede a la dirección http://localhost:8100.
 1. **Acceder al cliente de desktop:** Abre un navegador web y escribe la dirección http://localhost:8080 para poder acceder al cliente del administrador.
 
+## Test
+In order to run the [Protractor](http://www.protractortest.org/#/) tests of this project you have to follow these steps:
+  1. Check that Protractor is working by running `node_modules/protractor/bin/protractor --version`.
+  2. Now start up the Selenium Server: `node_modules/protractor/bin/webdriver-manager start`. This will output a bunch of info logs. You can see information about the status of the server at `http://localhost:4444/wd/hub`.
+  3. Finally, execute `node_modules/protractor/bin/protractor test/protractor/conf.js`.
+  
+In order to run the [Mocha](https://mochajs.org/) tests of this project you only have to execute the following command: `npm test`
+
 ## Documentación de la API
 Para poder visualizar la API del proyecto, hay que seguir estos pasos:  
 1. Lanza el servidor ejecutando el comando `npm start`.

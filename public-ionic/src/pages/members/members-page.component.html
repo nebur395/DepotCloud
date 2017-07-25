@@ -25,7 +25,7 @@
     <ion-item-sliding *ngFor="let member of currentMembers">
       <button ion-item (click)="selectMember(member)" [class.member]="selectedMember(member)">
         <ion-avatar item-start>
-          <img src="assets/images/member.png" />
+          <img src="assets/images/member.png" alt="Member image"/>
         </ion-avatar>
         <h2>{{member}}</h2>
         <ion-icon *ngIf="selectedMember(member)" name="checkmark" item-end></ion-icon>

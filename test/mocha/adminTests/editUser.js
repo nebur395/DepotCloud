@@ -61,7 +61,7 @@ describe('Admin', function () {
                 .put('/admin/users/' + email)
                 .send({name: name, newEmail: "modified@email.com"})
                 .set('Authorization','Bearer ' + createUserToken(name, true))
-                .end(function (err, result) {
+                .end(function () {
 
                     chai.request(server)
                         .put('/admin/users/' + "modified@email.com")
