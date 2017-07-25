@@ -45,11 +45,11 @@
       <button ion-item (click)="openItem(depotObject)">
 
         <ion-avatar *ngIf="depotObject.image" item-start>
-          <img [src]="'data:image/png;base64,' + depotObject.image" />
+          <img [src]="'data:image/png;base64,' + depotObject.image" alt="Depot object image"/>
         </ion-avatar>
 
         <ion-avatar *ngIf="!depotObject.image" item-start>
-          <img src="../../assets/images/add_image.png" />
+          <img src="../../assets/images/add_image.png" alt="Depot object image"/>
         </ion-avatar>
 
         <h3>{{depotObject.name}}</h3>
