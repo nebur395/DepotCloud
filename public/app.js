@@ -4,7 +4,7 @@ angular.module('depotCloudApp', ['ui.router', 'base64', 'ui-notification', 'char
     .config(function (NotificationProvider) {
         NotificationProvider.setOptions({
             positionX: 'center',
-            delay: null,
+            //delay: null, // Uncomment for Protractor testing
             maxCount: 4
         });
     })
