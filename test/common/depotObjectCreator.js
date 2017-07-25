@@ -101,8 +101,6 @@ function populateDepotObjectsReport(depot, owner, depotsId, depotObjectsId, call
 
                     }, function (err, result) {
 
-                        console.log(err);
-
                         depotsId.push(new ObjectId(result._id));
 
                         callback();
