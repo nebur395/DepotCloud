@@ -8,7 +8,7 @@ import { WelcomePageComponent }      from '../welcome/welcome-page.component';
 import { SettingsService } from '../../providers/settings.service';
 import { UserService }     from '../../providers/user.service';
 
-import { User } from '../../models/User';
+import { User } from '../../models/user';
 
 import { Observable } from "rxjs/Observable";
 

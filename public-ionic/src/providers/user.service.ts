@@ -3,7 +3,7 @@ import { Headers, Http }    from '@angular/http';
 import { Storage }          from '@ionic/storage';
 import { JwtHelper }        from 'angular2-jwt';
 
-import { User } from '../models/User';
+import { User } from '../models/user';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
@@ -13,6 +13,7 @@ import 'rxjs/add/operator/toPromise';
 export class UserService {
   storage: Storage = new Storage(null);
   jwtHelper: JwtHelper = new JwtHelper();
+
 
   constructor(
     private http: Http

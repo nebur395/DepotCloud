@@ -2,7 +2,7 @@ import { Injectable }       from '@angular/core';
 import { Headers, Http }    from '@angular/http';
 import { Storage }          from '@ionic/storage';
 
-import { User } from '../models/User';
+import { User } from '../models/user';
 
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/share';

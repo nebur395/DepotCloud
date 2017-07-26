@@ -4,8 +4,8 @@ import { Storage }          from '@ionic/storage';
 
 import { Observable }     from 'rxjs/Observable';
 
-import { DepotObject } from '../models/Depot-object';
-import { User } from '../models/User';
+import { DepotObject } from '../models/depot-object';
+import { User } from '../models/user';
 
 @Injectable()
 export class SearchService {

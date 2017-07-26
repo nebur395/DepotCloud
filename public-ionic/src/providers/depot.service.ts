@@ -2,8 +2,8 @@ import { Injectable }       from '@angular/core';
 import { Headers, Http }    from '@angular/http';
 import { Storage }          from '@ionic/storage';
 
-import { User }  from '../models/User';
-import { Depot } from '../models/Depot';
+import { User }  from '../models/user';
+import { Depot } from '../models/depot';
 
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/toPromise';
