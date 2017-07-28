@@ -25,7 +25,7 @@ module.exports = function (app) {
      *     parameters:
      *       - name: Authorization
      *         description: |
-     *           Base64 estándar: `Authorization: Basic + base64.encode(user:password)`.
+     *           JWT estándar: `Authorization: Bearer + JWT`.
      *         in: header
      *         required: true
      *         type: string

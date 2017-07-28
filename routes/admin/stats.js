@@ -252,17 +252,12 @@ module.exports = function (app) {
      *         schema:
      *           type: object
      *           properties:
-     *              usersStatus:
-     *               type: array
-     *               items:
-     *                type: object
-     *                properties:
-     *                  activeUsers:
-     *                   type: integer
-     *                   description: Número de usuarios activos.
-     *                  inactiveUsers:
-     *                   type: integer
-     *                   description: Número de usuarios inactivos.
+     *             activeUsers:
+     *               type: integer
+     *               description: Número de usuarios activos.
+     *             inactiveUsers:
+     *               type: integer
+     *               description: Número de usuarios inactivos.
      *       401:
      *         description: Mensaje de feedback para el usuario. Normalmente causado por no
      *           tener un token correcto o tenerlo caducado.
