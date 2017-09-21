@@ -4,8 +4,12 @@
 [![codecov](https://codecov.io/gh/nebur395/DepotCloud-tfg/branch/master/graph/badge.svg?token=gzD6RFnKbB)](https://codecov.io/gh/nebur395/DepotCloud-tfg)
 
 # Documentación
+Documentos iniciales:
 * [Términos de referencia](docs/TerminosDeReferencia.md)
 * [Definición de la arquitectura del sistema](docs/DefinicionArquitecturaSistema.md)
+
+Documentos finales:
+* [Memoria de documento final](docs/Moreno_Jimeno_Rubén_680882_TFG.pdf)
 
 # Empezar a usar la aplicación
 Se asume que para poder ejecutar el proyecto se tiene instalado [node.js](http://nodejs.org). Una vez instalado, hay que
