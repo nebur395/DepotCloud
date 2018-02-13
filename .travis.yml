@@ -3,7 +3,7 @@ node_js:
  - 6.9.5
 services: mongodb
 install:
-  - npm install -g istanbul mocha
+  - npm install -g istanbul
   - npm install
 script:
   - istanbul cover mocha test/mocha/**/*.js
