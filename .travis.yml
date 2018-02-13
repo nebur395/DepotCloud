@@ -6,6 +6,6 @@ install:
   - npm install -g istanbul mocha
   - npm install
 script:
-  - istanbul cover _mocha test/mocha/**/*.js
+  - istanbul cover mocha test/mocha/**/*.js
 after_success:
   - bash <(curl -s https://codecov.io/bash)
